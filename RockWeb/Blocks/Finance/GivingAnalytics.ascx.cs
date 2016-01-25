@@ -541,14 +541,17 @@ function(item) {
             bcAmount.TooltipFormatter = lcAmount.TooltipFormatter;
             bcAmount.DataSourceUrl = this.ResolveUrl( dataSourceUrl );
 
-            var chartData = GetChartData();
-            var singleDateTime = chartData.GroupBy( a => a.DateTimeStamp ).Count() == 1;
-            bcAmount.Visible = singleDateTime;
-            lcAmount.Visible = !singleDateTime;
-
-            if ( pnlChartAmountGrid.Visible )
+            if ( pnlChart.Visible )
             {
-                BindChartAmountGrid(chartData);
+                var chartData = GetChartData();
+                var singleDateTime = chartData.GroupBy( a => a.DateTimeStamp ).Count() == 1;
+                bcAmount.Visible = singleDateTime;
+                lcAmount.Visible = !singleDateTime;
+
+                if ( pnlChartAmountGrid.Visible )
+                {
+                    BindChartAmountGrid( chartData );
+                }
             }
 
             if ( pnlDetails.Visible )
@@ -783,10 +786,17 @@ function(item) {
             }
 
             // Clear all the existing grid columns
+            var selectField = new SelectField();
+            var oldSelectField = gGiversGifts.ColumnsOfType<SelectField>().FirstOrDefault();
+            if (oldSelectField != null )
+            {
+                selectField.SelectedKeys.AddRange( oldSelectField.SelectedKeys );
+            }
+
             gGiversGifts.Columns.Clear();
 
             // Add a column for selecting rows
-            gGiversGifts.Columns.Add( new SelectField() );
+            gGiversGifts.Columns.Add( selectField );
 
             // Add a column for the person's name
             gGiversGifts.Columns.Add(
