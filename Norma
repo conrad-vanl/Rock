@@ -1,0 +1,8 @@
+name: "Rock"
+tasks:
+
+  "browser-sync":
+    "dev": true
+    "xip": true
+    "proxy": "rock.dev:6229"
+    "files": ["./RockWeb/**/*"]
