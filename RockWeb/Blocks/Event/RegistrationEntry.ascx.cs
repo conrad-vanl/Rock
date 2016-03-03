@@ -2153,7 +2153,7 @@ namespace RockWeb.Blocks.Event
                                 registrantNames.Add( registrant.FullName );
                             }
 
-                            if ( registrar == null && ( RegistrationState.FirstName != registrar.NickName || RegistrationState.LastName != registrar.LastName ) )
+                            if ( registrar != null && ( RegistrationState.FirstName != registrar.NickName || RegistrationState.LastName != registrar.LastName ) )
                             {
                                 noteText.AppendFormat( " by {0}", RegistrationState.FirstName + " " + RegistrationState.LastName );
                             }
