@@ -28,11 +28,11 @@ namespace Rock.Security.Authentication
     /// Authenticates a username using Active Directory
     /// </summary>
     [Description( "Active Directory Authentication Provider" )]
-    [Export(typeof(AuthenticationComponent))]
-    [ExportMetadata("ComponentName", "Active Directory")]
+    [Export( typeof( AuthenticationComponent ) )]
+    [ExportMetadata( "ComponentName", "Active Directory" )]
     [TextField( "Server", "The Active Directory server name", true, "", "Server", 0 )]
     [TextField( "Domain", "The network domain that users belongs to", true, "", "Server", 1 )]
-    [BooleanField( "Allow Change Password", "Set to true to allow user to change their Active Directory user password from the Rock system", false, "Server")]
+    [BooleanField( "Allow Change Password", "Set to true to allow user to change their Active Directory user password from the Rock system", false, "Server" )]
     public class ActiveDirectory : AuthenticationComponent
     {
         /// <summary>
@@ -66,16 +66,23 @@ namespace Rock.Security.Authentication
         /// <returns></returns>
         public override bool Authenticate( UserLogin user, string password )
         {
-            string username = user.UserName;
+            string userName = user.UserName;
+
+            int atmarkIndex = userName.IndexOf( "@" );
+            if ( atmarkIndex > 0 )
+            {
+                userName = userName.Substring( 0, atmarkIndex );
+            }
+
             if ( !String.IsNullOrWhiteSpace( GetAttributeValue( "Domain" ) ) )
             {
-                username = string.Format( @"{0}\{1}", GetAttributeValue( "Domain" ), user.UserName );
+                userName = string.Format( @"{0}\{1}", GetAttributeValue( "Domain" ), userName );
             }
 
             var context = new PrincipalContext( ContextType.Domain, GetAttributeValue( "Server" ) );
             using ( context )
             {
-                return context.ValidateCredentials( user.UserName, password );
+                return context.ValidateCredentials( userName, password );
             }
         }
 
@@ -144,9 +151,9 @@ namespace Rock.Security.Authentication
         /// </value>
         public override bool SupportsChangePassword
         {
-            get 
-            { 
-                return GetAttributeValue("AllowChangePassword").AsBoolean(); 
+            get
+            {
+                return GetAttributeValue( "AllowChangePassword" ).AsBoolean();
             }
         }
 
@@ -178,7 +185,7 @@ namespace Rock.Security.Authentication
                         userPrincipal.ChangePassword( oldPassword, newPassword );
                         return true;
                     }
-                    catch (PasswordException pex)
+                    catch ( PasswordException pex )
                     {
                         warningMessage = pex.Message;
                         return false;
