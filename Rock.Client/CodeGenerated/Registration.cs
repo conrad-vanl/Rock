@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,7 +59,13 @@ namespace Rock.Client
         public int? GroupId { get; set; }
 
         /// <summary />
+        public bool IsTemporary { get; set; }
+
+        /// <summary />
         public string LastName { get; set; }
+
+        /// <summary />
+        public DateTime? LastPaymentReminderDateTime { get; set; }
 
         /// <summary>
         /// If the ModifiedByPersonAliasId is being set manually and should not be overwritten with current user when saved, set this value to true
@@ -113,7 +119,9 @@ namespace Rock.Client
             this.ForeignGuid = source.ForeignGuid;
             this.ForeignKey = source.ForeignKey;
             this.GroupId = source.GroupId;
+            this.IsTemporary = source.IsTemporary;
             this.LastName = source.LastName;
+            this.LastPaymentReminderDateTime = source.LastPaymentReminderDateTime;
             this.ModifiedAuditValuesAlreadyUpdated = source.ModifiedAuditValuesAlreadyUpdated;
             this.PersonAliasId = source.PersonAliasId;
             this.RegistrationInstanceId = source.RegistrationInstanceId;

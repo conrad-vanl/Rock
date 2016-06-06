@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Data.Entity;
 using System.Linq;
 
 using Rock.Attribute;
@@ -29,9 +30,10 @@ using Rock.Web.Cache;
 namespace Rock.Workflow.Action.CheckIn
 {
     /// <summary>
-    /// Saves the selected check-in data as attendance
+    /// Creates Check-in Labels
     /// </summary>
-    [Description( "Saves the selected check-in data as attendance" )]
+    [ActionCategory( "Check-In" )]
+    [Description( "Creates Check-in Labels" )]
     [Export( typeof( ActionComponent ) )]
     [ExportMetadata( "ComponentName", "Save Attendance" )]
     public class CreateLabels : CheckInActionComponent
@@ -53,8 +55,9 @@ namespace Rock.Workflow.Action.CheckIn
 
             if ( checkInState != null )
             {
-                var globalAttributes = Rock.Web.Cache.GlobalAttributesCache.Read( rockContext );
-                var globalMergeValues = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( null );
+                var commonMergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( null );
+
+                var groupMemberService = new GroupMemberService( rockContext );
 
                 foreach ( var family in checkInState.CheckIn.Families.Where( f => f.Selected ) )
                 {
@@ -63,12 +66,21 @@ namespace Rock.Workflow.Action.CheckIn
                         foreach ( var groupType in person.GroupTypes.Where( g => g.Selected ) )
                         {
                             var mergeObjects = new Dictionary<string, object>();
-                            foreach ( var keyValue in globalMergeValues )
+                            foreach ( var keyValue in commonMergeFields )
                             {
                                 mergeObjects.Add( keyValue.Key, keyValue.Value );
                             }
+
                             mergeObjects.Add( "Person", person );
                             mergeObjects.Add( "GroupType", groupType );
+
+                            var groupIds = groupType.Groups.Where( g => g.Selected && g.Group != null ).Select( g => g.Group.Id ).ToList();
+                            var groupMembers = groupMemberService.Queryable().AsNoTracking()
+                                .Where( m =>
+                                    m.PersonId == person.Person.Id &&
+                                    groupIds.Contains( m.GroupId ) )
+                                .ToList();
+                            mergeObjects.Add( "GroupMembers", groupMembers );
 
                             groupType.Labels = new List<CheckInLabel>();
 

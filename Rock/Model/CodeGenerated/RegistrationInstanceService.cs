@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -96,12 +96,14 @@ namespace Rock.Model
             target.ContactEmail = source.ContactEmail;
             target.ContactPersonAliasId = source.ContactPersonAliasId;
             target.ContactPhone = source.ContactPhone;
+            target.Cost = source.Cost;
             target.Details = source.Details;
             target.EndDateTime = source.EndDateTime;
             target.ForeignGuid = source.ForeignGuid;
             target.ForeignKey = source.ForeignKey;
             target.IsActive = source.IsActive;
             target.MaxAttendees = source.MaxAttendees;
+            target.MinimumInitialPayment = source.MinimumInitialPayment;
             target.Name = source.Name;
             target.RegistrationTemplateId = source.RegistrationTemplateId;
             target.ReminderSent = source.ReminderSent;

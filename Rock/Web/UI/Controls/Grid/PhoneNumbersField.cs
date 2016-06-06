@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,15 +76,7 @@ namespace Rock.Web.UI.Controls
             {
                 string cc = countryCode as string ?? string.Empty;
                 string n = number as string ?? string.Empty;
-
-                if ( DisplayCountryCode )
-                {
-                    formattedNumber = PhoneNumber.FormattedNumber( cc, n, true );
-                }
-                else
-                {
-                    formattedNumber = PhoneNumber.FormattedNumber( cc, n );
-                }
+                formattedNumber = PhoneNumber.FormattedNumber( cc, n, DisplayCountryCode );
             }
 
             var phoneType = DefinedValueCache.Read( phoneNumberTypeId );

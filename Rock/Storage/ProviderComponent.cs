@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -81,11 +81,16 @@ namespace Rock.Storage
         {
             if ( !string.IsNullOrWhiteSpace( file.Path ) )
             {
-                string url = file.Path.StartsWith( "~" ) ? System.Web.VirtualPathUtility.ToAbsolute( file.Path ) : file.Path;
-                if ( url.StartsWith( "http", StringComparison.OrdinalIgnoreCase ) )
+                string url = string.Empty;
+                try
                 {
-                    return url;
+                    url = file.Path.StartsWith( "~" ) ? System.Web.VirtualPathUtility.ToAbsolute( file.Path ) : file.Path;
+                    if ( url.StartsWith( "http", StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        return url;
+                    }
                 }
+                catch { }
 
                 Uri uri = null;
                 try

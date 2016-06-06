@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -231,6 +231,7 @@ namespace Rock.Web.UI.Controls
             Controls.Add( _hfFormGuid );
 
             _ddlNotificationSystemEmail = new RockDropDownList();
+            _ddlNotificationSystemEmail.EnableViewState = false;
             _ddlNotificationSystemEmail.DataValueField = "Id";
             _ddlNotificationSystemEmail.DataTextField = "Title";
             _ddlNotificationSystemEmail.Label = "Notification Email";
@@ -279,6 +280,7 @@ namespace Rock.Web.UI.Controls
             Controls.Add( _falActions );
 
             _ddlActionAttribute = new RockDropDownList();
+            _ddlActionAttribute.EnableViewState = false;
             _ddlActionAttribute.ID = this.ID + "_ddlActionAttribute";
             _ddlActionAttribute.Label = "Command Selected Attribute";
             _ddlActionAttribute.Help = "Optional text attribute that should be updated with the selected command label.";

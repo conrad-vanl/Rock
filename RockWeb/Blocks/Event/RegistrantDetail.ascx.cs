@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -501,7 +501,18 @@ namespace RockWeb.Blocks.Event
                 {
                     RegistrantState = new RegistrantInfo();
                     RegistrantState.RegistrationId = registrationId ?? 0;
-                    RegistrantState.Cost = TemplateState.Cost;
+                    if ( TemplateState.SetCostOnInstance.HasValue && TemplateState.SetCostOnInstance.Value )
+                    {
+                        var instance = new RegistrationInstanceService( rockContext ).Get( RegistrationInstanceId );
+                        if ( instance != null )
+                        {
+                            RegistrantState.Cost = instance.Cost ?? 0.0m;
+                        }
+                    }
+                    else
+                    {
+                        RegistrantState.Cost = TemplateState.Cost;
+                    }
                 }
 
                 if ( registrant != null && registrant.PersonAlias != null && registrant.PersonAlias.Person != null )

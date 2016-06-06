@@ -1,2 +1,12 @@
 /LINQPad.config
+/Bin
 *.webinfo
+/Themes/Fuse
+/Themes/KidSpring
+/Themes/Junction
+/Themes/NewSpring
+/Themes/Workflows
+/Plugins/com_centralaz/*
+/Plugins/cc_newspring/*
+
+

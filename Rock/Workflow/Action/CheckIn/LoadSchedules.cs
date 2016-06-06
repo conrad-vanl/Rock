@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ namespace Rock.Workflow.Action.CheckIn
     /// <summary>
     /// Loads the schedules available for each group
     /// </summary>
+    [ActionCategory( "Check-In" )]
     [Description( "Loads the schedules available for each group" )]
     [Export( typeof( ActionComponent ) )]
     [ExportMetadata( "ComponentName", "Load Schedules" )]
@@ -58,20 +59,20 @@ namespace Rock.Workflow.Action.CheckIn
                     {
                         foreach ( var groupType in person.GroupTypes.Where( g => g.Selected || loadAll ).ToList() )
                         {
-                            var kioskGroupType = checkInState.Kiosk.FilteredGroupTypes( checkInState.ConfiguredGroupTypes ).Where( g => g.GroupType.Id == groupType.GroupType.Id ).FirstOrDefault();
+                            var kioskGroupType = checkInState.Kiosk.ActiveGroupTypes( checkInState.ConfiguredGroupTypes ).Where( g => g.GroupType.Id == groupType.GroupType.Id ).FirstOrDefault();
                             if ( kioskGroupType != null )
                             {
                                 foreach ( var group in groupType.Groups.Where( g => g.Selected || loadAll ).ToList() )
                                 {
                                     foreach ( var location in group.Locations.Where( l => l.Selected || loadAll ).ToList() )
                                     {
-                                        var kioskGroup = kioskGroupType.KioskGroups.Where( g => g.Group.Id == group.Group.Id ).FirstOrDefault();
+                                        var kioskGroup = kioskGroupType.KioskGroups.Where( g => g.Group.Id == group.Group.Id && g.IsCheckInActive ).FirstOrDefault();
                                         if ( kioskGroup != null )
                                         {
-                                            var kioskLocation = kioskGroup.KioskLocations.Where( l => l.Location.Id == location.Location.Id ).FirstOrDefault();
+                                            var kioskLocation = kioskGroup.KioskLocations.Where( l => l.Location.Id == location.Location.Id && l.IsCheckInActive ).FirstOrDefault();
                                             if ( kioskLocation != null )
                                             {
-                                                foreach ( var kioskSchedule in kioskLocation.KioskSchedules )
+                                                foreach ( var kioskSchedule in kioskLocation.KioskSchedules.Where( s => s.IsCheckInActive ) )
                                                 {
                                                     if ( !location.Schedules.Any( s => s.Schedule.Id == kioskSchedule.Schedule.Id ) )
                                                     {

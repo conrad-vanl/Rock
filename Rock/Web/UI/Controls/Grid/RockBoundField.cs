@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,10 +59,12 @@ namespace Rock.Web.UI.Controls
         /// </summary>
         public virtual ExcelExportBehavior ExcelExportBehavior
         {
-            get { return _excelExportBehavior; }
-            set { _excelExportBehavior = value; }
+            get {
+                object t = ViewState["ExcelExportBehavior"];
+                return ( t == null ) ? ExcelExportBehavior.IncludeIfVisible : (ExcelExportBehavior)t;
+            }
+            set { ViewState["ExcelExportBehavior"] = value; }
         }
-        private ExcelExportBehavior _excelExportBehavior = ExcelExportBehavior.IncludeIfVisible;
 
         /// <summary>
         /// Formats the specified field value for a cell in the <see cref="T:System.Web.UI.WebControls.BoundField" /> object.

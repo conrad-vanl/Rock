@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -312,10 +312,10 @@ namespace RockWeb.Blocks.Groups
                         {
                             spouse = new Person();
 
-                            spouse.FirstName = tbSpouseFirstName.Text;
+                            spouse.FirstName = tbSpouseFirstName.Text.FixCase();
                             History.EvaluateChange( spouseChanges, "First Name", string.Empty, spouse.FirstName );
 
-                            spouse.LastName = tbSpouseLastName.Text;
+                            spouse.LastName = tbSpouseLastName.Text.FixCase();
                             History.EvaluateChange( spouseChanges, "Last Name", string.Empty, spouse.LastName );
 
                             spouse.ConnectionStatusValueId = _dvcConnectionStatus.Id;

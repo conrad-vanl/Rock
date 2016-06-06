@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -481,20 +481,23 @@ namespace RockWeb.Blocks.WorkFlow
                 foreach ( var attribute in AvailableAttributes )
                 {
                     var control = attribute.FieldType.Field.FilterControl( attribute.QualifierValues, "filter_" + attribute.Id.ToString(), false, Rock.Reporting.FilterMode.SimpleFilter );
-                    if ( control is IRockControl )
+                    if ( control != null )
                     {
-                        var rockControl = (IRockControl)control;
-                        rockControl.Label = attribute.Name;
-                        rockControl.Help = attribute.Description;
-                        phAttributeFilters.Controls.Add( control );
-                    }
-                    else
-                    {
-                        var wrapper = new RockControlWrapper();
-                        wrapper.ID = control.ID + "_wrapper";
-                        wrapper.Label = attribute.Name;
-                        wrapper.Controls.Add( control );
-                        phAttributeFilters.Controls.Add( wrapper );
+                        if ( control is IRockControl )
+                        {
+                            var rockControl = (IRockControl)control;
+                            rockControl.Label = attribute.Name;
+                            rockControl.Help = attribute.Description;
+                            phAttributeFilters.Controls.Add( control );
+                        }
+                        else
+                        {
+                            var wrapper = new RockControlWrapper();
+                            wrapper.ID = control.ID + "_wrapper";
+                            wrapper.Label = attribute.Name;
+                            wrapper.Controls.Add( control );
+                            phAttributeFilters.Controls.Add( wrapper );
+                        }
                     }
 
                     string savedValue = gfWorkflows.GetUserPreference( MakeKeyUniqueToType( attribute.Key ) );
@@ -514,8 +517,8 @@ namespace RockWeb.Blocks.WorkFlow
                     {
                         AttributeField boundField = new AttributeField();
                         boundField.DataField = dataFieldExpression;
+                        boundField.AttributeId = attribute.Id;
                         boundField.HeaderText = attribute.Name;
-                        boundField.SortExpression = string.Empty;
                         boundField.Condensed = false;
 
                         var attributeCache = Rock.Web.Cache.AttributeCache.Read( attribute.Id );
@@ -722,7 +725,7 @@ namespace RockWeb.Blocks.WorkFlow
                     {
                         w.Id,
                         w.Name,
-                        Initiator = w.InitiatorPersonAlias.Person,
+                        Initiator = w.InitiatorPersonAlias != null ? w.InitiatorPersonAlias.Person : null,
                         Activities = w.Activities.Where( a => a.ActivatedDateTime.HasValue && !a.CompletedDateTime.HasValue ).OrderBy( a => a.ActivityType.Order ).Select( a => a.ActivityType.Name ),
                         w.CreatedDateTime,
                         Status = w.Status,

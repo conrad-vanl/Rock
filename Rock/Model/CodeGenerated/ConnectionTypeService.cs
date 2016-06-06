@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -94,6 +94,7 @@ namespace Rock.Model
         public static void CopyPropertiesFrom( this ConnectionType target, ConnectionType source )
         {
             target.Id = source.Id;
+            target.DaysUntilRequestIdle = source.DaysUntilRequestIdle;
             target.Description = source.Description;
             target.EnableFullActivityList = source.EnableFullActivityList;
             target.EnableFutureFollowup = source.EnableFutureFollowup;
@@ -102,6 +103,7 @@ namespace Rock.Model
             target.IconCssClass = source.IconCssClass;
             target.Name = source.Name;
             target.OwnerPersonAliasId = source.OwnerPersonAliasId;
+            target.RequiresPlacementGroupToConnect = source.RequiresPlacementGroupToConnect;
             target.CreatedDateTime = source.CreatedDateTime;
             target.ModifiedDateTime = source.ModifiedDateTime;
             target.CreatedByPersonAliasId = source.CreatedByPersonAliasId;

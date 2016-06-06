@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -265,7 +265,6 @@ achieve our mission.  We are so grateful for your commitment.
                     txtCreditCard.Text = "5105105105105100";
                     txtCVV.Text = "023";
 
-                    txtBankName.Text = "Test Bank";
                     txtRoutingNumber.Text = "111111118";
                     txtAccountNumber.Text = "1111111111";
                      */
@@ -730,7 +729,7 @@ achieve our mission.  We are so grateful for your commitment.
                 var savedAccounts = new FinancialPersonSavedAccountService( new RockContext() )
                     .GetByPersonId( TargetPersonId.Value );
 
-                if ( Gateway != null )
+                if ( Gateway != null && Gateway.SupportsSavedAccount( true ) )
                 {
                     var ccCurrencyType = DefinedValueCache.Read( new Guid( Rock.SystemGuid.DefinedValue.CURRENCY_TYPE_CREDIT_CARD ) );
                     if ( Gateway.SupportsSavedAccount( ccCurrencyType ) )
@@ -851,11 +850,6 @@ achieve our mission.  We are so grateful for your commitment.
                 }
                 else
                 {
-                    if ( string.IsNullOrWhiteSpace( txtBankName.Text ) )
-                    {
-                        errorMessages.Add( "Make sure to enter a bank name" );
-                    }
-
                     if ( string.IsNullOrWhiteSpace( txtRoutingNumber.Text ) )
                     {
                         errorMessages.Add( "Make sure to enter a valid routing number" );
@@ -1247,7 +1241,6 @@ achieve our mission.  We are so grateful for your commitment.
         private ACHPaymentInfo GetACHInfo()
         {
             var ach = new ACHPaymentInfo( txtAccountNumber.Text, txtRoutingNumber.Text, rblAccountType.SelectedValue == "Savings" ? BankAccountType.Savings : BankAccountType.Checking );
-            ach.BankName = txtBankName.Text;
             return ach;
         }
 

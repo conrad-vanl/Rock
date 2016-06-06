@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -310,7 +310,20 @@ namespace Rock.Web.UI.Controls
                 writer.AddAttribute("class", "row");
                 writer.RenderBeginTag( HtmlTextWriterTag.Div );
 
+                var filterControls = new List<Control>();
                 foreach ( Control child in Controls )
+                {
+                    if ( child is PlaceHolder )
+                    {
+                        filterControls.AddRange( ( child as PlaceHolder ).Controls.OfType<Control>().ToList() );
+                    }
+                    else
+                    {
+                        filterControls.Add( child );
+                    }
+                }
+
+                foreach ( Control child in filterControls )
                 {
                     // write new row
                     if ( cellCount >= cellsPerRow )
@@ -415,9 +428,11 @@ namespace Rock.Web.UI.Controls
             RockBlock rockBlock = this.RockBlock();
             if ( rockBlock != null && _userPreferences != null )
             {
+                string keyPrefix = string.Format( "grid-filter-{0}-", rockBlock.BlockId );
+
                 foreach ( var userPreference in _userPreferences )
                 {
-                    rockBlock.DeleteUserPreference( userPreference.Key );
+                    rockBlock.DeleteUserPreference( string.Format( "{0}{1}|{2}", keyPrefix, userPreference.Key, userPreference.Name ) );
                 }
 
                 _userPreferences.Clear();

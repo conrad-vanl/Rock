@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -216,7 +216,7 @@ namespace Rock.Web.Cache
         /// </summary>
         /// <param name="id">The campus id.</param>
         /// <returns></returns>
-        public static string CacheKey( int id )
+        private static string CacheKey( int id )
         {
             return string.Format( "Rock:Campus:{0}", id );
         }
@@ -321,19 +321,18 @@ namespace Rock.Web.Cache
         /// <summary>
         /// Returns all campuses
         /// </summary>
-        /// <param name="rockContext">The rock context.</param>
         /// <returns></returns>
-        [Obsolete( "Use All() method instead. RockContext parameter is no longer needed." )]
-        public static List<CampusCache> All( RockContext rockContext )
+        public static List<CampusCache> All()
         {
-            return All();
+            return All( true );
         }
 
         /// <summary>
         /// Returns all campuses
         /// </summary>
+        /// <param name="includeInactive">if set to <c>true</c> [include inactive].</param>
         /// <returns></returns>
-        public static List<CampusCache> All()
+        public static List<CampusCache> All( bool includeInactive )
         {
             List<CampusCache> campuses = new List<CampusCache>();
             var campusIds = GetOrAddExisting( "Rock:Campus:All", () => LoadAll() );
@@ -341,7 +340,11 @@ namespace Rock.Web.Cache
             {
                 foreach ( int campusId in campusIds )
                 {
-                    campuses.Add( CampusCache.Read( campusId ) );
+                    var campusCache = CampusCache.Read( campusId );
+                    if ( campusCache != null && ( includeInactive || ( campusCache.IsActive ?? false ) ) )
+                    {
+                        campuses.Add( campusCache );
+                    }
                 }
             }
             return campuses;

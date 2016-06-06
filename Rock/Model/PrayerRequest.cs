@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,9 +53,8 @@ namespace Rock.Model
         /// <value>
         /// A <see cref="System.String"/> containing the last name of the person that this prayer request is about.  
         /// </value>
-        [Required]
         [MaxLength( 50 )]
-        [DataMember( IsRequired = true )]
+        [DataMember( IsRequired = false )]
         public string LastName { get; set; }
 
         /// <summary>
@@ -85,6 +84,7 @@ namespace Rock.Model
         /// A <see cref="System.Int32"/> representing the CategoryId of the <see cref="Rock.Model.Category"/> that the PrayerRequest belongs to.
         /// </value>
         [DataMember]
+        [IncludeForReporting]
         public int? CategoryId { get; set; }
 
         /// <summary>

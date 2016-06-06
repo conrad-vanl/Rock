@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -57,28 +57,29 @@ namespace Rock.Jobs
         {
             JobDataMap dataMap = context.JobDetail.JobDataMap;
             string workflowName = dataMap.GetString( "Workflow" );
-            LaunchTheWorkflow( workflowName );
+            LaunchTheWorkflow( workflowName, context );
         }
 
         /// <summary>
         /// Launch the workflow
         /// </summary>
-        protected void LaunchTheWorkflow(string workflowName)
+        protected void LaunchTheWorkflow( string workflowName, IJobExecutionContext context )
         {
             Guid workflowTypeGuid = Guid.NewGuid();
             if ( Guid.TryParse( workflowName, out workflowTypeGuid ) )
             {
                 var rockContext = new RockContext();
-                var workflowTypeService = new WorkflowTypeService(rockContext);
+                var workflowTypeService = new WorkflowTypeService( rockContext );
                 var workflowType = workflowTypeService.Get( workflowTypeGuid );
                 if ( workflowType != null )
                 {
                     var workflow = Rock.Model.Workflow.Activate( workflowType, workflowName );
 
                     List<string> workflowErrors;
-                    new Rock.Model.WorkflowService( rockContext ).Process( workflow, out workflowErrors );
+                    var processed = new Rock.Model.WorkflowService( rockContext ).Process( workflow, out workflowErrors );
+                    context.Result = ( processed ? "Processed " : "Did not process " ) + workflow.ToString();
                 }
-            }     
+            }
         }
     }
 }

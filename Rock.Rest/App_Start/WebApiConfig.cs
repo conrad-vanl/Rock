@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ using System.Web.Http.ExceptionHandling;
 using System.Web.Http.OData.Builder;
 using System.Web.Http.OData.Extensions;
 using System.Web.Routing;
-
+using Microsoft.Data.Edm;
 using Rock;
 
 namespace Rock.Rest
@@ -57,6 +57,19 @@ namespace Rock.Rest
                 defaults: new
                 {
                     action = "DataView"
+                } );
+
+            // Add API route for Launching a Workflow
+            config.Routes.MapHttpRoute(
+                name: "LaunchWorkflowApi",
+                routeTemplate: "api/{controller}/LaunchWorkflow/{id}",
+                defaults: new
+                {
+                    action = "LaunchWorkflow"
+                },
+                constraints: new
+                {
+                    httpMethod = new HttpMethodConstraint( new string[] { "POST" } ),
                 } );
 
             // Add API route for DeleteAttributeValue

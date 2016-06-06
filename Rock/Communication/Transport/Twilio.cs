@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ namespace Rock.Communication.Transport
                     var communicationEntityTypeId = EntityTypeCache.Read( "Rock.Model.Communication" ).Id;
                     var communicationCategoryId = CategoryCache.Read( Rock.SystemGuid.Category.HISTORY_PERSON_COMMUNICATIONS.AsGuid(), rockContext ).Id;
 
-                    var globalConfigValues = GlobalAttributesCache.GetMergeFields( null );
+                    var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( null );
 
                     bool recipientFound = true;
                     while ( recipientFound )
@@ -98,7 +98,7 @@ namespace Rock.Communication.Transport
                                 if ( phoneNumber != null )
                                 {
                                     // Create merge field dictionary
-                                    var mergeObjects = recipient.CommunicationMergeValues( globalConfigValues );
+                                    var mergeObjects = recipient.CommunicationMergeValues( mergeFields );
                                     string message = communication.GetMediumDataValue( "Message" );
 
                                     // convert any special microsoft word characters to normal chars so they don't look funny (for example "Hey â€œdouble-quotesâ€ from â€˜single quoteâ€™")

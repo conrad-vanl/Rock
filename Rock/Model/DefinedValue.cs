@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ namespace Rock.Model
         /// A <see cref="System.String"/> that represents the Value of the DefinedValue.
         /// </value>
         [Required]
-        [MaxLength( 100 )]
+        [MaxLength( 250 )]
         [DataMember( IsRequired = true )]
         public string Value { get; set; }
 

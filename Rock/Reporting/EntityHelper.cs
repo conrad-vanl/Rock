@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -453,28 +453,6 @@ namespace Rock.Reporting
         ///   <c>true</c> if [is previewable]; otherwise, <c>false</c>.
         /// </value>
         public bool IsPreviewable { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EntityField"/> class.
-        /// </summary>
-        [Obsolete( "Use one of the other EntityField constructors instead" )]
-        public EntityField()
-        {
-            FieldConfig = new Dictionary<string, ConfigurationValue>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EntityField"/> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="fieldKind">Kind of the field.</param>
-        /// <param name="propertyType">Type of the property.</param>
-        /// <param name="attributeGuid">The attribute unique identifier.</param>
-        [Obsolete( "Use one of the other EntityField constructors instead" )]
-        public EntityField( string name, FieldKind fieldKind, Type propertyType, Guid? attributeGuid = null )
-            : this( name, fieldKind, propertyType, null, attributeGuid )
-        {
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityField" /> class.

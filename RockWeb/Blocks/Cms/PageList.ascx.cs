@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ namespace RockWeb.Blocks.Cms
     [DisplayName( "Page List" )]
     [Category( "CMS" )]
     [Description( "Lists pages for a site." )]
+
+    [BooleanField("Show Page Id", "Enables the hiding of the page id column.", true)]
     public partial class PageList : RockBlock, ISecondaryBlock
     {
         #region Base Control Methods
@@ -69,6 +71,8 @@ namespace RockWeb.Blocks.Cms
             {
                 BindFilter();
                 BindPagesGrid();
+
+                gPages.Columns[0].Visible = GetAttributeValue( "ShowPageId" ).AsBoolean();
             }
         }
 

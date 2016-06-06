@@ -5,12 +5,50 @@
 #    System.Spatial.dll
 /*.pdb
 
-#specific files
-/Rock.Migrations.dll
-/Rock.Rest.dll
-/Rock.Version.dll
-/Rock.dll
+/*.xml
+
+af/
+ar/
+bg/
+bn-BD/
+cs/
+da/
+de/
+el/
+es/
+fa/
+fi-FI/
+fr/
+fr-BE/
+he/
+hu/
+id/
+it/
+ja/
+nb/
+nb-NO/
+nl/
+pl/
+pt/
+ro/
+ru/
+sk/
+sl/
+sr/
+sr-Latn/
+sv/
+tr/
+uk/
+uz-Cyrl-UZ/
+uz-Latn-UZ/
+vi/
+zh-CN/
+zh-Hans/
+zh-Hant/
 
 /Rock.Plugin.dll
 *.PayFlowPro.dll
 /DotLiquid.dll
+/Rock.Mandrill.dll
+/Rock.Mailgun.dll
+/Rock.NMI.dll

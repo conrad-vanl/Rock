@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ using System.Text.RegularExpressions;
 namespace Rock
 {
     /// <summary>
-    /// Handy string extensions
+    /// Handy string extensions that don't require any nuget packages
     /// </summary>
     public static partial class ExtensionMethods
     {
@@ -184,7 +184,11 @@ namespace Rock
         /// <returns></returns>
         public static string Left( this string str, int length )
         {
-            if ( str.Length <= length )
+            if ( str == null )
+            {
+                return null;
+            }                
+            else if ( str.Length <= length )
             {
                 return str;
             }

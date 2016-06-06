@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ namespace RockWeb.Blocks.Crm
             gPersonBadge.Actions.ShowAdd = canAddEditDelete;
             gPersonBadge.IsDeleteEnabled = canAddEditDelete;
 
-            SecurityField securityField = gPersonBadge.Columns[3] as SecurityField;
+            SecurityField securityField = gPersonBadge.Columns[4] as SecurityField;
             securityField.EntityTypeId = EntityTypeCache.Read( typeof( Rock.Model.PersonBadge ) ).Id;
         }
 
@@ -169,7 +169,7 @@ namespace RockWeb.Blocks.Crm
         private void BindGrid()
         {
             gPersonBadge.DataSource = new PersonBadgeService( new RockContext() )
-                .Queryable().OrderBy( b => b.Order ).ToList();
+                .Queryable( "EntityType").OrderBy( b => b.Order ).ToList();
             gPersonBadge.DataBind();
         }
 

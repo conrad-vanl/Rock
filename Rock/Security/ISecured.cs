@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,8 +54,12 @@ namespace Rock.Security
 
         /// <summary>
         /// An optional parent authority to check prior to checking main ParentAuthority.  
-        /// (i.e for Groups, the GroupType is a checked prior to the main parent
-        /// authority of parent group type, entity, globaldefault
+        /// i.e for Groups, the GroupType is a checked prior to the main parent
+        /// authority of parent group type, entity, globaldefault. 
+        /// 
+        /// NOTE: The ParentAuthorityPre is only checked for the root entity, for example 
+        /// if the entity specified by the Parentuthority value has a ParentAuthorityPre value,
+        /// that will not be checked.
         /// </summary>
         /// <value>
         /// The parent authority pre.

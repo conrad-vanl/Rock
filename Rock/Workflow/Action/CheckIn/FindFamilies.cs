@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,12 +32,10 @@ namespace Rock.Workflow.Action.CheckIn
     /// <summary>
     /// Finds families based on a given search critieria (i.e. phone, barcode, etc)
     /// </summary>
+    [ActionCategory( "Check-In" )]
     [Description( "Finds families based on a given search critieria (i.e. phone, barcode, etc)" )]
     [Export( typeof( ActionComponent ) )]
     [ExportMetadata( "ComponentName", "Find Families" )]
-    [IntegerField( "Max Results", "The maximum number of families to return ( Default is 100, a value of 0 will not limit results ).", false, 100, "", 0 )]
-    [CustomRadioListField( "Phone Search Type", "The type of search to use when finding families with a matching phone number.",
-        "0^Include families with a phone number that CONTAINS the value entered,1^Include families with a phone number that END WITH the value entered", true, "0", "", 1 )]
     public class FindFamilies : CheckInActionComponent
     {
         /// <summary>
@@ -72,8 +70,7 @@ namespace Rock.Workflow.Action.CheckIn
                             m.Group.GroupType.Guid.Equals( familyGroupTypeGuid ) &&
                             m.Person.RecordTypeValueId == personRecordTypeId );
 
-                    int? phoneSearchType = GetAttributeValue( action, "PhoneSearchType" ).AsIntegerOrNull();
-                    if ( phoneSearchType.HasValue && phoneSearchType.Value == 1 )
+                    if ( checkInState.CheckInType == null || checkInState.CheckInType.PhoneSearchType == PhoneSearchType.EndsWith )
                     {
                         familyQry = familyQry.Where( m =>
                             m.Person.PhoneNumbers.Any( n => n.Number.EndsWith( numericPhone ) ) );
@@ -88,7 +85,7 @@ namespace Rock.Workflow.Action.CheckIn
                         .Select( m => m.GroupId )
                         .Distinct();
 
-                    int maxResults = GetAttributeValue( action, "MaxResults" ).AsInteger();
+                    int maxResults = checkInState.CheckInType != null ? checkInState.CheckInType.MaxSearchResults : 100;
                     if ( maxResults > 0 )
                     {
                         familyIdQry = familyIdQry.Take( maxResults );

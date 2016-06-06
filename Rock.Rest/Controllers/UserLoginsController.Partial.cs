@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,6 +39,18 @@ namespace Rock.Rest.Controllers
         public bool Available( string username )
         {
             return ( (UserLoginService)Service ).GetByUserName( username ) == null;
+        }
+
+        /// <summary>
+        /// Tests if a username is available
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [System.Web.Http.Route( "api/userlogins/available" )]
+        public bool AvailableByQueryString( string username )
+        {
+            return Available( username );
         }
 
         /// <summary>

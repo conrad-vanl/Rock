@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -127,7 +127,7 @@ namespace RockWeb.Blocks.Crm
             
             var imageEditor = e.Item.FindControl( "imgedPhoto" ) as Rock.Web.UI.Controls.ImageEditor;
             imageEditor.BinaryFileId = person.PhotoId;
-            imageEditor.NoPictureUrl = Person.GetPhotoUrl( null, person.Age, person.Gender );
+            imageEditor.NoPictureUrl = Person.GetPersonPhotoUrl( person );
             imageEditor.Label = string.Format( "{0}", person.FullName );
 
             if ( _staffGroup != null && _staffGroup.Members.Where( m => m.PersonId == person.Id ).Count() > 0 )

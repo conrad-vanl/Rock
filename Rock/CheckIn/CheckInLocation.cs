@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,30 +45,6 @@ namespace Rock.CheckIn
         /// </value>
         [DataMember]
         public int? CampusId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the campu identifier.
-        /// </summary>
-        /// <value>
-        /// The campu identifier.
-        /// </value>
-        [DataMember]
-        [Obsolete( "Use CampusId property instead" )]
-        public int? CampuId
-        {
-            get { return CampusId; }
-            set { CampusId = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the current count.
-        /// </summary>
-        /// <value>
-        /// The current count.
-        /// </value>
-        [DataMember]
-        [Obsolete( "Not Used. This will be removed post McKinley." )]
-        public int CurrentCount { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [excluded by filter].

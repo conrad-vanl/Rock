@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -324,7 +324,7 @@ namespace Rock.Web.Cache
         /// <returns></returns>
         public static CategoryCache Read( Rock.Model.Category categoryModel )
         {
-            return GetOrAddExisting( CampusCache.CacheKey( categoryModel.Id ),
+            return GetOrAddExisting( CategoryCache.CacheKey( categoryModel.Id ),
                 () => LoadByModel( categoryModel ) );
         }
 

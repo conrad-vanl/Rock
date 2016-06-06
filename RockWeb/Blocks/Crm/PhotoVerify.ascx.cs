@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -140,7 +140,7 @@ namespace RockWeb.Blocks.Crm
                     Literal lImage = e.Row.FindControl( "lImage" ) as Literal;
                     if ( lImage != null )
                     {
-                        string imgTag = Person.GetPhotoImageTag( groupMember.Person.PhotoId, groupMember.Person.Gender, size, size );
+                        string imgTag = Person.GetPersonPhotoImageTag( groupMember.Person, size, size );
 
                         if ( groupMember.Person.PhotoId.HasValue )
                         {

@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,7 +51,12 @@ namespace Rock.Workflow
         /// </summary>
         public ActionComponent()
         {
-            // Override default constructor of Component that loads attributes (not needed for workflow actions, needs to be done by each action)
+            var type = this.GetType();
+            using ( var rockContext = new RockContext() )
+            {
+                int? actionTypeEntityTypeId = EntityTypeCache.Read( typeof( WorkflowActionType ) ).Id;
+                Rock.Attribute.Helper.UpdateAttributes( this.GetType(), actionTypeEntityTypeId, "EntityTypeId", Rock.Web.Cache.EntityTypeCache.GetId( type.FullName ).ToString(), rockContext );
+            }
         }
 
         /// <summary>
@@ -63,18 +68,6 @@ namespace Rock.Workflow
         /// <param name="errorMessages">The error messages.</param>
         /// <returns></returns>
         public abstract Boolean Execute( RockContext rockContext, WorkflowAction action, Object entity, out List<string> errorMessages );
-
-        /// <summary>
-        /// Loads the attributes.
-        /// </summary>
-        /// <exception cref="System.Exception">Workflow Action attributes are saved specific to the current action, which requires that the current action is included in order to load or retrieve values.  Use the LoadAttributes( WorkflowAction action ) method instead.</exception>
-        [Obsolete("Use LoadAttributes( WorkflowAction action ) instead", true)]
-        public void LoadAttributes()
-        {
-            // Compiler should generate error if referencing this method, so exception should never be thrown
-            // but method is needed to "override" the extension method for IHasAttributes objects
-            throw new Exception( "Workflow Action attributes are saved specific to the current action, which requires that the current action is included in order to load or retrieve values.  Use the LoadAttributes( WorkflowAction action ) method instead." );
-        }
 
         /// <summary>
         /// Loads the attributes for the action.  The attributes are loaded by the framework prior to executing the action, 
@@ -134,22 +127,40 @@ namespace Rock.Workflow
         /// <returns></returns>
         protected string GetAttributeValue( WorkflowAction action, string key )
         {
+            return GetActionAttributeValue( action, key );
+        }
+
+        /// <summary>
+        /// Gets the action attribute value.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public static string GetActionAttributeValue( WorkflowAction action, string key )
+        {
             var actionType = action.ActionType;
 
-            var values = actionType.AttributeValues;
-            if ( values.ContainsKey( key ) )
+            if ( actionType != null )
             {
-                var keyValues = values[key];
-                if ( keyValues != null )
+                if ( actionType.Attributes == null )
                 {
-                    return keyValues.Value;
+                    actionType.LoadAttributes();
                 }
-            }
+                var values = actionType.AttributeValues;
+                if ( values.ContainsKey( key ) )
+                {
+                    var keyValues = values[key];
+                    if ( keyValues != null )
+                    {
+                        return keyValues.Value;
+                    }
+                }
 
-            if ( actionType.Attributes != null &&
-                actionType.Attributes.ContainsKey( key ))
-            {
-                return actionType.Attributes[key].DefaultValue;
+                if ( actionType.Attributes != null &&
+                    actionType.Attributes.ContainsKey( key ) )
+                {
+                    return actionType.Attributes[key].DefaultValue;
+                }
             }
 
             return string.Empty;
@@ -185,19 +196,10 @@ namespace Rock.Workflow
         /// <returns></returns>
         protected Dictionary<string, object> GetMergeFields( WorkflowAction action )
         {
-            var mergeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( null );
+            var mergeFields = Lava.LavaHelper.GetCommonMergeFields( null );
             mergeFields.Add( "Action", action );
             mergeFields.Add( "Activity", action.Activity );
             mergeFields.Add( "Workflow", action.Activity.Workflow );
-
-            if ( HttpContext.Current != null && HttpContext.Current.Items.Contains( "CurrentPerson" ) )
-            {
-                var currentPerson = HttpContext.Current.Items["CurrentPerson"] as Person;
-                if (currentPerson != null)
-                {
-                    mergeFields.Add( "CurrentPerson", currentPerson );
-                }
-            }
 
             return mergeFields;
         }

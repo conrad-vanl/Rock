@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,6 +45,46 @@ namespace Rock.CheckIn
         /// The current kiosk id
         /// </summary>
         protected int? CurrentKioskId { get; set; }
+
+        /// <summary>
+        /// The current primary checkin-type id
+        /// </summary>
+        protected int? CurrentCheckinTypeId
+        {
+            get { return _currentCheckinTypeId; }
+            set
+            {
+                _currentCheckinTypeId = value;
+                _currentCheckinType = null;
+            }
+        }
+        private int? _currentCheckinTypeId;
+
+        /// <summary>
+        /// Gets the type of the current check in.
+        /// </summary>
+        /// <value>
+        /// The type of the current check in.
+        /// </value>
+        protected CheckinType CurrentCheckInType
+        {
+            get
+            {
+                if ( _currentCheckinType != null )
+                {
+                    return _currentCheckinType;
+                }
+
+                if ( CurrentCheckinTypeId.HasValue )
+                {
+                    _currentCheckinType = new CheckinType( CurrentCheckinTypeId.Value );
+                    return _currentCheckinType;
+                }
+
+                return null;
+            }
+        }
+        private CheckinType _currentCheckinType;
 
         /// <summary>
         /// The current group type ids
@@ -248,6 +288,15 @@ namespace Rock.CheckIn
                 Session.Remove( "CheckInKioskId" );
             }
 
+            if ( CurrentCheckinTypeId.HasValue )
+            {
+                Session["CheckinTypeId"] = CurrentCheckinTypeId.Value;
+            }
+            else
+            {
+                Session.Remove( "CheckinTypeId" );
+            }
+
             if ( CurrentGroupTypeIds != null )
             {
                 Session["CheckInGroupTypeIds"] = CurrentGroupTypeIds;
@@ -400,6 +449,11 @@ namespace Rock.CheckIn
                 CurrentKioskId = (int)Session["CheckInKioskId"];
             }
 
+            if ( Session["CheckinTypeId"] != null )
+            {
+                CurrentCheckinTypeId = (int)Session["CheckinTypeId"];
+            }
+
             if ( Session["CheckInGroupTypeIds"] != null )
             {
                 CurrentGroupTypeIds = Session["CheckInGroupTypeIds"] as List<int>;
@@ -417,8 +471,9 @@ namespace Rock.CheckIn
 
             if ( CurrentCheckInState == null && CurrentKioskId.HasValue )
             {
-                CurrentCheckInState = new CheckInState( CurrentKioskId.Value, CurrentGroupTypeIds );
+                CurrentCheckInState = new CheckInState( CurrentKioskId.Value, CurrentCheckinTypeId, CurrentGroupTypeIds );
             }
         }
+
     }
 }

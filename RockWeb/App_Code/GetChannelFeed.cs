@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -117,8 +117,7 @@ namespace RockWeb
                     if ( channel.EnableRss )
                     {
                         // load merge fields
-                        var mergeFields = new Dictionary<string, object>();
-                        mergeFields.Add( "Campuses", CampusCache.All() );
+                        var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( null );
                         mergeFields.Add( "Channel", channel );
 
                         Dictionary<string, object> requestObjects = new Dictionary<string, object>();
@@ -133,9 +132,6 @@ namespace RockWeb
                         requestObjects.Add( "OriginalString", request.Url.OriginalString );
 
                         mergeFields.Add( "Request", requestObjects );
-
-                        var globalAttributeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields(null);
-                        globalAttributeFields.ToList().ForEach( d => mergeFields.Add( d.Key, d.Value ) );
                         
                         // check for new rss item limit
                         if ( request.QueryString["Count"] != null )

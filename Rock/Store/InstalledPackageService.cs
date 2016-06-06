@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,7 +73,12 @@ namespace Rock.Store
         {
             var installedPackages = GetInstalledPackages();
 
-            return installedPackages.Where( p => p.PackageId == packageId ).FirstOrDefault();
+            if ( installedPackages != null )
+            {
+                return installedPackages.Where( p => p.PackageId == packageId ).FirstOrDefault();
+            }
+
+            return null;
         }
 
 

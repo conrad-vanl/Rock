@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,10 +31,10 @@ namespace Rock.Web.UI.Controls
     /// <summary>
     /// Displays a bootstrap badge
     /// </summary>
-    public class NewFamilyContactInfoRow : CompositeControl
+    public class NewGroupContactInfoRow : CompositeControl
     {
         /// <summary>
-        /// The Family role key
+        /// The Group role key
         /// </summary>
         /// 
         private PhoneNumberBox _pnbHomePhone;
@@ -220,9 +220,9 @@ namespace Rock.Web.UI.Controls
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NewFamilyContactInfoRow" /> class.
+        /// Initializes a new instance of the <see cref="NewGroupContactInfoRow" /> class.
         /// </summary>
-        public NewFamilyContactInfoRow()
+        public NewGroupContactInfoRow()
             : base()
         {
             _pnbHomePhone = new PhoneNumberBox();

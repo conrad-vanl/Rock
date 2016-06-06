@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@ namespace Rock.Workflow.Action.CheckIn
     /// <summary>
     /// Removes (or excludes) the grouptypes from each family member that are not specific to their age
     /// </summary>
+    [ActionCategory( "Check-In" )]
     [Description( "Removes (or excludes) the grouptypes from each family member that are not specific to their age" )]
     [Export( typeof( ActionComponent ) )]
     [ExportMetadata( "ComponentName", "Filter By Age" )]
 
     [BooleanField( "Remove", "Select 'Yes' if group types should be be removed.  Select 'No' if they should just be marked as excluded.", true, "", 0 )]
-    [BooleanField( "Age Required", "Select 'Yes' if groups with an age filter should be removed/excluded when person does not have an age.", true, "", 1 )]
     public class FilterByAge : CheckInActionComponent
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace Rock.Workflow.Action.CheckIn
                     foreach ( var person in family.People )
                     {
                         double? age = person.Person.AgePrecise;
-                        bool ageRequired = GetAttributeValue( action, "AgeRequired" ).AsBoolean( true );
+                        bool ageRequired = checkInState.CheckInType == null || checkInState.CheckInType.AgeRequired;
 
                         if ( age == null && !ageRequired )
                         {

@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -108,17 +108,15 @@ namespace Rock.Jobs
             var personList = personQry.AsNoTracking().ToList();
             foreach ( var person in personList )
             {
-                var mergeFields = new Dictionary<string, object>();
+                var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( null );
                 mergeFields.Add( "Person", person );
-
-                var globalAttributeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( null );
-                globalAttributeFields.ToList().ForEach( d => mergeFields.Add( d.Key, d.Value ) );
 
                 recipients.Add( new RecipientData( person.Email, mergeFields ) );
             }
 
             var appRoot = Rock.Web.Cache.GlobalAttributesCache.Read( rockContext ).GetValue( "ExternalApplicationRoot" );
             Email.Send( systemEmail.Guid, recipients, appRoot );
+            context.Result = string.Format( "{0} birthday emails sent", recipients.Count() );
         }
     }
 }

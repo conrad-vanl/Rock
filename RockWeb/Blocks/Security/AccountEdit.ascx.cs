@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -282,6 +282,10 @@ namespace RockWeb.Blocks.Security
                     History.EvaluateChange( changes, "Email", person.Email, tbEmail.Text );
                     person.Email = tbEmail.Text.Trim();
 
+                    var newEmailPreference = rblEmailPreference.SelectedValue.ConvertToEnum<EmailPreference>();
+                    History.EvaluateChange( changes, "Email Preference", person.EmailPreference, newEmailPreference );
+                    person.EmailPreference = newEmailPreference;
+
                     if ( person.IsValid )
                     {
                         if ( rockContext.SaveChanges() > 0 )
@@ -445,7 +449,7 @@ namespace RockWeb.Blocks.Security
             if ( person != null )
             {
                 imgPhoto.BinaryFileId = person.PhotoId;
-                imgPhoto.NoPictureUrl = Person.GetPhotoUrl( null, person.Age, person.Gender );
+                imgPhoto.NoPictureUrl = Person.GetPersonPhotoUrl( person, 200, 200 );
                 ddlTitle.SelectedValue = person.TitleValueId.HasValue ? person.TitleValueId.Value.ToString() : string.Empty;
                 tbFirstName.Text = person.FirstName;
                 tbNickName.Text = person.NickName;
@@ -454,6 +458,7 @@ namespace RockWeb.Blocks.Security
                 bpBirthDay.SelectedDate = person.BirthDate;
                 rblGender.SelectedValue = person.Gender.ConvertToString();
                 tbEmail.Text = person.Email;             
+                rblEmailPreference.SelectedValue = person.EmailPreference.ConvertToString( false );
 
                 Guid? locationTypeGuid = GetAttributeValue( "LocationType" ).AsGuidOrNull();
                 if ( locationTypeGuid.HasValue )

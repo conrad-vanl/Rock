@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -254,7 +254,7 @@ namespace Rock.Web.Cache
         /// <returns></returns>
         public static NoteTypeCache Read( Rock.Model.NoteType NoteTypeModel )
         {
-            return GetOrAddExisting( CampusCache.CacheKey( NoteTypeModel.Id ),
+            return GetOrAddExisting( NoteTypeCache.CacheKey( NoteTypeModel.Id ),
                 () => LoadByModel( NoteTypeModel ) );
         }
 

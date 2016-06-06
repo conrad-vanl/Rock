@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,6 +33,9 @@ namespace Rock.Client
     {
         /// <summary />
         public int Id { get; set; }
+
+        /// <summary />
+        public bool AllowIndexing { get; set; }
 
         /// <summary />
         public bool BreadCrumbDisplayIcon { get; set; }
@@ -153,6 +156,7 @@ namespace Rock.Client
         public void CopyPropertiesFrom( Page source )
         {
             this.Id = source.Id;
+            this.AllowIndexing = source.AllowIndexing;
             this.BreadCrumbDisplayIcon = source.BreadCrumbDisplayIcon;
             this.BreadCrumbDisplayName = source.BreadCrumbDisplayName;
             this.BrowserTitle = source.BrowserTitle;

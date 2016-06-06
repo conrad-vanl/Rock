@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -350,26 +350,6 @@ namespace Rock.Web.UI.Controls
             {
                 EnsureChildControls();
                 hfExpanded.Value = value.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the selection.
-        /// </summary>
-        /// <value>
-        /// The selection.
-        /// </value>
-        [Obsolete("Use GetSelection or SetSelection instead")]
-        public string Selection
-        {
-            get
-            {
-                return GetSelection();
-            }
-            
-            set
-            {
-                SetSelection( value );
             }
         }
 

@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -140,7 +140,7 @@ namespace Rock.Client
         public ICollection<CommunicationRecipientActivity> Activities { get; set; }
 
         /// <summary />
-        public Dictionary<string, string> AdditionalMergeValues { get; set; }
+        public Dictionary<string, Object> AdditionalMergeValues { get; set; }
 
         /// <summary />
         public PersonAlias PersonAlias { get; set; }

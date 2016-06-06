@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -113,6 +113,7 @@ namespace Rock.Web.UI.Controls
 
                 var ddlButtonHtml = new RockDropDownList();
                 ddlButtonHtml.ID = this.ID + "_ddlButtonHtml" + i.ToString();
+                ddlButtonHtml.EnableViewState = false;
                 Controls.Add( ddlButtonHtml );
                 ddlButtonHtml.AddCssClass( "form-action-button" );
                 ddlButtonHtml.AddCssClass( "form-control" );
@@ -128,6 +129,7 @@ namespace Rock.Web.UI.Controls
 
                 var ddlActivity = new RockDropDownList();
                 ddlActivity.ID = this.ID + "_ddlActivity" + i.ToString();
+                ddlActivity.EnableViewState = false;
                 Controls.Add( ddlActivity );
                 ddlActivity.AddCssClass( "form-action-value" );
                 ddlActivity.AddCssClass( "form-control" );

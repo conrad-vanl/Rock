@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ using Rock.Web.Cache;
 namespace Rock.Model
 {
     /// <summary>
-    /// 
+    /// The person doing the registration. For example, Dad signing his kids up for camp. Dad is the Registration person and the kids would be Registrants
     /// </summary>
     [Table( "Registration" )]
     [DataContract]
@@ -127,6 +127,34 @@ namespace Rock.Model
         /// </value>
         [DataMember]
         public int? GroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is temporary.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsTemporary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last payment reminder date time.
+        /// </summary>
+        /// <value>
+        /// The last payment reminder date time.
+        /// </value>
+        [DataMember]
+        public DateTime? LastPaymentReminderDateTime
+        {
+            get
+            {
+                return _lastPaymentReminderDateTime.HasValue ? _lastPaymentReminderDateTime : this.CreatedDateTime;
+            }
+            set
+            {
+                _lastPaymentReminderDateTime = value;
+            }
+        }
+        private DateTime? _lastPaymentReminderDateTime;
 
         #endregion
 

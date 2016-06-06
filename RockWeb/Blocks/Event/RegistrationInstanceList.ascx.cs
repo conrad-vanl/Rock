@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -328,7 +328,7 @@ namespace RockWeb.Blocks.Event
                     i.EndDateTime,
                     i.IsActive,
                     Details = string.Empty,
-                    Registrants = i.Registrations.SelectMany( r => r.Registrants ).Count()
+                    Registrants = i.Registrations.Where( r => !r.IsTemporary ).SelectMany( r => r.Registrants ).Count()
                 });
 
                 gInstances.SetLinqDataSource( instanceQry );

@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,15 +38,6 @@ namespace Rock.Rest.Controllers
         /// Gets the children.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="rootCategoryId">The root category identifier.</param>
-        /// <param name="getCategorizedItems">if set to <c>true</c> [get categorized items].</param>
-        /// <param name="entityTypeId">The entity type identifier.</param>
-        /// <param name="entityQualifier">The entity qualifier.</param>
-        /// <param name="entityQualifierValue">The entity qualifier value.</param>
-        /// <param name="showUnnamedEntityItems">if set to <c>true</c> [show unnamed entity items].</param>
-        /// <param name="showCategoriesThatHaveNoChildren">if set to <c>true</c> [show categories that have no children].</param>
-        /// <param name="includedCategoryIds">The included category ids.</param>
-        /// <param name="excludedCategoryIds">The excluded category ids.</param>
         /// <returns></returns>
         [Authenticate, Secured]
         [System.Web.Http.Route( "api/ConnectionRequests/GetChildren/{id}" )]

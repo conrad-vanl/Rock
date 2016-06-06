@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,8 +35,11 @@ public class SafeDirectoryCatalog : ComposablePartCatalog
     /// <param name="baseType">Type of the base.</param>
     public SafeDirectoryCatalog( string directory, Type baseType )
     {
-        // get all *.dll in the current and subdirectories, except for *.resources.dll
-        var files = Directory.EnumerateFiles( directory, "*.dll", SearchOption.AllDirectories ).Where( a => !a.EndsWith( ".resources.dll", StringComparison.OrdinalIgnoreCase ) );
+        // get all *.dll in the current and subdirectories, except for *.resources.dll and the sql server type library files 
+        var files = Directory.EnumerateFiles( directory, "*.dll", SearchOption.AllDirectories )
+                        .Where( a => !a.EndsWith( ".resources.dll", StringComparison.OrdinalIgnoreCase )
+                                    && !a.EndsWith( "msvcr100.dll", StringComparison.OrdinalIgnoreCase )
+                                    && !a.EndsWith( "SqlServerSpatial110.dll", StringComparison.OrdinalIgnoreCase ) );
 
         _catalog = new AggregateCatalog();
         string baseTypeAssemblyName = baseType.Assembly.GetName().Name;

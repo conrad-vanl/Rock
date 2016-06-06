@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,7 +61,21 @@ namespace Rock.Financial
         /// <summary>
         /// Gets or sets a value indicating whether schedule is still active.
         /// </summary>
-        public bool ScheduleActive { get; set; }
+        public bool? ScheduleActive { get; set; }
 
+        /// <summary>
+        /// Gets or sets the status.
+        /// </summary>
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status message.
+        /// </summary>
+        public string StatusMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is failure.
+        /// </summary>
+        public bool IsFailure { get; set; }
     }
 }

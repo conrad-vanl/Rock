@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -331,7 +331,7 @@ namespace RockWeb.Blocks.Crm
         protected void lbProfileNext_Click( object sender, EventArgs e )
         {
             // setup merge fields
-            var mergeFields = new Dictionary<string, object>();
+            var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( this.RockPage, this.CurrentPerson );
             mergeFields.Add( "PersonId", hfPersonId.Value );
             mergeFields.Add( "FirstName", tbFirstName.Text );
             mergeFields.Add( "LastName", tbLastName.Text );
@@ -345,9 +345,6 @@ namespace RockWeb.Blocks.Crm
             mergeFields.Add( "MobilePhone", pnbHomePhone.Text );
             mergeFields.Add( "BirthDate", dpBirthdate.Text );
             mergeFields.Add( "OtherUpdates", tbOtherUpdates.Text );
-
-            var globalAttributeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( CurrentPerson );
-            globalAttributeFields.ToList().ForEach( d => mergeFields.Add( d.Key, d.Value ) );
 
             // if an email was provided email results
             RockContext rockContext = new RockContext();

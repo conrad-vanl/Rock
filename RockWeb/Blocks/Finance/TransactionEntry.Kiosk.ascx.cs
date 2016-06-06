@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -444,6 +444,9 @@ namespace RockWeb.Blocks.Finance
                             transaction.TransactionTypeValueId = txnType.Id;
                             History.EvaluateChange( txnChanges, "Type", string.Empty, txnType.Value );
 
+                            transaction.Summary = swipeInfo.Comment1;
+                            History.EvaluateChange( txnChanges, "Transaction Code", string.Empty, transaction.Summary );
+
                             if ( transaction.FinancialPaymentDetail == null )
                             {
                                 transaction.FinancialPaymentDetail = new FinancialPaymentDetail();
@@ -788,7 +791,7 @@ namespace RockWeb.Blocks.Finance
             }
 
             // setup lava
-            var mergeFields = new Dictionary<string, object>();
+            var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( this.RockPage, this.CurrentPerson );
 
             mergeFields.Add( "Person", givingUnit );
 
@@ -836,9 +839,6 @@ namespace RockWeb.Blocks.Finance
             mergeFields.Add( "TransactionCode", _transactionCode );
 
             mergeFields.Add( "Amounts", accountAmounts );
-
-            var globalAttributeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( CurrentPerson );
-            globalAttributeFields.ToList().ForEach( d => mergeFields.Add( d.Key, d.Value ) );
 
             return mergeFields;
         }

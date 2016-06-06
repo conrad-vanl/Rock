@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,18 +52,6 @@ namespace Rock.Follow
         public EventComponent()
         {
             // Override default constructor of Component that loads attributes (not needed for event components, needs to be done by each following event)
-        }
-
-        /// <summary>
-        /// Loads the attributes.
-        /// </summary>
-        /// <exception cref="System.Exception">Event Component attributes are saved specific to the following event, which requires that the current following event is included in order to load or retrieve values. Use the LoadAttributes( FollowingEvent followingEvent ) method instead.</exception>
-        [Obsolete( "Use LoadAttributes( FollowingEvent followingEvent ) instead", true )]
-        public void LoadAttributes()
-        {
-            // Compiler should generate error if referencing this method, so exception should never be thrown
-            // but method is needed to "override" the extension method for IHasAttributes objects
-            throw new Exception( "Event Component attributes are saved specific to the following event, which requires that the current following event is included in order to load or retrieve values. Use the LoadAttributes( FollowingEvent followingEvent ) method instead." );
         }
 
         /// <summary>

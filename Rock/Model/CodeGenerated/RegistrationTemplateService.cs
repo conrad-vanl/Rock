@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -89,7 +89,10 @@ namespace Rock.Model
         {
             target.Id = source.Id;
             target.AddPersonNote = source.AddPersonNote;
+            target.AllowExternalRegistrationUpdates = source.AllowExternalRegistrationUpdates;
+            target.AllowGroupPlacement = source.AllowGroupPlacement;
             target.AllowMultipleRegistrants = source.AllowMultipleRegistrants;
+            target.BatchNamePrefix = source.BatchNamePrefix;
             target.CategoryId = source.CategoryId;
             target.ConfirmationEmailTemplate = source.ConfirmationEmailTemplate;
             target.ConfirmationFromEmail = source.ConfirmationFromEmail;
@@ -110,6 +113,11 @@ namespace Rock.Model
             target.MinimumInitialPayment = source.MinimumInitialPayment;
             target.Name = source.Name;
             target.Notify = source.Notify;
+            target.PaymentReminderEmailTemplate = source.PaymentReminderEmailTemplate;
+            target.PaymentReminderFromEmail = source.PaymentReminderFromEmail;
+            target.PaymentReminderFromName = source.PaymentReminderFromName;
+            target.PaymentReminderSubject = source.PaymentReminderSubject;
+            target.PaymentReminderTimeSpan = source.PaymentReminderTimeSpan;
             target.RegistrantsSameFamily = source.RegistrantsSameFamily;
             target.RegistrantTerm = source.RegistrantTerm;
             target.RegistrationTerm = source.RegistrationTerm;
@@ -118,6 +126,7 @@ namespace Rock.Model
             target.ReminderFromName = source.ReminderFromName;
             target.ReminderSubject = source.ReminderSubject;
             target.RequestEntryName = source.RequestEntryName;
+            target.SetCostOnInstance = source.SetCostOnInstance;
             target.SuccessText = source.SuccessText;
             target.SuccessTitle = source.SuccessTitle;
             target.CreatedDateTime = source.CreatedDateTime;

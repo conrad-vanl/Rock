@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -1005,7 +1005,8 @@ namespace RockWeb.Blocks.Communication
 
                 foreach ( var dataItem in mediumData )
                 {
-                    if ( !string.IsNullOrWhiteSpace( dataItem.Value ) )
+                    // Also check Subject so that empty subject values not set in template are cleared. (Fixes #1393)
+                    if ( !string.IsNullOrWhiteSpace( dataItem.Value ) || dataItem.Key == "Subject" )
                     {
                         if ( MediumData.ContainsKey( dataItem.Key ) )
                         {
@@ -1038,7 +1039,7 @@ namespace RockWeb.Blocks.Communication
                 IsUserAuthorized( Authorization.EDIT ) )
             {
                 btnSubmit.Enabled = true;
-                btnSave.Enabled = true;
+                btnSave.Enabled = true && _fullMode;
             }
             else
             {
@@ -1055,7 +1056,7 @@ namespace RockWeb.Blocks.Communication
             else
             {
                 btnSubmit.Text = "Submit";
-                btnSave.Visible = true;
+                btnSave.Visible = true && _fullMode;
                 btnCancel.Visible = false;
             }
         }

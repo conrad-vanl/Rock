@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -227,6 +227,15 @@ namespace Rock.Model
         }
         private bool _isPublic = true;
 
+        /// <summary>
+        /// Gets or sets the group capacity.
+        /// </summary>
+        /// <value>
+        /// The group capacity.
+        /// </value>
+        [DataMember]
+        public int? GroupCapacity { get; set; }
+
         #endregion
 
         #region Virtual Properties
@@ -299,7 +308,7 @@ namespace Rock.Model
         /// <value>
         /// A collection of Groups that are children of this group.
         /// </value>
-        [DataMember]
+        [LavaInclude]
         public virtual ICollection<Group> Groups
         {
             get { return _groups ?? ( _groups = new Collection<Group>() ); }

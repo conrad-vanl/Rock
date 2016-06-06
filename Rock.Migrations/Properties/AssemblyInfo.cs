@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,8 +48,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion( "1.4.1.0" )]
-[assembly: AssemblyFileVersion( "1.4.1.0" )]
+[assembly: AssemblyVersion( "1.4.2.0" )]
+[assembly: AssemblyFileVersion( "1.4.2.0" )]
 
 // required for EntityFramework RockMigrationGenerator's override of CSharpMigrationCodeGenerator (Specifically in CSharpMigrationCodeGenerator.WriteClassStart)
-[assembly: AssemblyInformationalVersion( "Rock McKinley 4.1" )]
+[assembly: AssemblyInformationalVersion( "Rock McKinley 4.2" )]

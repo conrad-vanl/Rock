@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -68,6 +68,7 @@ namespace Rockweb.Blocks.Crm
                 When you are ready, click the 'Start' button to proceed.
             </p>
 " )]
+    [BooleanField("Always Allow Retakes", "Determines if the retake button should be shown.", false, order:5)]
     public partial class Disc : Rock.Web.UI.RockBlock
     {
         #region Fields
@@ -122,7 +123,7 @@ namespace Rockweb.Blocks.Crm
             {
                 DiscService.AssessmentResults savedScores = DiscService.LoadSavedAssessmentResults( _targetPerson );
 
-                if ( savedScores.LastSaveDate <= DateTime.MinValue )
+                if ( savedScores.LastSaveDate <= DateTime.MinValue || !string.IsNullOrWhiteSpace(PageParameter( "RetakeDisc" ))  )
                 {
                     ShowInstructions();
                 }
@@ -156,6 +157,7 @@ namespace Rockweb.Blocks.Crm
             BindRepeater();
         }
 
+       
         /// <summary>
         /// Scores test, and displays results.
         /// </summary>
@@ -396,7 +398,7 @@ namespace Rockweb.Blocks.Crm
             pnlResults.Visible = false;
 
             // Resolve the text field merge fields
-            var mergeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( _targetPerson );
+            var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( this.RockPage, _targetPerson );
             if ( _targetPerson != null )
             {
                 mergeFields.Add( "Person", _targetPerson );
@@ -422,7 +424,7 @@ namespace Rockweb.Blocks.Crm
 
             // Show re-take test button if MinDaysToRetake has passed...
             double days = GetAttributeValue( "MinDaysToRetake" ).AsDouble();
-            if ( savedScores.LastSaveDate.AddDays( days ) <= RockDateTime.Now )
+            if ( (savedScores.LastSaveDate.AddDays( days ) <= RockDateTime.Now) || GetAttributeValue( "AlwaysAllowRetakes" ).AsBoolean() ) 
             {
                 btnRetakeTest.Visible = true;
             }

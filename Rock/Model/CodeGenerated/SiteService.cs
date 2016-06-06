@@ -5,7 +5,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -88,6 +88,10 @@ namespace Rock.Model
         public static void CopyPropertiesFrom( this Site target, Site source )
         {
             target.Id = source.Id;
+            target.AllowedFrameDomains = source.AllowedFrameDomains;
+            target.AllowIndexing = source.AllowIndexing;
+            target.ChangePasswordPageId = source.ChangePasswordPageId;
+            target.ChangePasswordPageRouteId = source.ChangePasswordPageRouteId;
             target.CommunicationPageId = source.CommunicationPageId;
             target.CommunicationPageRouteId = source.CommunicationPageRouteId;
             target.DefaultPageId = source.DefaultPageId;
@@ -105,6 +109,7 @@ namespace Rock.Model
             target.LoginPageRouteId = source.LoginPageRouteId;
             target.MobilePageId = source.MobilePageId;
             target.Name = source.Name;
+            target.PageHeaderContent = source.PageHeaderContent;
             target.PageNotFoundPageId = source.PageNotFoundPageId;
             target.PageNotFoundPageRouteId = source.PageNotFoundPageRouteId;
             target.PageViewRetentionPeriodDays = source.PageViewRetentionPeriodDays;

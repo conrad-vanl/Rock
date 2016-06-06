@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ namespace Rock.Jobs
         /// </remarks>
         public virtual void Execute( IJobExecutionContext context )
         {
+            int workflowsProcessed = 0;
             foreach ( var workflowId in new WorkflowService( new RockContext() ).GetActive().Select(a => a.Id).ToList() )
             {
                 // create a new rockContext and service for every workflow to prevent a build-up of Context.ChangeTracker.Entries()
@@ -73,10 +74,16 @@ namespace Rock.Jobs
                     {
                         var errorMessages = new List<string>();
 
-                        workflowService.Process( workflow, out errorMessages );
+                        var processed = workflowService.Process( workflow, out errorMessages );
+                        if ( processed )
+                        {
+                            workflowsProcessed++;
+                        }
                     }
                 }
             }
+
+            context.Result = string.Format( "{0} workflows processed", workflowsProcessed );
         }
     }
 }

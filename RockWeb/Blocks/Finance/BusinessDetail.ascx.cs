@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -123,6 +123,7 @@ namespace RockWeb.Blocks.Finance
                 {
                     business = new Person();
                     personService.Add( business );
+                    tbBusinessName.Text = tbBusinessName.Text.FixCase();
                 }
 
                 // Business Name
@@ -457,7 +458,21 @@ namespace RockWeb.Blocks.Finance
                         .Where( g =>
                             g.GroupRole.Guid.Equals( new Guid( Rock.SystemGuid.GroupRole.GROUPROLE_KNOWN_RELATIONSHIPS_OWNER ) ) &&
                             g.PersonId == business.Id )
-                        .Select( g => g.Group ).FirstOrDefault();
+                        .Select( g => g.Group )
+                        .FirstOrDefault();
+                    if ( businessKnownRelationshipGroup == null )
+                    {
+                        // In some cases business may not yet have a know relationship group type
+                        businessKnownRelationshipGroup = new Group();
+                        groupService.Add( businessKnownRelationshipGroup );
+                        businessKnownRelationshipGroup.Name = "Known Relationship";
+                        businessKnownRelationshipGroup.GroupTypeId = knownRelationshipGroupType.Id;
+
+                        var ownerMember = new GroupMember();
+                        ownerMember.PersonId = int.Parse( hfBusinessId.Value );
+                        ownerMember.GroupRoleId = ownerRoleId;
+                        businessKnownRelationshipGroup.Members.Add( ownerMember );
+                    }
                     var businessGroupMember = new GroupMember();
                     businessGroupMember.PersonId = contactId.Value;
                     businessGroupMember.GroupRoleId = businessContactRoleId;

@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ namespace Rock.Model
                 .Select( a => a.Id );
 
             // Now find the active PrayerRequests that have any of those category Ids.
-            var list = Queryable( "RequestedByPersonAlias.Person" ).Where( p => p.IsActive == true && categoryIds.Contains( p.CategoryId ?? -1 ) );
+            var list = Queryable( "RequestedByPersonAlias.Person" ).Where( p => p.IsActive == true && expandedCategoryIds.Contains( p.CategoryId ?? -1 ) );
 
             if ( onlyApproved )
             {

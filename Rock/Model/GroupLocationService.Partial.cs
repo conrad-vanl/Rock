@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ namespace Rock.Model
         /// <returns></returns>
         public IQueryable<GroupLocation> GetActiveByLocation( int locationId )
         {
-            return Queryable( "Schedules,Group.GroupType" )
+            return Queryable()
                 .Where( g =>
                     g.LocationId == locationId &&
                     g.Group.IsActive );
@@ -56,8 +56,7 @@ namespace Rock.Model
         /// <returns></returns>
         public IQueryable<GroupLocation> GetActiveByLocations( List<int> locationIds )
         {
-            return Queryable( "Schedules,Group.GroupType,Location" )
-                .Where( g =>
+            return Queryable().Where( g =>
                     locationIds.Contains(g.LocationId) &&
                     g.Group.IsActive );
         }

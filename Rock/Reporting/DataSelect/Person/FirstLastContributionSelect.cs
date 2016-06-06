@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -216,7 +216,9 @@ namespace Rock.Reporting.DataSelect.Person
             if ( !string.IsNullOrWhiteSpace( selection ) )
             {
                 // accountIds
-                var selectedAccountIdList = selection.Split( new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries ).AsIntegerList(); 
+                var selectedAccountGuidList = selection.Split( new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries ).AsGuidList();
+                var selectedAccountIdList = new FinancialAccountService( context ).GetByGuids( selectedAccountGuidList ).Select( a => a.Id ).ToList();
+
                 if ( selectedAccountIdList.Count() > 0 )
                 {
                     // t.AccountId

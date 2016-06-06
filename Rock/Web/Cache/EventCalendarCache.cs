@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -228,17 +228,6 @@ namespace Rock.Web.Cache
                 return new EventCalendarCache( eventCalendarModel );
             }
             return null;
-        }
-
-        /// <summary>
-        /// Returns all event calendars
-        /// </summary>
-        /// <param name="rockContext">The rock context.</param>
-        /// <returns></returns>
-        [Obsolete( "Use All() method instead. RockContext parameter is no longer needed." )]
-        public static List<EventCalendarCache> All( RockContext rockContext )
-        {
-            return All();
         }
 
         /// <summary>

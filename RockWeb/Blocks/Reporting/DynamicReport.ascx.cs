@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -312,9 +312,18 @@ namespace RockWeb.Blocks.Reporting
                 if ( filter.ExpressionType == FilterExpressionType.Filter )
                 {
                     var filterControl = new FilterField();
-                    filterControl.FilterMode = FilterMode.SimpleFilter;
-
                     bool filterIsVisible = selectedDataFieldGuids.Contains( filter.Guid );
+
+                    if ( filterIsVisible )
+                    {
+                        // only set FilterMode to simple if the filter is visible since SimpleFilters might have a different filtering behavior
+                        filterControl.FilterMode = FilterMode.SimpleFilter;
+                    }
+                    else
+                    {
+                        filterControl.FilterMode = FilterMode.AdvancedFilter;
+                    }
+
                     bool filterIsConfigurable = configurableDataFieldGuids.Contains( filter.Guid );
                     bool showCheckbox = togglableDataFieldGuids.Contains( filter.Guid ) || !filterIsConfigurable;
                     filterControl.Visible = filterIsVisible;

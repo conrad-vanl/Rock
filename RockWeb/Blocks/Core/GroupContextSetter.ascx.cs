@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -156,8 +156,7 @@ namespace RockWeb.Blocks.Core
 
                 lCurrentSelection.Text = currentGroup != null ? currentGroup.ToString() : GetAttributeValue( "NoGroupText" );
 
-                var groupList = qryGroups.OrderBy( a => a.Order )
-                    .ThenBy( a => a.Name ).ToList()
+                var groupList = qryGroups.OrderBy( a => a.Name ).ToList()
                     .Select( a => new GroupItem() { Name = a.Name, Id = a.Id } )
                     .ToList();
 

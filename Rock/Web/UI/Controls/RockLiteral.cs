@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,11 +71,16 @@ namespace Rock.Web.UI.Controls
                 writer.Write( Label );
                 writer.RenderEndTag();  // label
 
+                writer.AddAttribute( HtmlTextWriterAttribute.Class, "control-wrapper" );
+                writer.RenderBeginTag( HtmlTextWriterTag.Div );
+
                 writer.AddAttribute("class", "form-control-static");
                 writer.AddAttribute( HtmlTextWriterAttribute.Id, this.ClientID );
                 writer.RenderBeginTag( HtmlTextWriterTag.P );
                 base.RenderControl( writer );
                 writer.RenderEndTag();
+
+                writer.RenderEndTag();  // control-wrapper
 
                 writer.RenderEndTag();  // form-group            
             }

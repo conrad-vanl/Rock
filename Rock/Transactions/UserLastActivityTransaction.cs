@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,15 +40,6 @@ namespace Rock.Transactions
         /// The last activity date.
         /// </value>
         public DateTime LastActivityDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the rock user id in session.
-        /// </summary>
-        /// <value>
-        /// The rock user id in session.
-        /// </value>
-        [Obsolete( "No longer used" )]
-        public int? SessionUserId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [is on line].

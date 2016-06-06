@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -258,6 +258,14 @@ namespace Rock.Web.Cache
         public bool IncludeAdminFooter { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [allow indexing].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [allow indexing]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AllowIndexing { get; set; }
+
+        /// <summary>
         /// Gets the parent page.
         /// </summary>
         /// <value>
@@ -493,6 +501,7 @@ namespace Rock.Web.Cache
                 this.KeyWords = page.KeyWords;
                 this.HeaderContent = page.HeaderContent;
                 this.IncludeAdminFooter = page.IncludeAdminFooter;
+                this.AllowIndexing = page.AllowIndexing;
 
                 this.PageContexts = new Dictionary<string, string>();
                 if ( page.PageContexts != null )

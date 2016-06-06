@@ -1,5 +1,5 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -126,9 +126,9 @@ namespace Rock.Field
         {
             return FormatValue( parentControl, value, configurationValues, condensed );
         }
-
+         
         /// <summary>
-        /// Values the type of as field.
+        /// Returns the value using the most appropriate datatype
         /// </summary>
         /// <param name="parentControl">The parent control.</param>
         /// <param name="value">The value.</param>
@@ -136,7 +136,21 @@ namespace Rock.Field
         /// <returns></returns>
         public virtual object ValueAsFieldType(  Control parentControl, string value, Dictionary<string, ConfigurationValue> configurationValues )
         {
+            // by default, get the field type's value
             return value;
+        }
+
+        /// <summary>
+        /// Returns the value that should be used for sorting, using the most appropriate datatype
+        /// </summary>
+        /// <param name="parentControl">The parent control.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="configurationValues">The configuration values.</param>
+        /// <returns></returns>
+        public virtual object SortValue( Control parentControl, string value, Dictionary<string, ConfigurationValue> configurationValues )
+        {
+            // by default, get the formatted condensed value that would be displayed to the user
+            return FormatValue( parentControl, value, configurationValues, true );
         }
 
         #endregion
@@ -317,19 +331,6 @@ namespace Rock.Field
         }
 
         /// <summary>
-        /// Gets the filter compare control with a FilterMode of AdvancedFilter
-        /// </summary>
-        /// <param name="configurationValues">The configuration values.</param>
-        /// <param name="id">The identifier.</param>
-        /// <param name="required">if set to <c>true</c> [required].</param>
-        /// <returns></returns>
-        [Obsolete]
-        public virtual Control FilterCompareControl( Dictionary<string, ConfigurationValue> configurationValues, string id, bool required )
-        {
-            return FilterCompareControl( configurationValues, id, required, FilterMode.AdvancedFilter );
-        }
-
-        /// <summary>
         /// Gets the type of the filter comparison.
         /// </summary>
         /// <value>
@@ -358,19 +359,6 @@ namespace Rock.Field
             }
 
             return control;
-        }
-
-        /// <summary>
-        /// Gets the filter value control with the a FilterMode of AdvancedFilter
-        /// </summary>
-        /// <param name="configurationValues">The configuration values.</param>
-        /// <param name="id">The identifier.</param>
-        /// <param name="required">if set to <c>true</c> [required].</param>
-        /// <returns></returns>
-        [Obsolete]
-        public virtual Control FilterValueControl( Dictionary<string, ConfigurationValue> configurationValues, string id, bool required )
-        {
-            return FilterValueControl( configurationValues, id, required, FilterMode.AdvancedFilter );
         }
 
         /// <summary>
@@ -410,18 +398,6 @@ namespace Rock.Field
         }
 
         /// <summary>
-        /// Gets the filter values.
-        /// </summary>
-        /// <param name="filterControl">The filter control.</param>
-        /// <param name="configurationValues">The configuration values.</param>
-        /// <returns></returns>
-        [Obsolete]
-        public virtual List<string> GetFilterValues( Control filterControl, Dictionary<string, ConfigurationValue> configurationValues )
-        {
-            return GetFilterValues( filterControl, configurationValues, FilterMode.AdvancedFilter );
-        }
-
-        /// <summary>
         /// Gets the filter compare value.
         /// </summary>
         /// <param name="control">The control.</param>
@@ -451,17 +427,6 @@ namespace Rock.Field
             }
 
             return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the filter compare value.
-        /// </summary>
-        /// <param name="control">The control.</param>
-        /// <returns></returns>
-        [Obsolete]
-        public virtual string GetFilterCompareValue( Control control )
-        {
-            return GetFilterCompareValue( control, FilterMode.AdvancedFilter );
         }
 
         /// <summary>
@@ -555,7 +520,16 @@ namespace Rock.Field
                         }
                         else
                         {
-                            return string.Format( "{0} {1}", comparisonType.ConvertToString(), FormatFilterValueValue( configurationValues, filterValues[1] ) );
+                            var filterValueValue = FormatFilterValueValue( configurationValues, filterValues[1] );
+                            if ( ( comparisonType == ComparisonType.Contains || comparisonType == ComparisonType.DoesNotContain ) && string.IsNullOrEmpty( filterValueValue ) )
+                            {
+                                // if doing a 'Contains or NotContains', but the CompareValue is empty, there is nothing filtered, so just return String.Empty
+                                return string.Empty;
+                            }
+                            else
+                            {
+                                return string.Format( "{0} {1}", comparisonType.ConvertToString(), filterValueValue );
+                            }
                         }
                     }
                 }
@@ -639,18 +613,6 @@ namespace Rock.Field
         }
 
         /// <summary>
-        /// Converts the type of the value to property
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="propertyType">Type of the property.</param>
-        /// <returns></returns>
-        [Obsolete("Use ConvertValueToPropertyType( string value, Type propertyType, bool isNullableType )")]
-        public virtual object ConvertValueToPropertyType( string value, Type propertyType )
-        {
-            return ConvertValueToPropertyType( value, propertyType, false );
-        }
-
-        /// <summary>
         /// Converts the type of the value to property.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -687,10 +649,8 @@ namespace Rock.Field
                 if ( comparisonValue != "0" )
                 {
                     ComparisonType comparisonType = comparisonValue.ConvertToEnum<ComparisonType>( ComparisonType.EqualTo );
-                    MemberExpression propertyExpression = Expression.Property( parameterExpression, "Value" );
-                    ConstantExpression constantExpression = Expression.Constant( filterValues[1], typeof( string ) );
-
-                    return ComparisonHelper.ComparisonExpression( comparisonType, propertyExpression, constantExpression );
+                    MemberExpression propertyExpression = Expression.Property( parameterExpression, this.AttributeValueFieldName );
+                    return ComparisonHelper.ComparisonExpression( comparisonType, propertyExpression, AttributeConstantExpression( filterValues[1] ) );
                 }
             }
 
@@ -709,6 +669,16 @@ namespace Rock.Field
             {
                 return "Value";
             }
+        }
+
+        /// <summary>
+        /// Attributes the constant expression.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public virtual ConstantExpression AttributeConstantExpression( string value )
+        {
+            return Expression.Constant( value, this.AttributeValueFieldType );
         }
 
         /// <summary>
