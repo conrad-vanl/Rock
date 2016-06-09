@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -179,7 +179,7 @@ namespace Rock.Model
         /// <param name="accountIds">The account ids.</param>
         /// <param name="dataViewId">The data view identifier.</param>
         /// <returns></returns>
-        public IEnumerable<IChartData> GetChartData(
+        public IEnumerable<SummaryData> GetChartData(
             ChartGroupBy groupBy, TransactionGraphBy graphBy, DateTime? start, DateTime? end, decimal? minAmount, decimal? maxAmount,
             List<int> currencyTypeIds, List<int> sourceTypeIds, List<int> accountIds, int? dataViewId )
         {
@@ -199,7 +199,8 @@ namespace Rock.Model
                 Account = new
                 {
                     Id = d.FinancialTransactionDetail.AccountId,
-                    Name = d.FinancialTransactionDetail.Account.Name
+                    Name = d.FinancialTransactionDetail.Account.Name,
+                    GLCode = d.FinancialTransactionDetail.Account.GlCode
                 },
                 Amount = d.FinancialTransactionDetail.Amount
             } );
@@ -236,6 +237,7 @@ namespace Rock.Model
                     DateTimeStamp = d.Key.SummaryDateTime.ToJavascriptMilliseconds(),
                     DateTime = d.Key.SummaryDateTime,
                     SeriesId = d.Key.Series.Name,
+                    SeriesAddlInfo = d.Key.Series.GLCode,
                     YValue = d.Amount
                 } ).ToList();
             }
@@ -306,7 +308,7 @@ namespace Rock.Model
             }
             parameters.Add( "ViewBy", viewBy );
 
-            var result = DbService.GetDataSet( "spFinance_GivingAnalyticsQuery", System.Data.CommandType.StoredProcedure, parameters, 180 );
+            var result = DbService.GetDataSet( "spFinance_GivingAnalyticsQuery", System.Data.CommandType.StoredProcedure, parameters, 300 );
 
             return result;
         }

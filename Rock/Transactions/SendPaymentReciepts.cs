@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -75,7 +75,7 @@ namespace Rock.Transactions
                         var person = transaction.AuthorizedPersonAlias.Person;
 
                         // setup merge fields
-                        var mergeFields = new Dictionary<string, object>();
+                        var mergeFields = Rock.Lava.LavaHelper.GetCommonMergeFields( null );
                         mergeFields.Add( "Person", person );
 
                         decimal totalAmount = 0;
@@ -102,9 +102,6 @@ namespace Rock.Transactions
                         mergeFields.Add( "FirstNames", person.NickName );
                         mergeFields.Add( "TransactionCode", transaction.TransactionCode );
                         mergeFields.Add( "Amounts", accountAmounts );
-
-                        var globalAttributeFields = Rock.Web.Cache.GlobalAttributesCache.GetMergeFields( person );
-                        globalAttributeFields.ToList().ForEach( d => mergeFields.Add( d.Key, d.Value ) );
 
                         var appRoot = Rock.Web.Cache.GlobalAttributesCache.Read( rockContext ).GetValue( "ExternalApplicationRoot" );
 

@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -77,6 +77,16 @@ namespace Rock.Model
         public int EntityId { get; set; }
 
         /// <summary>
+        /// Gets or sets the verb which is a structured (for querying) field to describe what the action is (ADD, DELETE, UPDATE, VIEW, WATCHED,  etc).
+        /// </summary>
+        /// <value>
+        /// A <see cref="System.String"/> representing the verb of the History.
+        /// </value>
+        [MaxLength( 20 )]
+        [DataMember]
+        public string Verb { get; set; }
+
+        /// <summary>
         /// Gets or sets the caption
         /// </summary>
         /// <value>
@@ -114,17 +124,26 @@ namespace Rock.Model
         [DataMember]
         public int? RelatedEntityId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the related data.
+        /// </summary>
+        /// <value>
+        /// The related data.
+        /// </value>
+        [DataMember]
+        public string RelatedData { get; set; }
+        
         #endregion
 
         #region Virtual Properties
 
-        /// <summary>
-        /// Gets or sets the entity type this history is associated with
-        /// </summary>
-        /// <value>
-        /// The <see cref="Rock.Model.EntityType"/> of this history.
-        /// </value>
-        [DataMember]
+            /// <summary>
+            /// Gets or sets the entity type this history is associated with
+            /// </summary>
+            /// <value>
+            /// The <see cref="Rock.Model.EntityType"/> of this history.
+            /// </value>
+            [DataMember]
         public virtual EntityType EntityType { get; set; }
 
         /// <summary>

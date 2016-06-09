@@ -5,13 +5,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,6 +53,9 @@ namespace Rock.Client
         public string ContactPhone { get; set; }
 
         /// <summary />
+        public decimal? Cost { get; set; }
+
+        /// <summary />
         public string Details { get; set; }
 
         /// <summary />
@@ -69,6 +72,9 @@ namespace Rock.Client
 
         /// <summary />
         public int MaxAttendees { get; set; }
+
+        /// <summary />
+        public decimal? MinimumInitialPayment { get; set; }
 
         /// <summary>
         /// If the ModifiedByPersonAliasId is being set manually and should not be overwritten with current user when saved, set this value to true
@@ -129,12 +135,14 @@ namespace Rock.Client
             this.ContactEmail = source.ContactEmail;
             this.ContactPersonAliasId = source.ContactPersonAliasId;
             this.ContactPhone = source.ContactPhone;
+            this.Cost = source.Cost;
             this.Details = source.Details;
             this.EndDateTime = source.EndDateTime;
             this.ForeignGuid = source.ForeignGuid;
             this.ForeignKey = source.ForeignKey;
             this.IsActive = source.IsActive;
             this.MaxAttendees = source.MaxAttendees;
+            this.MinimumInitialPayment = source.MinimumInitialPayment;
             this.ModifiedAuditValuesAlreadyUpdated = source.ModifiedAuditValuesAlreadyUpdated;
             this.Name = source.Name;
             this.RegistrationTemplateId = source.RegistrationTemplateId;

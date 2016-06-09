@@ -1,5 +1,7 @@
 ![Rock RMS](https://raw.githubusercontent.com/SparkDevNetwork/Rock/develop/Images/github-banner.png)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/om3ddkynyoobdnpf/branch/master?svg=true)](https://ci.appveyor.com/project/NewSpring/rock/branch/master)
+
 Rock RMS is an open source Relationship Management System (RMS) and Application 
 Framework. While Rock specializes in serving the unique needs of churches it's
 useful in a wide range of service industries.  Rock is an ASP.NET 4.5 C# web application
@@ -18,7 +20,7 @@ Jump over to our [Rock website](http://www.rockrms.com/) to find out more. Keep 
 * [Subscribing to our newsletter](http://www.rockrms.com/Rock/Subscribe)
 
 ## License
-Rock released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).
+Rock released under the [Rock Community License](http://www.rockrms.com/license).
 
 ## Crafted By
 

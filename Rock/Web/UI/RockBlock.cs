@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -708,6 +708,22 @@ namespace Rock.Web.UI
         }
 
         /// <summary>
+        /// Navigates to current page.
+        /// </summary>
+        /// <param name="queryString">The query string.</param>
+        /// <returns></returns>
+        public bool NavigateToCurrentPage( Dictionary<string, string> queryString = null )
+        {
+            var pageCache = PageCache.Read( RockPage.PageId );
+            if ( pageCache != null )
+            {
+                return NavigateToPage( pageCache.Guid, queryString );
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Navigates/redirects to the parent <see cref="Rock.Model.Page"/>.
         /// </summary>
         /// <param name="queryString">A <see cref="System.Collections.Generic.Dictionary{String,String}"/> containing the query string parameters to include in the linked <see cref="Rock.Model.Page"/> URL.  
@@ -951,6 +967,15 @@ namespace Rock.Web.UI
             }
         }
 
+        /// <summary>
+        /// Gets the ip address.
+        /// </summary>
+        /// <returns></returns>
+        public string GetClientIpAddress()
+        {
+            return RockPage.GetClientIpAddress();
+        }
+
         #region User Preferences
 
         /// <summary>
@@ -1006,6 +1031,56 @@ namespace Rock.Web.UI
         public void DeleteUserPreference( string key )
         {
             RockPage.DeleteUserPreference( key );
+        }
+
+        #endregion
+
+        #region User Preferences for a specific block
+
+        /// <summary>
+        /// Gets the prefix for a user preference key that includes the block id so that it specific to the this block
+        /// </summary>
+        /// <value>
+        /// The block user preference prefix.
+        /// </value>
+        private string BlockUserPreferencePrefix
+        {
+            get
+            {
+                return string.Format( "block-{0}-", this.BlockId );
+            }
+        }
+
+        /// <summary>
+        /// Returns the user preference value for the current user and block for a given key
+        /// </summary>
+        /// <param name="key">A <see cref="System.String" /> representing the key to the user preference.</param>
+        /// <returns>A <see cref="System.String" /> representing the user preference value. If a match for the key is not found, 
+        /// an empty string will be returned.</returns>
+        public string GetBlockUserPreference( string key )
+        {
+            return RockPage.GetUserPreference( BlockUserPreferencePrefix + key );
+        }
+
+        /// <summary>
+        /// Sets a user preference for the current user and block with the specified key and value, and optionally save value to database
+        /// </summary>
+        /// <param name="key">A <see cref="System.String" /> that represents the key value that identifies the
+        /// user preference.</param>
+        /// <param name="value">A <see cref="System.String" /> that represents the value of the user preference.</param>
+        /// <param name="saveValue">if set to <c>true</c> [save value].</param>
+        public void SetBlockUserPreference( string key, string value, bool saveValue = true )
+        {
+            RockPage.SetUserPreference( BlockUserPreferencePrefix + key, value, saveValue );
+        }
+
+        /// <summary>
+        /// Deletes a user preference value for the current user and block with the specified key
+        /// </summary>
+        /// <param name="key">A <see cref="System.String"/> representing the name of the key.</param>
+        public void DeleteBlockUserPreference( string key )
+        {
+            RockPage.DeleteUserPreference( BlockUserPreferencePrefix + key );
         }
 
         #endregion

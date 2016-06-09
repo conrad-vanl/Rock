@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,71 +71,74 @@ namespace Rock.Attribute
             bool attributesUpdated = false;
             bool attributesDeleted = false;
 
-            List<string> existingKeys = new List<string>();
-
-            var blockProperties = new List<FieldAttribute>();
-
-            // If a ContextAwareAttribute exists without an EntityType defined, add a property attribute to specify the type
-            int properties = 0;
-            foreach ( var customAttribute in type.GetCustomAttributes( typeof( ContextAwareAttribute ), true ) )
+            if ( type != null )
             {
-                var contextAttribute = (ContextAwareAttribute)customAttribute;
-                if ( contextAttribute != null && contextAttribute.EntityType == null )
-                {
-                    if ( contextAttribute.IsConfigurable )
-                    {
-                        string propertyKeyName = string.Format( "ContextEntityType{0}", properties > 0 ? properties.ToString() : "" );
-                        properties++;
+                List<string> existingKeys = new List<string>();
 
-                        blockProperties.Add( new EntityTypeFieldAttribute( "Entity Type", false, "The type of entity that will provide context for this block", false, "Context", 0, propertyKeyName ) );
+                var blockProperties = new List<FieldAttribute>();
+
+                // If a ContextAwareAttribute exists without an EntityType defined, add a property attribute to specify the type
+                int properties = 0;
+                foreach ( var customAttribute in type.GetCustomAttributes( typeof( ContextAwareAttribute ), true ) )
+                {
+                    var contextAttribute = (ContextAwareAttribute)customAttribute;
+                    if ( contextAttribute != null && contextAttribute.EntityType == null )
+                    {
+                        if ( contextAttribute.IsConfigurable )
+                        {
+                            string propertyKeyName = string.Format( "ContextEntityType{0}", properties > 0 ? properties.ToString() : "" );
+                            properties++;
+
+                            blockProperties.Add( new EntityTypeFieldAttribute( "Entity Type", false, "The type of entity that will provide context for this block", false, "Context", 0, propertyKeyName ) );
+                        }
                     }
                 }
-            }
 
-            // Add any property attributes that were defined for the block
-            foreach ( var customAttribute in type.GetCustomAttributes( typeof( FieldAttribute ), true ) )
-            {
-                blockProperties.Add( (FieldAttribute)customAttribute );
-            }
+                // Add any property attributes that were defined for the block
+                foreach ( var customAttribute in type.GetCustomAttributes( typeof( FieldAttribute ), true ) )
+                {
+                    blockProperties.Add( (FieldAttribute)customAttribute );
+                }
 
-            rockContext = rockContext ?? new RockContext();
+                rockContext = rockContext ?? new RockContext();
 
-            // Create any attributes that need to be created
-            foreach ( var blockProperty in blockProperties )
-            {
+                // Create any attributes that need to be created
+                foreach ( var blockProperty in blockProperties )
+                {
+                    try
+                    {
+                        attributesUpdated = UpdateAttribute( blockProperty, entityTypeId, entityQualifierColumn, entityQualifierValue, rockContext ) || attributesUpdated;
+                        existingKeys.Add( blockProperty.Key );
+                    }
+                    catch ( Exception ex )
+                    {
+                        ExceptionLogService.LogException( new Exception( string.Format( "Could not update a block attribute ( Entity Type Id: {0}; Property Name: {1} ). ", entityTypeId, blockProperty.Name ), ex ), null );
+                    }
+                }
+
+                // Remove any old attributes
                 try
                 {
-                    attributesUpdated = UpdateAttribute( blockProperty, entityTypeId, entityQualifierColumn, entityQualifierValue, rockContext ) || attributesUpdated;
-                    existingKeys.Add( blockProperty.Key );
+                    var attributeService = new Model.AttributeService( rockContext );
+                    foreach ( var a in attributeService.Get( entityTypeId, entityQualifierColumn, entityQualifierValue ).ToList() )
+                    {
+                        if ( !existingKeys.Contains( a.Key ) )
+                        {
+                            attributeService.Delete( a );
+                            attributesDeleted = true;
+                        }
+                    }
+                    rockContext.SaveChanges();
                 }
                 catch ( Exception ex )
                 {
-                    ExceptionLogService.LogException( new Exception( string.Format( "Could not update a block attribute ( Entity Type Id: {0}; Property Name: {1} ). ", entityTypeId, blockProperty.Name ), ex ), null );
+                    ExceptionLogService.LogException( new Exception( "Could not delete one or more old attributes.", ex ), null );
                 }
-            }
 
-            // Remove any old attributes
-            try
-            {
-                var attributeService = new Model.AttributeService( rockContext );
-                foreach ( var a in attributeService.Get( entityTypeId, entityQualifierColumn, entityQualifierValue ).ToList() )
+                if ( attributesUpdated || attributesDeleted )
                 {
-                    if ( !existingKeys.Contains( a.Key ) )
-                    {
-                        attributeService.Delete( a );
-                        attributesDeleted = true;
-                    }
+                    AttributeCache.FlushEntityAttributes();
                 }
-                rockContext.SaveChanges();
-            }
-            catch ( Exception ex )
-            {
-                ExceptionLogService.LogException( new Exception( "Could not delete one or more old attributes.", ex ), null );
-            }
-
-            if ( attributesUpdated || attributesDeleted )
-            {
-                AttributeCache.FlushEntityAttributes();
             }
 
             return attributesUpdated;
@@ -795,9 +798,11 @@ namespace Rock.Attribute
                     attributeValueService.Add( attributeValue );
                 }
 
-                attributeValue.Value = newValue;
-
-                rockContext.SaveChanges();
+                if ( attributeValue.Value != newValue )
+                {
+                    attributeValue.Value = newValue;
+                    rockContext.SaveChanges();
+                }
 
                 if ( model.AttributeValues != null && model.AttributeValues.ContainsKey( attribute.Key ) )
                 {
@@ -894,18 +899,6 @@ namespace Rock.Attribute
         }
 
         /// <summary>
-        /// Adds the edit controls.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="parentControl">The parent control.</param>
-        /// <param name="setValue">if set to <c>true</c> [set value].</param>
-        [Obsolete("Use the other AddEditControls (which requires ValidationGroup)")]
-        public static void AddEditControls( IHasAttributes item, Control parentControl, bool setValue)
-        {
-            AddEditControls( item, parentControl, setValue, "", new List<string>(), false );
-        }
-        
-        /// <summary>
         /// Adds edit controls for each of the item's attributes
         /// </summary>
         /// <param name="item">The item.</param>
@@ -929,7 +922,7 @@ namespace Rock.Attribute
         /// <param name="supressOrdering">if set to <c>true</c> supresses reording (LoadAttributes() may perform custom ordering as is the case for group member attributes).</param>
         public static void AddEditControls( IHasAttributes item, Control parentControl, bool setValue, string validationGroup, List<string> exclude, bool supressOrdering = false )
         {
-            if ( item.Attributes != null )
+            if ( item != null && item.Attributes != null )
             {
                 foreach ( var attributeCategory in GetAttributeCategories( item, false, false, supressOrdering ) )
                 {
@@ -978,7 +971,7 @@ namespace Rock.Attribute
             {
                 var attribute = item.Attributes[key];
 
-                if ( !exclude.Contains( attribute.Name ) )
+                if ( !exclude.Contains( attribute.Name ) && !exclude.Contains( attribute.Key ) )
                 {
                     // Add the control for editing the attribute value
                     attribute.AddControl( fieldSet.Controls, item.AttributeValues[attribute.Key].Value, validationGroup, setValue, true );
@@ -1032,7 +1025,7 @@ namespace Rock.Attribute
 
                 foreach ( var attribute in attributeCategory.Attributes )
                 {
-                    if ( exclude == null || !exclude.Contains( attribute.Name ) )
+                    if ( exclude == null || ( !exclude.Contains( attribute.Name ) && !exclude.Contains( attribute.Key ) ) )
                     {
                         // Get the Attribute Value formatted for display.
                         string value = attribute.DefaultValue;

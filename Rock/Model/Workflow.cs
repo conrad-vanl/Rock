@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -265,38 +265,6 @@ namespace Rock.Model
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Processes this Workflow instance.
-        /// </summary>
-        /// <param name="rockContext">The rock context.</param>
-        /// <param name="errorMessages">The error messages.</param>
-        /// <returns>
-        /// A <see cref="System.Boolean" /> value that is <c>true</c> if the Workflow processed successfully; otherwise <c>false</c>.
-        /// </returns>
-        [Obsolete( "Use the WorkflowService.Process() method instead." )]
-        public virtual bool Process( RockContext rockContext, out List<string> errorMessages )
-        {
-            return ProcessActivities( rockContext, null, out errorMessages );
-        }
-
-        /// <summary>
-        /// Processes this instance.
-        /// </summary>
-        /// <param name="rockContext">The rock context.</param>
-        /// <param name="entity">The entity that work is being performed against.</param>
-        /// <param name="errorMessages">A
-        /// <see cref="System.Collections.Generic.List{String}"/> that will contain and any error messages that occur
-        /// while the Workflow is being processed.</param>
-        /// <returns>
-        /// A <see cref="System.Boolean"/> that is <c>true</c> if the workflow processed sucessfully.
-        /// </returns>
-        [Obsolete("Use the WorkflowService.Process() method instead.")]
-        public virtual bool Process( RockContext rockContext, Object entity, out List<string> errorMessages )
-        {
-            return ProcessActivities( rockContext, entity, out errorMessages );
-        }
-
 
         /// <summary>
         /// Processes the activities.

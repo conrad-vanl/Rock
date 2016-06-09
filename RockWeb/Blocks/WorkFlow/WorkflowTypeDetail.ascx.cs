@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,6 +28,7 @@ using Rock.Constants;
 using Rock.Data;
 using Rock.Model;
 using Rock.Security;
+using Rock.Utility;
 using Rock.Web.Cache;
 using Rock.Web.UI;
 using Rock.Web.UI.Controls;
@@ -71,7 +72,7 @@ namespace RockWeb.Blocks.WorkFlow
             }
             else
             {
-                AttributesState = JsonConvert.DeserializeObject<List<Attribute>>( json );
+                AttributesState = RockJsonTextReader.DeserializeObjectInSimpleMode<List<Attribute>>( json );
             }
 
             json = ViewState["ActivityTypesState"] as string;
@@ -81,7 +82,7 @@ namespace RockWeb.Blocks.WorkFlow
             }
             else
             {
-                ActivityTypesState = JsonConvert.DeserializeObject<List<WorkflowActivityType>>( json );
+                ActivityTypesState = RockJsonTextReader.DeserializeObjectInSimpleMode<List<WorkflowActivityType>>( json );
             }
 
             json = ViewState["ActivityAttributesState"] as string;
@@ -91,7 +92,7 @@ namespace RockWeb.Blocks.WorkFlow
             }
             else
             {
-                ActivityAttributesState = JsonConvert.DeserializeObject<Dictionary<Guid, List<Attribute>>>( json );
+                ActivityAttributesState = RockJsonTextReader.DeserializeObjectInSimpleMode<Dictionary<Guid, List<Attribute>>>( json );
             }
 
             ExpandedActivities = ViewState["ExpandedActivities"] as List<Guid>;
@@ -130,6 +131,8 @@ namespace RockWeb.Blocks.WorkFlow
             gAttributes.Actions.AddClick += gAttributes_Add;
             gAttributes.GridRebind += gAttributes_GridRebind;
             gAttributes.GridReorder += gAttributes_GridReorder;
+
+            LoadDropDowns();
 
             btnDelete.Attributes["onclick"] = string.Format( "javascript: return Rock.dialogs.confirmDelete(event, '{0}', 'This will also delete all the workflows of this type!');", WorkflowType.FriendlyTypeName );
             btnSecurity.EntityTypeId = EntityTypeCache.Read( typeof( Rock.Model.WorkflowType ) ).Id;
@@ -195,15 +198,16 @@ namespace RockWeb.Blocks.WorkFlow
         /// </returns>
         protected override object SaveViewState()
         {
-            var jsonSetting = new JsonSerializerSettings 
-            { 
+            var jsonSetting = new JsonSerializerSettings
+            {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = new Rock.Utility.IgnoreUrlEncodedKeyContractResolver()
+                ContractResolver = new Rock.Utility.BlockStateContractResolver(),
             };
 
-            ViewState["AttributesState"] = JsonConvert.SerializeObject( AttributesState, Formatting.None, jsonSetting );
-            ViewState["ActivityTypesState"] = JsonConvert.SerializeObject( ActivityTypesState, Formatting.None, jsonSetting );
-            ViewState["ActivityAttributesState"] = JsonConvert.SerializeObject( ActivityAttributesState, Formatting.None, jsonSetting );
+            ViewState["AttributesState"] = RockJsonTextWriter.SerializeObjectInSimpleMode( AttributesState, Formatting.None, jsonSetting );
+            var activityTypesState = RockJsonTextWriter.SerializeObjectInSimpleMode( ActivityTypesState, Formatting.None, jsonSetting );
+            ViewState["ActivityTypesState"] = activityTypesState;
+            ViewState["ActivityAttributesState"] = RockJsonTextWriter.SerializeObjectInSimpleMode( ActivityAttributesState, Formatting.None, jsonSetting );
             ViewState["ExpandedActivities"] = ExpandedActivities;
             ViewState["ExpandedActivityAttributes"] = ExpandedActivityAttributes;
             ViewState["ExpandedActions"] = ExpandedActions;
@@ -213,15 +217,15 @@ namespace RockWeb.Blocks.WorkFlow
 
         #endregion
 
-        #region Events
+            #region Events
 
-        #region Edit  events
+            #region Edit  events
 
-        /// <summary>
-        /// Handles the Click event of the btnEdit control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+            /// <summary>
+            /// Handles the Click event of the btnEdit control.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void btnEdit_Click( object sender, EventArgs e )
         {
             var rockContext = new RockContext();
@@ -551,6 +555,8 @@ namespace RockWeb.Blocks.WorkFlow
                 SaveAttributes( new Workflow().TypeId, "WorkflowTypeId", workflowType.Id.ToString(), AttributesState, rockContext );
 
                 WorkflowActivityTypeService workflowActivityTypeService = new WorkflowActivityTypeService( rockContext );
+                WorkflowActivityService workflowActivityService = new WorkflowActivityService( rockContext );
+                WorkflowActionService workflowActionService = new WorkflowActionService( rockContext );
                 WorkflowActionTypeService workflowActionTypeService = new WorkflowActionTypeService( rockContext );
                 WorkflowActionFormService workflowFormService = new WorkflowActionFormService( rockContext );
                 WorkflowActionFormAttributeService workflowFormAttributeService = new WorkflowActionFormAttributeService( rockContext );
@@ -570,14 +576,29 @@ namespace RockWeb.Blocks.WorkFlow
                 var deletedActionTypes = from actionType in actionTypesInDB
                                          where !actionTypesInUI.Select( u => u.Guid ).Contains( actionType.Guid )
                                          select actionType;
-                deletedActionTypes.ToList().ForEach( actionType =>
+                foreach ( var actionType in deletedActionTypes.ToList() )
                 {
                     if ( actionType.WorkflowForm != null )
                     {
                         workflowFormService.Delete( actionType.WorkflowForm );
                     }
+
+                    // Delete any workflow actions of this type
+                    int loopCounter = 0;
+                    foreach ( var action in workflowActionService.Queryable().Where( a => a.ActionTypeId == actionType.Id ) )
+                    {
+                        workflowActionService.Delete( action );
+                        loopCounter++;
+                        if ( loopCounter > 100 )
+                        {
+                            rockContext.SaveChanges();
+                            loopCounter = 0;
+                        }
+                    }
+                    rockContext.SaveChanges();
+
                     workflowActionTypeService.Delete( actionType );
-                } );
+                } 
                 rockContext.SaveChanges();
 
                 // delete WorkflowActivityTypes that aren't assigned in the UI anymore
@@ -585,10 +606,24 @@ namespace RockWeb.Blocks.WorkFlow
                 var deletedActivityTypes = from activityType in activityTypesInDB
                                            where !ActivityTypesState.Select( u => u.Guid ).Contains( activityType.Guid )
                                            select activityType;
-                deletedActivityTypes.ToList().ForEach( activityType =>
+                foreach ( var activityType in deletedActivityTypes.ToList() )
                 {
+                    // Delete any workflow activities of this type
+                    int loopCounter = 0;
+                    foreach ( var activity in workflowActivityService.Queryable().Where( a => a.ActivityTypeId == activityType.Id ) )
+                    {
+                        workflowActivityService.Delete( activity );
+                        loopCounter++;
+                        if ( loopCounter > 100 )
+                        {
+                            rockContext.SaveChanges();
+                            loopCounter = 0;
+                        }
+                    }
+                    rockContext.SaveChanges();
+
                     workflowActivityTypeService.Delete( activityType );
-                } );
+                } 
                 rockContext.SaveChanges();
 
                 // add or update WorkflowActivityTypes(and Actions) that are assigned in the UI
@@ -1275,8 +1310,6 @@ namespace RockWeb.Blocks.WorkFlow
 
             SetEditMode( true );
 
-            LoadDropDowns();
-
             cbIsActive.Checked = workflowType.IsActive ?? false;
             tbName.Text = workflowType.Name;
             tbDescription.Text = workflowType.Description;
@@ -1331,9 +1364,7 @@ namespace RockWeb.Blocks.WorkFlow
 <div>
     <ol>";
 
-                foreach ( var activityType in workflowType.ActivityTypes.OrderBy( a => a.Order ) )
-                {
-                    string activityTypeTextFormat = @"
+                string activityTypeTextFormat = @"
         <li>
             <strong>{0}</strong>
             {1}
@@ -1344,7 +1375,8 @@ namespace RockWeb.Blocks.WorkFlow
             </ol>
         </li>
 ";
-
+                foreach ( var activityType in workflowType.ActivityTypes.OrderBy( a => a.Order ) )
+                {
                     string actionTypeText = string.Empty;
 
                     foreach ( var actionType in activityType.ActionTypes.OrderBy( a => a.Order ) )

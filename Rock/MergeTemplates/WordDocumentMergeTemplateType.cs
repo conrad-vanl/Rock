@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -373,7 +373,23 @@ namespace Rock.MergeTemplates
                         lastId++;
                     }
 
-                    HeaderFooterGlobalMerge( outputDoc, globalMergeFields );
+                    DotLiquid.Hash globalMergeHash = new DotLiquid.Hash();
+                    foreach ( var field in globalMergeFields )
+                    {
+                        globalMergeHash.Add( field.Key, field.Value );
+                    }
+
+                    HeaderFooterGlobalMerge( outputDoc, globalMergeHash );
+
+                    // sweep thru any remaining un-merged body parts for any Lava having to do with Global merge fields
+                    foreach ( var bodyTextPart in outputDoc.MainDocumentPart.Document.Body.Descendants<Text>() )
+                    {
+                        string nodeText = bodyTextPart.Text.ReplaceWordChars();
+                        if ( lavaRegEx.IsMatch( nodeText ) )
+                        {
+                            bodyTextPart.Text = nodeText.ResolveMergeFields( globalMergeHash, true, true );
+                        }
+                    }
 
                     // remove the last pagebreak
                     MarkupSimplifier.SimplifyMarkup( outputDoc, new SimplifyMarkupSettings { RemoveLastRenderedPageBreak = true } );
@@ -403,14 +419,11 @@ namespace Rock.MergeTemplates
         /// Merges global merge fields into the Header and Footer parts of the document
         /// </summary>
         /// <param name="outputDoc">The output document.</param>
-        /// <param name="globalMergeFields">The global merge fields.</param>
-        private void HeaderFooterGlobalMerge( WordprocessingDocument outputDoc, Dictionary<string, object> globalMergeFields )
+        /// <param name="globalMergeHash">The global merge hash.</param>
+        private void HeaderFooterGlobalMerge( WordprocessingDocument outputDoc, DotLiquid.Hash globalMergeHash )
         {
-            DotLiquid.Hash globalMergeHash = new DotLiquid.Hash();
-            foreach ( var field in globalMergeFields )
-            {
-                globalMergeHash.Add( field.Key, field.Value );
-            }
+            // make sure that all proof codes get removed so that the lava can be found
+            MarkupSimplifier.SimplifyMarkup( outputDoc, new SimplifyMarkupSettings { RemoveProof = true } );
 
             // update the doc headers and footers for any Lava having to do with Global merge fields
             // from http://stackoverflow.com/a/19012057/1755417

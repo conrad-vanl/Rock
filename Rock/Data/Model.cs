@@ -1,11 +1,11 @@
 ﻿// <copyright>
-// Copyright 2013 by the Spark Development Network
+// Copyright by the Spark Development Network
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Rock Community License (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-// http://www.apache.org/licenses/LICENSE-2.0
+// http://www.rockrms.com/license
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -191,6 +191,15 @@ namespace Rock.Data
         [RockClientInclude("If the ModifiedByPersonAliasId is being set manually and should not be overwritten with current user when saved, set this value to true")]
         public virtual bool ModifiedAuditValuesAlreadyUpdated { get; set; }
 
+        /// <summary>
+        /// Gets or sets a field that can be used for custom sorting.
+        /// </summary>
+        /// <value>
+        /// The sort value.
+        /// </value>
+        [NotMapped]
+        public virtual object CustomSortValue { get; set; }
+
         #endregion
 
         #region Methods
@@ -373,6 +382,8 @@ namespace Rock.Data
                 object item = base[key];
                 if ( item == null )
                 {
+                    var lavaSupportLevel = GlobalAttributesCache.Read().LavaSupportLevel; 
+                    
                     if (this.Attributes == null)
                     {
                         this.LoadAttributes();
@@ -388,6 +399,12 @@ namespace Rock.Data
                     // deprecated ( in v4.0 ), and only the new method of using the Attribute filter is 
                     // suported (e.g. {{ Person | Attribute:'BaptismDate' }} ), the remainder of this method 
                     // can be removed
+
+                    if ( lavaSupportLevel == Lava.LavaSupportLevel.NoLegacy )
+                    {
+                        return null;
+                    }
+                    
 
                     if ( this.Attributes != null )
                     {
@@ -411,6 +428,11 @@ namespace Rock.Data
                             var attribute = this.Attributes[attributeKey];
                             if ( attribute.IsAuthorized( Authorization.VIEW, null ) )
                             {
+                                if ( lavaSupportLevel == Lava.LavaSupportLevel.LegacyWithWarning )
+                                {
+                                    Rock.Model.ExceptionLogService.LogException( new Rock.Lava.LegacyLavaSyntaxDetectedException( this.GetType().GetFriendlyTypeName(), attributeKey ), System.Web.HttpContext.Current );
+                                }
+
                                 if ( unformatted )
                                 {
                                     return GetAttributeValueAsType( attribute.Key );
