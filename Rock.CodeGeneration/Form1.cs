@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
-using GraphQL;
+using GraphQLib = GraphQL;
 using Rock;
 
 namespace Rock.CodeGeneration
@@ -775,6 +775,8 @@ order by [parentTable], [columnName]
                 string fieldTypeName = fieldType.ToString();
                 bool nullable = false;
                 bool IsComplexType = false;
+                bool IsGuid = false;
+                bool IsEnum = false;
 
                 // handle nullable fields
                 if (IsNullable(field.PropertyType))
@@ -784,27 +786,27 @@ order by [parentTable], [columnName]
                     fieldTypeName = fieldType.Name;
                 }
 
-               // handle guids as Id type
                 if (fieldType == typeof(Guid))
                 {
-                    fieldTypeName = typeof(GraphQL.Types.IdGraphType).ToString(); 
+                    IsGuid = true;
                 }
-                else if (fieldType.Namespace == "Rock.Model")
+
+                if (fieldType.Namespace == "Rock.Model")
                 {
                     if (fieldType.IsEnum)
                     {
-                        fieldTypeName = typeof(GraphQL.Types.IntGraphType).ToString();
+                        IsEnum = true;
                     } else
                     {
                         IsComplexType = true;
                         fieldTypeName = String.Format("{0}.{1}", typeNamespace, fieldType.Name);
                     }
                 }
-                else
+                else if (fieldType != typeof(Guid))
                 {
                     try
                     {
-                        GraphQL.TypeExtensions.GetGraphTypeFromType(fieldType, true).ToString();
+                        GraphQLib.TypeExtensions.GetGraphTypeFromType(fieldType, true).ToString();
                     }
                     catch
                     {
@@ -814,12 +816,22 @@ order by [parentTable], [columnName]
 
                 if (IsComplexType)
                 {
-                    sb.AppendFormat("          Field<{0}>(x => x.{1}, nullable: {2});" + Environment.NewLine, fieldTypeName, field.Name, nullable.ToTrueFalse().ToLower());
+                    sb.AppendFormat("          Field<{0}>(\"{1}\", x => x.{1}, nullable: {2});" + Environment.NewLine, fieldTypeName, field.Name, nullable.ToTrueFalse().ToLower());
 
                 } else if ( !string.IsNullOrWhiteSpace( fieldTypeName ))
                 {
 
-                    sb.AppendFormat("          Field(x => x.{0}, nullable: {1});" + Environment.NewLine, field.Name, nullable.ToTrueFalse().ToLower());
+                    string fieldname = field.Name;
+                    if (IsGuid)
+                    {
+                        fieldname = fieldname + ".ToStringSafe()";
+                    }
+
+                    if (IsEnum)
+                    {
+                        fieldname = fieldname + ".ConvertToInt()";
+                    }
+                    sb.AppendFormat("          Field(\"{0}\", x => x.{1}, nullable: {2});" + Environment.NewLine, field.Name, fieldname, nullable.ToTrueFalse().ToLower());
                 }
             }
 

@@ -24,23 +24,6 @@ namespace Rock.GraphQL
                 var instance = (RockQuery)Activator.CreateInstance(type.Value, this);
             }
 
-            Field<ModelInterface>(
-                "model",
-                arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
-                resolve: ResolveObjectFromGlobalId
-            );
-
-        }
-
-        private object ResolveObjectFromGlobalId(ResolveFieldContext<object> context)
-        {
-            string globalId = context.GetArgument<string>("id");
-            var parts = Types.Model.FromGlobalId(globalId);
-            var node = (IRockModel<object>)context.Schema.FindType(parts.Item1);
-
-            var userContext = context.UserContext.As<GraphQLContext>();
-
-            return node.GetById(parts.Item2, userContext);
         }
 
     }
@@ -49,7 +32,7 @@ namespace Rock.GraphQL
     {
         public RockQuery(ObjectGraphType query)
         {
-
+       
         }
     }
 }
