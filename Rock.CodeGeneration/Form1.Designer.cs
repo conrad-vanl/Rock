@@ -36,15 +36,18 @@
             this.cbSelectAll = new System.Windows.Forms.CheckBox();
             this.fbdServiceOutput = new System.Windows.Forms.FolderBrowserDialog();
             this.cbRest = new System.Windows.Forms.CheckBox();
+            this.cbGraphQL = new System.Windows.Forms.CheckBox();
             this.cbService = new System.Windows.Forms.CheckBox();
             this.ofdAssembly = new System.Windows.Forms.OpenFileDialog();
             this.fbdRestOutput = new System.Windows.Forms.FolderBrowserDialog();
+            this.fbdGraphQLOutput = new System.Windows.Forms.FolderBrowserDialog();
             this.cbClient = new System.Windows.Forms.CheckBox();
             this.lblAssemblyPath = new System.Windows.Forms.Label();
             this.lblAssembly = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tbServiceFolder = new System.Windows.Forms.TextBox();
             this.tbRestFolder = new System.Windows.Forms.TextBox();
+            this.tbGraphQLFolder = new System.Windows.Forms.TextBox();
             this.tbClientFolder = new System.Windows.Forms.TextBox();
             this.fdbRockClient = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -68,7 +71,7 @@
             // btnGenerate
             // 
             this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGenerate.Location = new System.Drawing.Point(12, 510);
+            this.btnGenerate.Location = new System.Drawing.Point(12, 537);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(75, 23);
             this.btnGenerate.TabIndex = 2;
@@ -119,6 +122,19 @@
             this.cbRest.Text = "Rest";
             this.cbRest.UseVisualStyleBackColor = true;
             // 
+            // cbGraphQL
+            // 
+            this.cbGraphQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbGraphQL.AutoSize = true;
+            this.cbGraphQL.Checked = true;
+            this.cbGraphQL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbGraphQL.Location = new System.Drawing.Point(13, 456);
+            this.cbGraphQL.Name = "cbGraphQL";
+            this.cbGraphQL.Size = new System.Drawing.Size(48, 17);
+            this.cbGraphQL.TabIndex = 6;
+            this.cbGraphQL.Text = "GraphQL";
+            this.cbGraphQL.UseVisualStyleBackColor = true;
+            // 
             // cbService
             // 
             this.cbService.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -144,13 +160,20 @@
             this.fbdRestOutput.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.fbdRestOutput.ShowNewFolderButton = false;
             // 
+            // fbdGraphQLOutput
+            // 
+            this.fbdGraphQLOutput.Description = "Select the project folder that the Rest files should be added to.  The namespace " +
+    "of the objects will be used to create a relative folder path if neccessary.";
+            this.fbdGraphQLOutput.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            this.fbdGraphQLOutput.ShowNewFolderButton = false;
+            // 
             // cbClient
             // 
             this.cbClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbClient.AutoSize = true;
             this.cbClient.Checked = true;
             this.cbClient.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbClient.Location = new System.Drawing.Point(13, 456);
+            this.cbClient.Location = new System.Drawing.Point(13, 483);
             this.cbClient.Name = "cbClient";
             this.cbClient.Size = new System.Drawing.Size(53, 17);
             this.cbClient.TabIndex = 8;
@@ -178,7 +201,7 @@
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(390, 514);
+            this.progressBar1.Location = new System.Drawing.Point(390, 541);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(212, 23);
             this.progressBar1.TabIndex = 11;
@@ -204,11 +227,22 @@
             this.tbRestFolder.TabIndex = 13;
             this.tbRestFolder.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tbRestFolder_MouseDoubleClick);
             // 
+            // tbGraphQLFolder
+            // 
+            this.tbGraphQLFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbGraphQLFolder.Location = new System.Drawing.Point(120, 454);
+            this.tbGraphQLFolder.Name = "tbGraphQLFolder";
+            this.tbGraphQLFolder.Size = new System.Drawing.Size(482, 21);
+            this.tbGraphQLFolder.TabIndex = 13;
+            this.tbGraphQLFolder.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tbGraphQLFolder_MouseDoubleClick);
+            
+            // 
             // tbClientFolder
             // 
             this.tbClientFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbClientFolder.Location = new System.Drawing.Point(120, 454);
+            this.tbClientFolder.Location = new System.Drawing.Point(120, 481);
             this.tbClientFolder.Name = "tbClientFolder";
             this.tbClientFolder.Size = new System.Drawing.Size(482, 21);
             this.tbClientFolder.TabIndex = 14;
@@ -252,7 +286,7 @@
             // 
             this.tbDatabaseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDatabaseFolder.Location = new System.Drawing.Point(120, 481);
+            this.tbDatabaseFolder.Location = new System.Drawing.Point(120, 508);
             this.tbDatabaseFolder.Name = "tbDatabaseFolder";
             this.tbDatabaseFolder.Size = new System.Drawing.Size(482, 21);
             this.tbDatabaseFolder.TabIndex = 19;
@@ -263,7 +297,7 @@
             this.cbDatabaseProcs.AutoSize = true;
             this.cbDatabaseProcs.Checked = true;
             this.cbDatabaseProcs.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDatabaseProcs.Location = new System.Drawing.Point(13, 483);
+            this.cbDatabaseProcs.Location = new System.Drawing.Point(13, 510);
             this.cbDatabaseProcs.Name = "cbDatabaseProcs";
             this.cbDatabaseProcs.Size = new System.Drawing.Size(101, 17);
             this.cbDatabaseProcs.TabIndex = 18;
@@ -274,7 +308,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 545);
+            this.ClientSize = new System.Drawing.Size(614, 572);
             this.Controls.Add(this.tbDatabaseFolder);
             this.Controls.Add(this.cbDatabaseProcs);
             this.Controls.Add(this.lblDatabase);
@@ -282,6 +316,7 @@
             this.Controls.Add(this.lblAssemblyDateTime);
             this.Controls.Add(this.tbClientFolder);
             this.Controls.Add(this.tbRestFolder);
+            this.Controls.Add(this.tbGraphQLFolder);
             this.Controls.Add(this.tbServiceFolder);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblAssembly);
@@ -289,6 +324,7 @@
             this.Controls.Add(this.cbClient);
             this.Controls.Add(this.cbService);
             this.Controls.Add(this.cbRest);
+            this.Controls.Add(this.cbGraphQL);
             this.Controls.Add(this.cbSelectAll);
             this.Controls.Add(this.cblModels);
             this.Controls.Add(this.btnGenerate);
@@ -311,15 +347,18 @@
         private System.Windows.Forms.CheckBox cbSelectAll;
         private System.Windows.Forms.FolderBrowserDialog fbdServiceOutput;
         private System.Windows.Forms.CheckBox cbRest;
+        private System.Windows.Forms.CheckBox cbGraphQL;
         private System.Windows.Forms.CheckBox cbService;
 		private System.Windows.Forms.OpenFileDialog ofdAssembly;
         private System.Windows.Forms.FolderBrowserDialog fbdRestOutput;
+        private System.Windows.Forms.FolderBrowserDialog fbdGraphQLOutput;
         private System.Windows.Forms.CheckBox cbClient;
         private System.Windows.Forms.Label lblAssemblyPath;
         private System.Windows.Forms.Label lblAssembly;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox tbServiceFolder;
         private System.Windows.Forms.TextBox tbRestFolder;
+        private System.Windows.Forms.TextBox tbGraphQLFolder;
         private System.Windows.Forms.TextBox tbClientFolder;
         private System.Windows.Forms.FolderBrowserDialog fdbRockClient;
         private System.Windows.Forms.ToolTip toolTip1;
