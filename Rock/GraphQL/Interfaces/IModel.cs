@@ -19,10 +19,10 @@ namespace Rock.GraphQL.Interfaces
             Name = "Model";
 
             Field<NonNullGraphType<IdGraphType>>("id", "global node id");
-            Field<Person>("createdByPerson", "the person who created the model");
-            Field<Person>("modifiedByPerson", "the person who last modified the model");
-            Field<DateGraphType>("createdDateTime", "the creation time of the model");
-            Field<DateGraphType>("modifiedDateTime", "the last time the model was updated");
+            //Field<Person>("createdByPerson", "the person who created the model");
+            //Field<Person>("modifiedByPerson", "the person who last modified the model");
+            //Field<DateGraphType>("createdDateTime", "the creation time of the model");
+            //Field<DateGraphType>("modifiedDateTime", "the last time the model was updated");
         }
     }
 }

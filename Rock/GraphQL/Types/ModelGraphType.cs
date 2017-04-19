@@ -99,54 +99,54 @@ namespace Rock.GraphQL.Types
                 }
             );
 
-            Field<Person>(
-                "createdByPerson",
-                resolve: context =>
-                {
-                    var data = context.Source.As<Data.IModel>();
+            //Field<Person>(
+            //    "createdByPerson",
+            //    resolve: context =>
+            //    {
+            //        var data = context.Source.As<Data.IModel>();
 
-                    var userContext = context.UserContext.As<GraphQLContext>();
-                    if (data.CreatedByPersonAliasId.HasValue)
-                    {
-                        var personAliasService = new PersonAliasService(userContext.db);
-                        int id = data.CreatedByPersonAliasId ?? 0;
-                        return personAliasService.GetPerson(id);
-                    }
-                    return null;
-                }
-            );
+            //        var userContext = context.UserContext.As<GraphQLContext>();
+            //        if (data.CreatedByPersonAliasId.HasValue)
+            //        {
+            //            var personAliasService = new PersonAliasService(userContext.db);
+            //            int id = data.CreatedByPersonAliasId ?? 0;
+            //            return personAliasService.GetPerson(id);
+            //        }
+            //        return null;
+            //    }
+            //);
 
 
-            Field<Person>(
-                "modifiedByPerson",
-                resolve: context =>
-                {
-                    var data = context.Source.As<Data.IModel>();
+            //Field<Person>(
+            //    "modifiedByPerson",
+            //    resolve: context =>
+            //    {
+            //        var data = context.Source.As<Data.IModel>();
 
-                    var userContext = context.UserContext.As<GraphQLContext>();
-                    if (data.ModifiedByPersonAliasId.HasValue)
-                    {
-                        var personAliasService = new PersonAliasService(userContext.db);
-                        int id = data.ModifiedByPersonAliasId ?? 0;
-                        return personAliasService.GetPerson(id);
-                    }
-                    return null;
-                }
-            );
+            //        var userContext = context.UserContext.As<GraphQLContext>();
+            //        if (data.ModifiedByPersonAliasId.HasValue)
+            //        {
+            //            var personAliasService = new PersonAliasService(userContext.db);
+            //            int id = data.ModifiedByPersonAliasId ?? 0;
+            //            return personAliasService.GetPerson(id);
+            //        }
+            //        return null;
+            //    }
+            //);
 
-            Field<StringGraphType>(
-                "attribute",
-                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "key" }),
-                resolve: context =>
-                {
-                    var data = context.Source.As<IHasAttributes>();
+            //Field<StringGraphType>(
+            //    "attribute",
+            //    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "key" }),
+            //    resolve: context =>
+            //    {
+            //        var data = context.Source.As<IHasAttributes>();
 
-                    string key = context.GetArgument<string>("key");
-                    var userContext = context.UserContext.As<GraphQLContext>();
-                    data.LoadAttributes();
-                    return data.GetAttributeValue(key);
-                }
-            );
+            //        string key = context.GetArgument<string>("key");
+            //        var userContext = context.UserContext.As<GraphQLContext>();
+            //        data.LoadAttributes();
+            //        return data.GetAttributeValue(key);
+            //    }
+            //);
         }
     }
 

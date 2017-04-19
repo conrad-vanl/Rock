@@ -816,7 +816,7 @@ order by [parentTable], [columnName]
 
                 if (IsComplexType)
                 {
-                    sb.AppendFormat("          Field<{0}>(\"{1}\", x => x.{1}, nullable: {2});" + Environment.NewLine, fieldTypeName, field.Name, nullable.ToTrueFalse().ToLower());
+                    sb.AppendFormat("          Field<{0}>(\"{1}\", resolve: x => x.Source.{1});" + Environment.NewLine, fieldTypeName, field.Name);
 
                 } else if ( !string.IsNullOrWhiteSpace( fieldTypeName ))
                 {

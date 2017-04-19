@@ -22,95 +22,75 @@
 //
 
 using GraphQL;
-using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
 {
     /// <summary>
-    /// Person GraphQL Type
+    /// AnalyticsDimPersonCurrent GraphQL Type
     /// </summary>
-    public partial class Person : ModelGraphType<Rock.Model.Person>
+    public partial class AnalyticsDimPersonCurrent : ModelGraphType<Rock.Model.AnalyticsDimPersonCurrent>
     {
-       public Person(): base("Person")
+       public AnalyticsDimPersonCurrent(): base("AnalyticsDimPersonCurrent")
        {
+          Field("Age", x => x.Age, nullable: true);
           Field("AnniversaryDate", x => x.AnniversaryDate, nullable: true);
-          Field("BirthDate", x => x.BirthDate, nullable: true);
+          //Field<Rock.GraphQL.Types.AnalyticsDimDate>("BirthDateDim", resolve: x => x.Source.BirthDateDim);
+          Field("BirthDateKey", x => x.BirthDateKey, nullable: true);
           Field("BirthDay", x => x.BirthDay, nullable: true);
           Field("BirthMonth", x => x.BirthMonth, nullable: true);
           Field("BirthYear", x => x.BirthYear, nullable: true);
-          // Field<Rock.GraphQL.Types.DefinedValue>("ConnectionStatusValue", x => x.ConnectionStatusValue, nullable: false);
+          Field("ConnectionStatus", x => x.ConnectionStatus, nullable: false);
           Field("ConnectionStatusValueId", x => x.ConnectionStatusValueId, nullable: true);
-          Field("DaysUntilBirthday", x => x.DaysUntilBirthday, nullable: true);
+          Field("CurrentRowIndicator", x => x.CurrentRowIndicator, nullable: false);
+          Field("EffectiveDate", x => x.EffectiveDate, nullable: false);
           Field("Email", x => x.Email, nullable: false);
-          Field("EmailNote", x => x.EmailNote, nullable: false);
           Field("EmailPreference", x => x.EmailPreference.ConvertToInt(), nullable: false);
+          Field("EmailPreferenceText", x => x.EmailPreferenceText, nullable: false);
+          Field("ExpireDate", x => x.ExpireDate, nullable: false);
           Field("FirstName", x => x.FirstName, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("Gender", x => x.Gender.ConvertToInt(), nullable: false);
+          Field("GenderText", x => x.GenderText, nullable: false);
           Field("GivingGroupId", x => x.GivingGroupId, nullable: true);
           Field("GivingId", x => x.GivingId, nullable: false);
-          Field("GivingLeaderId", x => x.GivingLeaderId, nullable: false);
-          Field("GradeOffset", x => x.GradeOffset, nullable: true);
+          Field("GivingLeaderId", x => x.GivingLeaderId, nullable: true);
           Field("GraduationYear", x => x.GraduationYear, nullable: true);
           Field("InactiveReasonNote", x => x.InactiveReasonNote, nullable: false);
           Field("IsDeceased", x => x.IsDeceased, nullable: false);
-          Field("IsEmailActive", x => x.IsEmailActive, nullable: false);
-          Field("IsSystem", x => x.IsSystem, nullable: false);
           Field("LastName", x => x.LastName, nullable: false);
-          // Field<Rock.GraphQL.Types.DefinedValue>("MaritalStatusValue", x => x.MaritalStatusValue, nullable: false);
+          Field("MaritalStatus", x => x.MaritalStatus, nullable: false);
           Field("MaritalStatusValueId", x => x.MaritalStatusValueId, nullable: true);
           Field("MiddleName", x => x.MiddleName, nullable: false);
-          Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
           Field("NickName", x => x.NickName, nullable: false);
-          // Field<Rock.GraphQL.Types.BinaryFile>("Photo", x => x.Photo, nullable: false);
+          Field("PersonId", x => x.PersonId, nullable: false);
           Field("PhotoId", x => x.PhotoId, nullable: true);
-          Field("PrimaryAliasId", x => x.PrimaryAliasId, nullable: true);
+          Field("PrimaryFamilyId", x => x.PrimaryFamilyId, nullable: true);
+          Field("PrimaryFamilyKey", x => x.PrimaryFamilyKey, nullable: true);
+          Field("RecordStatus", x => x.RecordStatus, nullable: false);
           Field("RecordStatusLastModifiedDateTime", x => x.RecordStatusLastModifiedDateTime, nullable: true);
-          // Field<Rock.GraphQL.Types.DefinedValue>("RecordStatusReasonValue", x => x.RecordStatusReasonValue, nullable: false);
+          Field("RecordStatusReason", x => x.RecordStatusReason, nullable: false);
           Field("RecordStatusReasonValueId", x => x.RecordStatusReasonValueId, nullable: true);
-          // Field<Rock.GraphQL.Types.DefinedValue>("RecordStatusValue", x => x.RecordStatusValue, nullable: false);
           Field("RecordStatusValueId", x => x.RecordStatusValueId, nullable: true);
-          // Field<Rock.GraphQL.Types.DefinedValue>("RecordTypeValue", x => x.RecordTypeValue, nullable: false);
+          Field("RecordType", x => x.RecordType, nullable: false);
           Field("RecordTypeValueId", x => x.RecordTypeValueId, nullable: true);
+          Field("ReviewReason", x => x.ReviewReason, nullable: false);
           Field("ReviewReasonNote", x => x.ReviewReasonNote, nullable: false);
-          // Field<Rock.GraphQL.Types.DefinedValue>("ReviewReasonValue", x => x.ReviewReasonValue, nullable: false);
           Field("ReviewReasonValueId", x => x.ReviewReasonValueId, nullable: true);
-          //Field<Rock.GraphQL.Types.DefinedValue>("SuffixValue", x => x.SuffixValue, nullable: false);
+          Field("Suffix", x => x.Suffix, nullable: false);
           Field("SuffixValueId", x => x.SuffixValueId, nullable: true);
           Field("SystemNote", x => x.SystemNote, nullable: false);
-          //Field<Rock.GraphQL.Types.DefinedValue>("TitleValue", x => x.TitleValue, nullable: false);
+          Field("Title", x => x.Title, nullable: false);
           Field("TitleValueId", x => x.TitleValueId, nullable: true);
           Field("ViewedCount", x => x.ViewedCount, nullable: true);
-          Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
-          Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
-          Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);
-          Field("ModifiedByPersonAliasId", x => x.ModifiedByPersonAliasId, nullable: true);
           Field("Guid", x => x.Guid.ToStringSafe(), nullable: false);
+          Field("ForeignId", x => x.ForeignId, nullable: true);
        }
-       public override Rock.Model.Person GetById(int id, GraphQLContext context)
+       public override Rock.Model.AnalyticsDimPersonCurrent GetById(int id, GraphQLContext context)
        {
-           var service = new Rock.Model.PersonService(context.db);
+           var service = new Rock.Model.AnalyticsDimPersonCurrentService(context.db);
            return service.Get(id);
        }
    }
-
-    public class PersonGraphQuery : RockQuery
-    {
-        public PersonGraphQuery(ObjectGraphType query) : base(query)
-        {
-            query.AddField(
-                Field<Person>(
-                    "currentPerson",
-                    resolve: context =>
-                    {
-                        return context.UserContext.As<GraphQLContext>().person;
-                    }
-                )
-            );
-        }
-        
-    }
-
 }
