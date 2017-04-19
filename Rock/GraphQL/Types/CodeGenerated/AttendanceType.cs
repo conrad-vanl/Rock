@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,30 +36,48 @@ namespace Rock.GraphQL.Types
        {
           Field<Rock.GraphQL.Types.AttendanceCode>("AttendanceCode", resolve: x => x.Source.AttendanceCode);
           Field("AttendanceCodeId", x => x.AttendanceCodeId, nullable: true);
+          Field<Rock.GraphQL.Types.Campus>("Campus", resolve: x => x.Source.Campus);
           Field("CampusId", x => x.CampusId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field<Rock.GraphQL.Types.Device>("Device", resolve: x => x.Source.Device);
           Field("DeviceId", x => x.DeviceId, nullable: true);
           Field("DidAttend", x => x.DidAttend, nullable: true);
           Field("DidNotOccur", x => x.DidNotOccur, nullable: true);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("EndDateTime", x => x.EndDateTime, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field<Rock.GraphQL.Types.Group>("Group", resolve: x => x.Source.Group);
           Field("GroupId", x => x.GroupId, nullable: true);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<Rock.GraphQL.Types.Location>("Location", resolve: x => x.Source.Location);
           Field("LocationId", x => x.LocationId, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Note", x => x.Note, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("PersonAlias", resolve: x => x.Source.PersonAlias);
           Field("PersonAliasId", x => x.PersonAliasId, nullable: true);
           Field("Processed", x => x.Processed, nullable: true);
           Field<Rock.GraphQL.Types.DefinedValue>("Qualifier", resolve: x => x.Source.Qualifier);
           Field("QualifierValueId", x => x.QualifierValueId, nullable: true);
           Field("RSVP", x => x.RSVP.ConvertToInt(), nullable: false);
+          Field<Rock.GraphQL.Types.Schedule>("Schedule", resolve: x => x.Source.Schedule);
           Field("ScheduleId", x => x.ScheduleId, nullable: true);
+          Field<Rock.GraphQL.Types.Group>("SearchResultGroup", resolve: x => x.Source.SearchResultGroup);
           Field("SearchResultGroupId", x => x.SearchResultGroupId, nullable: true);
           Field<Rock.GraphQL.Types.DefinedValue>("SearchTypeValue", resolve: x => x.Source.SearchTypeValue);
           Field("SearchTypeValueId", x => x.SearchTypeValueId, nullable: true);
           Field("SearchValue", x => x.SearchValue, nullable: false);
           Field("StartDateTime", x => x.StartDateTime, nullable: false);
           Field("SundayDate", x => x.SundayDate, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

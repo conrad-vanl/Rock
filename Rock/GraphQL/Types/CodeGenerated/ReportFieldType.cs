@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,16 +36,29 @@ namespace Rock.GraphQL.Types
        {
           Field("ColumnHeaderText", x => x.ColumnHeaderText, nullable: false);
           Field("ColumnOrder", x => x.ColumnOrder, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field<Rock.GraphQL.Types.EntityType>("DataSelectComponentEntityType", resolve: x => x.Source.DataSelectComponentEntityType);
           Field("DataSelectComponentEntityTypeId", x => x.DataSelectComponentEntityTypeId, nullable: true);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field<Rock.GraphQL.Types.Report>("Report", resolve: x => x.Source.Report);
           Field("ReportFieldType", x => x.ReportFieldType.ConvertToInt(), nullable: false);
           Field("ReportId", x => x.ReportId, nullable: false);
           Field("Selection", x => x.Selection, nullable: false);
           Field("ShowInGrid", x => x.ShowInGrid, nullable: false);
           Field("SortOrder", x => x.SortOrder, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

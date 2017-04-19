@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,23 +35,40 @@ namespace Rock.GraphQL.Types
        public UserLogin(): base("UserLogin")
        {
           Field("ApiKey", x => x.ApiKey, nullable: false);
+          Field("ConfirmationCode", x => x.ConfirmationCode, nullable: false);
+          Field("ConfirmationCodeEncoded", x => x.ConfirmationCodeEncoded, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field<Rock.GraphQL.Types.EntityType>("EntityType", resolve: x => x.Source.EntityType);
           Field("EntityTypeId", x => x.EntityTypeId, nullable: true);
           Field("FailedPasswordAttemptCount", x => x.FailedPasswordAttemptCount, nullable: true);
           Field("FailedPasswordAttemptWindowStartDateTime", x => x.FailedPasswordAttemptWindowStartDateTime, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsAuthenticated", x => x.IsAuthenticated, nullable: false);
           Field("IsConfirmed", x => x.IsConfirmed, nullable: true);
           Field("IsLockedOut", x => x.IsLockedOut, nullable: true);
           Field("IsOnLine", x => x.IsOnLine, nullable: true);
           Field("IsPasswordChangeRequired", x => x.IsPasswordChangeRequired, nullable: true);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastActivityDateTime", x => x.LastActivityDateTime, nullable: true);
           Field("LastLockedOutDateTime", x => x.LastLockedOutDateTime, nullable: true);
           Field("LastLoginDateTime", x => x.LastLoginDateTime, nullable: true);
           Field("LastPasswordChangedDateTime", x => x.LastPasswordChangedDateTime, nullable: true);
           Field("LastPasswordExpirationWarningDateTime", x => x.LastPasswordExpirationWarningDateTime, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field("Password", x => x.Password, nullable: false);
+          Field<Rock.GraphQL.Types.Person>("Person", resolve: x => x.Source.Person);
           Field("PersonId", x => x.PersonId, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("UserName", x => x.UserName, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

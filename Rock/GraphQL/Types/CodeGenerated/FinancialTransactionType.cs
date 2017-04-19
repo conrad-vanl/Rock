@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,20 +36,37 @@ namespace Rock.GraphQL.Types
        {
           Field<Rock.GraphQL.Types.PersonAlias>("AuthorizedPersonAlias", resolve: x => x.Source.AuthorizedPersonAlias);
           Field("AuthorizedPersonAliasId", x => x.AuthorizedPersonAliasId, nullable: true);
+          Field<Rock.GraphQL.Types.FinancialBatch>("Batch", resolve: x => x.Source.Batch);
           Field("BatchId", x => x.BatchId, nullable: true);
           Field("CheckMicrEncrypted", x => x.CheckMicrEncrypted, nullable: false);
           Field("CheckMicrHash", x => x.CheckMicrHash, nullable: false);
           Field("CheckMicrParts", x => x.CheckMicrParts, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field<Rock.GraphQL.Types.FinancialGateway>("FinancialGateway", resolve: x => x.Source.FinancialGateway);
           Field("FinancialGatewayId", x => x.FinancialGatewayId, nullable: true);
           Field<Rock.GraphQL.Types.FinancialPaymentDetail>("FinancialPaymentDetail", resolve: x => x.Source.FinancialPaymentDetail);
           Field("FinancialPaymentDetailId", x => x.FinancialPaymentDetailId, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.FinancialTransactionImage>>("Images", resolve: x => x.Source.Images);
           Field("IsReconciled", x => x.IsReconciled, nullable: true);
           Field("IsSettled", x => x.IsSettled, nullable: true);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("MICRStatus", x => x.MICRStatus.ConvertToInt(), nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ProcessedByPersonAlias", resolve: x => x.Source.ProcessedByPersonAlias);
+          Field("ProcessedByPersonAliasId", x => x.ProcessedByPersonAliasId, nullable: true);
+          Field("ProcessedDateTime", x => x.ProcessedDateTime, nullable: true);
+          Field<Rock.GraphQL.Types.FinancialTransactionRefund>("RefundDetails", resolve: x => x.Source.RefundDetails);
+          Field<ListGraphType<Rock.GraphQL.Types.FinancialTransactionRefund>>("Refunds", resolve: x => x.Source.Refunds);
+          Field<Rock.GraphQL.Types.FinancialScheduledTransaction>("ScheduledTransaction", resolve: x => x.Source.ScheduledTransaction);
           Field("ScheduledTransactionId", x => x.ScheduledTransactionId, nullable: true);
           Field("SettledDate", x => x.SettledDate, nullable: true);
           Field("SettledGroupId", x => x.SettledGroupId, nullable: false);
@@ -58,10 +76,15 @@ namespace Rock.GraphQL.Types
           Field("StatusMessage", x => x.StatusMessage, nullable: false);
           Field("Summary", x => x.Summary, nullable: false);
           Field("SundayDate", x => x.SundayDate, nullable: true);
+          Field("TotalAmount", x => x.TotalAmount, nullable: false);
           Field("TransactionCode", x => x.TransactionCode, nullable: false);
           Field("TransactionDateTime", x => x.TransactionDateTime, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.FinancialTransactionDetail>>("TransactionDetails", resolve: x => x.Source.TransactionDetails);
           Field<Rock.GraphQL.Types.DefinedValue>("TransactionTypeValue", resolve: x => x.Source.TransactionTypeValue);
           Field("TransactionTypeValueId", x => x.TransactionTypeValueId, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

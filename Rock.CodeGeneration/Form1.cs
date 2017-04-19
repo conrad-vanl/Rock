@@ -730,10 +730,13 @@ order by [parentTable], [columnName]
                 return;
             }
 
+            var allMembers = type.GetProperties().SortByStandardOrder();
+
             var dataMembers = type.GetProperties().SortByStandardOrder()
-                .Where(a => a.GetCustomAttribute<DataMemberAttribute>() != null)
-                .Where(a => a.GetCustomAttribute<ObsoleteAttribute>() == null)
-                .Where(a => (a.GetCustomAttribute<NotMappedAttribute>() == null || a.GetCustomAttribute<Rock.Data.RockClientIncludeAttribute>() != null));
+                .Where(x => x.Name != "Id")
+                //.Where(a => a.GetCustomAttribute<DataMemberAttribute>() != null)
+                .Where(a => a.GetCustomAttribute<ObsoleteAttribute>() == null);
+                //.Where(a => (a.GetCustomAttribute<NotMappedAttribute>() == null || a.GetCustomAttribute<Rock.Data.RockClientIncludeAttribute>() != null));
 
             var sb = new StringBuilder();
 
@@ -762,6 +765,7 @@ order by [parentTable], [columnName]
             sb.AppendLine( "" );
 
             sb.AppendLine("using GraphQL;");
+            sb.AppendLine("using GraphQL.Types;");
             sb.AppendFormat( "using {0};" + Environment.NewLine, type.Namespace );
             sb.AppendLine( "" );
 
@@ -775,7 +779,7 @@ order by [parentTable], [columnName]
             sb.AppendFormat("       public {0}(): base(\"{0}\")" + Environment.NewLine, name);
             sb.AppendLine("       {");
 
-            foreach ( var field in dataMembers.Where(x => x.Name != "Id" ) )
+            foreach ( var field in dataMembers )
             {
                 Type fieldType = field.PropertyType;
                 TypeInfo info = fieldType.GetTypeInfo();
@@ -784,7 +788,15 @@ order by [parentTable], [columnName]
                 bool IsComplexType = false;
                 bool IsGuid = false;
                 bool IsEnum = false;
+                bool IsICollection = (
+                    field.GetGetMethod() != null &&
+                    field.GetGetMethod().IsVirtual &&
+                    fieldType.IsGenericType &&
+                    fieldType.GetGenericTypeDefinition() != null &&
+                    fieldType.GetGenericTypeDefinition() == typeof(ICollection<>)
+                );
 
+                
                 // handle nullable fields
                 if (IsNullable(field.PropertyType))
                 {
@@ -822,13 +834,17 @@ order by [parentTable], [columnName]
                     }
                 }
 
-                if (IsComplexType)
+                if (IsICollection)
+                {
+                    Type implementedType = fieldType.GetGenericArguments().Single();
+                    fieldTypeName = String.Format("{0}.{1}", typeNamespace, implementedType.Name);
+                    sb.AppendFormat("          Field<ListGraphType<{0}>>(\"{1}\", resolve: x => x.Source.{1});" + Environment.NewLine, fieldTypeName, field.Name);
+                } else if (IsComplexType)
                 {
                     sb.AppendFormat("          Field<{0}>(\"{1}\", resolve: x => x.Source.{1});" + Environment.NewLine, fieldTypeName, field.Name);
 
                 } else if ( !string.IsNullOrWhiteSpace( fieldTypeName ) )
                 {
-
                     string fieldname = field.Name;
                     if (IsGuid)
                     {
@@ -841,6 +857,7 @@ order by [parentTable], [columnName]
                     }
                     sb.AppendFormat("          Field(\"{0}\", x => x.{1}, nullable: {2});" + Environment.NewLine, field.Name, fieldname, nullable.ToTrueFalse().ToLower());
                 }
+                
             }
 
             sb.AppendLine("       }");

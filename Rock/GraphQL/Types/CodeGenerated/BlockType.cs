@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,20 +34,35 @@ namespace Rock.GraphQL.Types
     {
        public Block(): base("Block")
        {
+          Field("BlockLocation", x => x.BlockLocation.ConvertToInt(), nullable: false);
           Field<Rock.GraphQL.Types.BlockType>("BlockType", resolve: x => x.Source.BlockType);
           Field("BlockTypeId", x => x.BlockTypeId, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("CssClass", x => x.CssClass, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<Rock.GraphQL.Types.Layout>("Layout", resolve: x => x.Source.Layout);
           Field("LayoutId", x => x.LayoutId, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("Order", x => x.Order, nullable: false);
           Field("OutputCacheDuration", x => x.OutputCacheDuration, nullable: false);
+          Field<Rock.GraphQL.Types.Page>("Page", resolve: x => x.Source.Page);
           Field("PageId", x => x.PageId, nullable: true);
           Field("PostHtml", x => x.PostHtml, nullable: false);
           Field("PreHtml", x => x.PreHtml, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("Zone", x => x.Zone, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

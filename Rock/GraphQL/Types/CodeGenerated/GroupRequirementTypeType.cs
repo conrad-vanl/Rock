@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,17 +36,31 @@ namespace Rock.GraphQL.Types
        {
           Field("CanExpire", x => x.CanExpire, nullable: false);
           Field("CheckboxLabel", x => x.CheckboxLabel, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field<Rock.GraphQL.Types.DataView>("DataView", resolve: x => x.Source.DataView);
           Field("DataViewId", x => x.DataViewId, nullable: true);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ExpireInDays", x => x.ExpireInDays, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("NegativeLabel", x => x.NegativeLabel, nullable: false);
           Field("PositiveLabel", x => x.PositiveLabel, nullable: false);
           Field("RequirementCheckType", x => x.RequirementCheckType.ConvertToInt(), nullable: false);
           Field("SqlExpression", x => x.SqlExpression, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
+          Field<Rock.GraphQL.Types.DataView>("WarningDataView", resolve: x => x.Source.WarningDataView);
           Field("WarningDataViewId", x => x.WarningDataViewId, nullable: true);
           Field("WarningLabel", x => x.WarningLabel, nullable: false);
           Field("WarningSqlExpression", x => x.WarningSqlExpression, nullable: false);

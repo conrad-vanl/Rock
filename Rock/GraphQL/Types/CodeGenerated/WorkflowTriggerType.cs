@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,6 +34,8 @@ namespace Rock.GraphQL.Types
     {
        public WorkflowTrigger(): base("WorkflowTrigger")
        {
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field<Rock.GraphQL.Types.EntityType>("EntityType", resolve: x => x.Source.EntityType);
           Field("EntityTypeId", x => x.EntityTypeId, nullable: false);
           Field("EntityTypeQualifierColumn", x => x.EntityTypeQualifierColumn, nullable: false);
@@ -42,6 +45,10 @@ namespace Rock.GraphQL.Types
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: true);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("WorkflowName", x => x.WorkflowName, nullable: false);
           Field("WorkflowTriggerType", x => x.WorkflowTriggerType.ConvertToInt(), nullable: false);
           Field<Rock.GraphQL.Types.WorkflowType>("WorkflowType", resolve: x => x.Source.WorkflowType);

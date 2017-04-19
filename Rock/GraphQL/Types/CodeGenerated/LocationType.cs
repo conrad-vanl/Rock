@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,27 +36,43 @@ namespace Rock.GraphQL.Types
        {
           Field("AssessorParcelId", x => x.AssessorParcelId, nullable: false);
           Field("Barcode", x => x.Barcode, nullable: false);
+          Field("CampusId", x => x.CampusId, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.Location>>("ChildLocations", resolve: x => x.Source.ChildLocations);
           Field("City", x => x.City, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
           Field("Country", x => x.Country, nullable: false);
           Field("County", x => x.County, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Distance", x => x.Distance, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("FirmRoomThreshold", x => x.FirmRoomThreshold, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("FormattedAddress", x => x.FormattedAddress, nullable: false);
+          Field("FormattedHtmlAddress", x => x.FormattedHtmlAddress, nullable: false);
           Field("GeocodeAttemptedDateTime", x => x.GeocodeAttemptedDateTime, nullable: true);
           Field("GeocodeAttemptedResult", x => x.GeocodeAttemptedResult, nullable: false);
           Field("GeocodeAttemptedServiceType", x => x.GeocodeAttemptedServiceType, nullable: false);
           Field("GeocodedDateTime", x => x.GeocodedDateTime, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupLocation>>("GroupLocations", resolve: x => x.Source.GroupLocations);
           Field<Rock.GraphQL.Types.BinaryFile>("Image", resolve: x => x.Source.Image);
           Field("ImageId", x => x.ImageId, nullable: true);
           Field("IsActive", x => x.IsActive, nullable: false);
           Field("IsGeoPointLocked", x => x.IsGeoPointLocked, nullable: true);
+          Field("IsNamedLocation", x => x.IsNamedLocation, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("Latitude", x => x.Latitude, nullable: true);
           Field<Rock.GraphQL.Types.DefinedValue>("LocationTypeValue", resolve: x => x.Source.LocationTypeValue);
           Field("LocationTypeValueId", x => x.LocationTypeValueId, nullable: true);
           Field("Longitude", x => x.Longitude, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
+          Field<Rock.GraphQL.Types.Location>("ParentLocation", resolve: x => x.Source.ParentLocation);
           Field("ParentLocationId", x => x.ParentLocationId, nullable: true);
           Field("PostalCode", x => x.PostalCode, nullable: false);
           Field<Rock.GraphQL.Types.Device>("PrinterDevice", resolve: x => x.Source.PrinterDevice);
@@ -68,6 +85,9 @@ namespace Rock.GraphQL.Types
           Field("State", x => x.State, nullable: false);
           Field("Street1", x => x.Street1, nullable: false);
           Field("Street2", x => x.Street2, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

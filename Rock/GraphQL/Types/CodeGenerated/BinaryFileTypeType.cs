@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,14 +35,24 @@ namespace Rock.GraphQL.Types
        public BinaryFileType(): base("BinaryFileType")
        {
           Field("AllowCaching", x => x.AllowCaching, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
+          Field("FileCount", x => x.FileCount, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("MaxHeight", x => x.MaxHeight, nullable: true);
           Field("MaxWidth", x => x.MaxWidth, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("PreferredColorDepth", x => x.PreferredColorDepth.ConvertToInt(), nullable: false);
           Field("PreferredFormat", x => x.PreferredFormat.ConvertToInt(), nullable: false);
@@ -50,6 +61,9 @@ namespace Rock.GraphQL.Types
           Field("RequiresViewSecurity", x => x.RequiresViewSecurity, nullable: false);
           Field<Rock.GraphQL.Types.EntityType>("StorageEntityType", resolve: x => x.Source.StorageEntityType);
           Field("StorageEntityTypeId", x => x.StorageEntityTypeId, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

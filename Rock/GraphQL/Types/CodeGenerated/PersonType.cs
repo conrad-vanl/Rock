@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,38 +34,68 @@ namespace Rock.GraphQL.Types
     {
        public Person(): base("Person")
        {
+          Field("Age", x => x.Age, nullable: true);
+          Field("AgePrecise", x => x.AgePrecise, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.PersonAlias>>("Aliases", resolve: x => x.Source.Aliases);
+          Field("AllowsInteractiveBulkIndexing", x => x.AllowsInteractiveBulkIndexing, nullable: false);
           Field("AnniversaryDate", x => x.AnniversaryDate, nullable: true);
           Field("BirthDate", x => x.BirthDate, nullable: true);
           Field("BirthDay", x => x.BirthDay, nullable: true);
+          Field("BirthdayDayOfWeek", x => x.BirthdayDayOfWeek, nullable: false);
+          Field("BirthdayDayOfWeekShort", x => x.BirthdayDayOfWeekShort, nullable: false);
           Field("BirthMonth", x => x.BirthMonth, nullable: true);
           Field("BirthYear", x => x.BirthYear, nullable: true);
           Field<Rock.GraphQL.Types.DefinedValue>("ConnectionStatusValue", resolve: x => x.Source.ConnectionStatusValue);
           Field("ConnectionStatusValueId", x => x.ConnectionStatusValueId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("DaysToBirthday", x => x.DaysToBirthday, nullable: false);
           Field("DaysUntilBirthday", x => x.DaysUntilBirthday, nullable: true);
           Field("Email", x => x.Email, nullable: false);
           Field("EmailNote", x => x.EmailNote, nullable: false);
           Field("EmailPreference", x => x.EmailPreference.ConvertToInt(), nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("FirstName", x => x.FirstName, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("FullName", x => x.FullName, nullable: false);
+          Field("FullNameFormal", x => x.FullNameFormal, nullable: false);
+          Field("FullNameFormalReversed", x => x.FullNameFormalReversed, nullable: false);
+          Field("FullNameReversed", x => x.FullNameReversed, nullable: false);
           Field("Gender", x => x.Gender.ConvertToInt(), nullable: false);
+          Field<Rock.GraphQL.Types.Group>("GivingGroup", resolve: x => x.Source.GivingGroup);
           Field("GivingGroupId", x => x.GivingGroupId, nullable: true);
           Field("GivingId", x => x.GivingId, nullable: false);
           Field("GivingLeaderId", x => x.GivingLeaderId, nullable: false);
+          Field("GradeFormatted", x => x.GradeFormatted, nullable: false);
           Field("GradeOffset", x => x.GradeOffset, nullable: true);
           Field("GraduationYear", x => x.GraduationYear, nullable: true);
+          Field("HasGraduated", x => x.HasGraduated, nullable: true);
+          Field("ImpersonationParameter", x => x.ImpersonationParameter, nullable: false);
           Field("InactiveReasonNote", x => x.InactiveReasonNote, nullable: false);
           Field("IsDeceased", x => x.IsDeceased, nullable: false);
           Field("IsEmailActive", x => x.IsEmailActive, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastName", x => x.LastName, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("MaritalStatusValue", resolve: x => x.Source.MaritalStatusValue);
           Field("MaritalStatusValueId", x => x.MaritalStatusValueId, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupMember>>("Members", resolve: x => x.Source.Members);
           Field("MiddleName", x => x.MiddleName, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field("NextAnniversary", x => x.NextAnniversary, nullable: true);
+          Field("NextBirthDay", x => x.NextBirthDay, nullable: true);
           Field("NickName", x => x.NickName, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.PhoneNumber>>("PhoneNumbers", resolve: x => x.Source.PhoneNumbers);
           Field<Rock.GraphQL.Types.BinaryFile>("Photo", resolve: x => x.Source.Photo);
           Field("PhotoId", x => x.PhotoId, nullable: true);
+          Field("PhotoUrl", x => x.PhotoUrl, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("PrimaryAlias", resolve: x => x.Source.PrimaryAlias);
           Field("PrimaryAliasId", x => x.PrimaryAliasId, nullable: true);
           Field("RecordStatusLastModifiedDateTime", x => x.RecordStatusLastModifiedDateTime, nullable: true);
           Field<Rock.GraphQL.Types.DefinedValue>("RecordStatusReasonValue", resolve: x => x.Source.RecordStatusReasonValue);
@@ -81,6 +112,10 @@ namespace Rock.GraphQL.Types
           Field("SystemNote", x => x.SystemNote, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("TitleValue", resolve: x => x.Source.TitleValue);
           Field("TitleValueId", x => x.TitleValueId, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.UserLogin>>("Users", resolve: x => x.Source.Users);
           Field("ViewedCount", x => x.ViewedCount, nullable: true);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

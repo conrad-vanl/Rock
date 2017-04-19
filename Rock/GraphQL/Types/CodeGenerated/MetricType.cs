@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,24 +34,44 @@ namespace Rock.GraphQL.Types
     {
        public Metric(): base("Metric")
        {
+          Field<Rock.GraphQL.Types.PersonAlias>("AdminPersonAlias", resolve: x => x.Source.AdminPersonAlias);
           Field("AdminPersonAliasId", x => x.AdminPersonAliasId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field<Rock.GraphQL.Types.DataView>("DataView", resolve: x => x.Source.DataView);
           Field("DataViewId", x => x.DataViewId, nullable: true);
           Field("Description", x => x.Description, nullable: false);
           Field("EnableAnalytics", x => x.EnableAnalytics, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
           Field("IsCumulative", x => x.IsCumulative, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastRunDateTime", x => x.LastRunDateTime, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.MetricCategory>>("MetricCategories", resolve: x => x.Source.MetricCategories);
+          Field<Rock.GraphQL.Types.PersonAlias>("MetricChampionPersonAlias", resolve: x => x.Source.MetricChampionPersonAlias);
           Field("MetricChampionPersonAliasId", x => x.MetricChampionPersonAliasId, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.MetricPartition>>("MetricPartitions", resolve: x => x.Source.MetricPartitions);
+          Field<ListGraphType<Rock.GraphQL.Types.MetricValue>>("MetricValues", resolve: x => x.Source.MetricValues);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field("NumericDataType", x => x.NumericDataType.ConvertToInt(), nullable: false);
+          Field<Rock.GraphQL.Types.Schedule>("Schedule", resolve: x => x.Source.Schedule);
           Field("ScheduleId", x => x.ScheduleId, nullable: true);
           Field("SourceSql", x => x.SourceSql, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("SourceValueType", resolve: x => x.Source.SourceValueType);
           Field("SourceValueTypeId", x => x.SourceValueTypeId, nullable: true);
           Field("Subtitle", x => x.Subtitle, nullable: false);
           Field("Title", x => x.Title, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("XAxisLabel", x => x.XAxisLabel, nullable: false);
           Field("YAxisLabel", x => x.YAxisLabel, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -40,24 +41,40 @@ namespace Rock.GraphQL.Types
           Field("ApprovedOnDateTime", x => x.ApprovedOnDateTime, nullable: true);
           Field<Rock.GraphQL.Types.Category>("Category", resolve: x => x.Source.Category);
           Field("CategoryId", x => x.CategoryId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Email", x => x.Email, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("EnteredDateTime", x => x.EnteredDateTime, nullable: false);
           Field("ExpirationDate", x => x.ExpirationDate, nullable: true);
           Field("FirstName", x => x.FirstName, nullable: false);
           Field("FlagCount", x => x.FlagCount, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("FullName", x => x.FullName, nullable: false);
+          Field("FullNameReversed", x => x.FullNameReversed, nullable: false);
+          Field<Rock.GraphQL.Types.Group>("Group", resolve: x => x.Source.Group);
           Field("GroupId", x => x.GroupId, nullable: true);
           Field("IsActive", x => x.IsActive, nullable: true);
           Field("IsApproved", x => x.IsApproved, nullable: true);
           Field("IsPublic", x => x.IsPublic, nullable: true);
           Field("IsUrgent", x => x.IsUrgent, nullable: true);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastName", x => x.LastName, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field("Name", x => x.Name, nullable: false);
           Field("PrayerCount", x => x.PrayerCount, nullable: true);
           Field<Rock.GraphQL.Types.PersonAlias>("RequestedByPersonAlias", resolve: x => x.Source.RequestedByPersonAlias);
           Field("RequestedByPersonAliasId", x => x.RequestedByPersonAliasId, nullable: true);
           Field("Text", x => x.Text, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

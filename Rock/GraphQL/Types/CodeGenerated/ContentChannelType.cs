@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,23 +35,38 @@ namespace Rock.GraphQL.Types
        public ContentChannel(): base("ContentChannel")
        {
           Field("ChannelUrl", x => x.ChannelUrl, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.ContentChannel>>("ChildContentChannels", resolve: x => x.Source.ChildContentChannels);
           Field("ChildItemsManuallyOrdered", x => x.ChildItemsManuallyOrdered, nullable: false);
           Field<Rock.GraphQL.Types.ContentChannelType>("ContentChannelType", resolve: x => x.Source.ContentChannelType);
           Field("ContentChannelTypeId", x => x.ContentChannelTypeId, nullable: false);
           Field("ContentControlType", x => x.ContentControlType.ConvertToInt(), nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
           Field("EnableRss", x => x.EnableRss, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
           Field("IsIndexEnabled", x => x.IsIndexEnabled, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.ContentChannelItem>>("Items", resolve: x => x.Source.Items);
           Field("ItemsManuallyOrdered", x => x.ItemsManuallyOrdered, nullable: false);
           Field("ItemUrl", x => x.ItemUrl, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.ContentChannel>>("ParentContentChannels", resolve: x => x.Source.ParentContentChannels);
           Field("RequiresApproval", x => x.RequiresApproval, nullable: false);
           Field("RootImageDirectory", x => x.RootImageDirectory, nullable: false);
           Field("TimeToLive", x => x.TimeToLive, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

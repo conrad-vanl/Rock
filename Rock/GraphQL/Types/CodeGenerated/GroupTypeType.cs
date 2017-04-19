@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -38,34 +39,55 @@ namespace Rock.GraphQL.Types
           Field("AttendanceCountsAsWeekendService", x => x.AttendanceCountsAsWeekendService, nullable: false);
           Field("AttendancePrintTo", x => x.AttendancePrintTo.ConvertToInt(), nullable: false);
           Field("AttendanceRule", x => x.AttendanceRule.ConvertToInt(), nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupType>>("ChildGroupTypes", resolve: x => x.Source.ChildGroupTypes);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field<Rock.GraphQL.Types.GroupTypeRole>("DefaultGroupRole", resolve: x => x.Source.DefaultGroupRole);
           Field("DefaultGroupRoleId", x => x.DefaultGroupRoleId, nullable: true);
           Field("Description", x => x.Description, nullable: false);
           Field("EnableLocationSchedules", x => x.EnableLocationSchedules, nullable: true);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("GroupAttendanceRequiresLocation", x => x.GroupAttendanceRequiresLocation, nullable: false);
           Field("GroupAttendanceRequiresSchedule", x => x.GroupAttendanceRequiresSchedule, nullable: false);
           Field("GroupCapacityRule", x => x.GroupCapacityRule.ConvertToInt(), nullable: false);
+          Field("GroupCount", x => x.GroupCount, nullable: false);
           Field("GroupMemberTerm", x => x.GroupMemberTerm, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupMemberWorkflowTrigger>>("GroupMemberWorkflowTriggers", resolve: x => x.Source.GroupMemberWorkflowTriggers);
+          Field<ListGraphType<Rock.GraphQL.Types.Group>>("Groups", resolve: x => x.Source.Groups);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupScheduleExclusion>>("GroupScheduleExclusions", resolve: x => x.Source.GroupScheduleExclusions);
           Field("GroupsRequireCampus", x => x.GroupsRequireCampus, nullable: false);
           Field("GroupTerm", x => x.GroupTerm, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("GroupTypePurposeValue", resolve: x => x.Source.GroupTypePurposeValue);
           Field("GroupTypePurposeValueId", x => x.GroupTypePurposeValueId, nullable: true);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
           Field("IgnorePersonInactivated", x => x.IgnorePersonInactivated, nullable: false);
+          Field<Rock.GraphQL.Types.GroupType>("InheritedGroupType", resolve: x => x.Source.InheritedGroupType);
           Field("InheritedGroupTypeId", x => x.InheritedGroupTypeId, nullable: true);
           Field("IsIndexEnabled", x => x.IsIndexEnabled, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LocationSelectionMode", x => x.LocationSelectionMode.ConvertToInt(), nullable: false);
+          //Field<ListGraphType<Rock.GraphQL.Types.GroupTypeLocationType>>("LocationTypes", resolve: x => x.Source.LocationTypes);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("Order", x => x.Order, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupType>>("ParentGroupTypes", resolve: x => x.Source.ParentGroupTypes);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupTypeRole>>("Roles", resolve: x => x.Source.Roles);
           Field("SendAttendanceReminder", x => x.SendAttendanceReminder, nullable: false);
           Field("ShowConnectionStatus", x => x.ShowConnectionStatus, nullable: false);
           Field("ShowInGroupList", x => x.ShowInGroupList, nullable: false);
           Field("ShowInNavigation", x => x.ShowInNavigation, nullable: false);
           Field("TakesAttendance", x => x.TakesAttendance, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

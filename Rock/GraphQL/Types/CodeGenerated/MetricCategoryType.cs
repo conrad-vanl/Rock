@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,11 +36,19 @@ namespace Rock.GraphQL.Types
        {
           Field<Rock.GraphQL.Types.Category>("Category", resolve: x => x.Source.Category);
           Field("CategoryId", x => x.CategoryId, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IconCssClass", x => x.IconCssClass, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field<Rock.GraphQL.Types.Metric>("Metric", resolve: x => x.Source.Metric);
           Field("MetricId", x => x.MetricId, nullable: false);
+          Field("Name", x => x.Name, nullable: false);
           Field("Order", x => x.Order, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("Guid", x => x.Guid.ToStringSafe(), nullable: false);
           Field("ForeignId", x => x.ForeignId, nullable: true);
        }

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,13 +34,21 @@ namespace Rock.GraphQL.Types
     {
        public PersonAlias(): base("PersonAlias")
        {
+          Field("AliasEncryptedKey", x => x.AliasEncryptedKey, nullable: false);
+          Field<Rock.GraphQL.Types.Person>("AliasPerson", resolve: x => x.Source.AliasPerson);
           Field("AliasPersonGuid", x => x.AliasPersonGuid.ToStringSafe(), nullable: false);
           Field("AliasPersonId", x => x.AliasPersonId, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field<Rock.GraphQL.Types.Person>("Person", resolve: x => x.Source.Person);
           Field("PersonId", x => x.PersonId, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("Guid", x => x.Guid.ToStringSafe(), nullable: false);
           Field("ForeignId", x => x.ForeignId, nullable: true);
        }

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,11 +34,18 @@ namespace Rock.GraphQL.Types
     {
        public AttributeQualifier(): base("AttributeQualifier")
        {
+          Field<Rock.GraphQL.Types.Attribute>("Attribute", resolve: x => x.Source.Attribute);
           Field("AttributeId", x => x.AttributeId, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("Key", x => x.Key, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("Value", x => x.Value, nullable: false);
           Field("Guid", x => x.Guid.ToStringSafe(), nullable: false);
           Field("ForeignId", x => x.ForeignId, nullable: true);

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -38,26 +39,41 @@ namespace Rock.GraphQL.Types
           Field("AllowGroupPlacement", x => x.AllowGroupPlacement, nullable: false);
           Field("AllowMultipleRegistrants", x => x.AllowMultipleRegistrants, nullable: false);
           Field("BatchNamePrefix", x => x.BatchNamePrefix, nullable: false);
+          Field<Rock.GraphQL.Types.Category>("Category", resolve: x => x.Source.Category);
           Field("CategoryId", x => x.CategoryId, nullable: true);
           Field("ConfirmationEmailTemplate", x => x.ConfirmationEmailTemplate, nullable: false);
           Field("ConfirmationFromEmail", x => x.ConfirmationFromEmail, nullable: false);
           Field("ConfirmationFromName", x => x.ConfirmationFromName, nullable: false);
           Field("ConfirmationSubject", x => x.ConfirmationSubject, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
           Field("Cost", x => x.Cost, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("DiscountCodeTerm", x => x.DiscountCodeTerm, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.RegistrationTemplateDiscount>>("Discounts", resolve: x => x.Source.Discounts);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.RegistrationTemplateFee>>("Fees", resolve: x => x.Source.Fees);
           Field("FeeTerm", x => x.FeeTerm, nullable: false);
           Field<Rock.GraphQL.Types.FinancialGateway>("FinancialGateway", resolve: x => x.Source.FinancialGateway);
           Field("FinancialGatewayId", x => x.FinancialGatewayId, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.RegistrationTemplateForm>>("Forms", resolve: x => x.Source.Forms);
           Field("GroupMemberRoleId", x => x.GroupMemberRoleId, nullable: true);
           Field("GroupMemberStatus", x => x.GroupMemberStatus.ConvertToInt(), nullable: false);
+          Field<Rock.GraphQL.Types.GroupType>("GroupType", resolve: x => x.Source.GroupType);
           Field("GroupTypeId", x => x.GroupTypeId, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.RegistrationInstance>>("Instances", resolve: x => x.Source.Instances);
           Field("IsActive", x => x.IsActive, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LoginRequired", x => x.LoginRequired, nullable: false);
           Field("MaxRegistrants", x => x.MaxRegistrants, nullable: false);
           Field("MinimumInitialPayment", x => x.MinimumInitialPayment, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("Notify", x => x.Notify.ConvertToInt(), nullable: false);
           Field("PaymentReminderEmailTemplate", x => x.PaymentReminderEmailTemplate, nullable: false);
@@ -82,6 +98,9 @@ namespace Rock.GraphQL.Types
           Field("SignatureDocumentAction", x => x.SignatureDocumentAction.ConvertToInt(), nullable: false);
           Field("SuccessText", x => x.SuccessText, nullable: false);
           Field("SuccessTitle", x => x.SuccessTitle, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("WaitListEnabled", x => x.WaitListEnabled, nullable: false);
           Field("WaitListTransitionEmailTemplate", x => x.WaitListTransitionEmailTemplate, nullable: false);
           Field("WaitListTransitionFromEmail", x => x.WaitListTransitionFromEmail, nullable: false);

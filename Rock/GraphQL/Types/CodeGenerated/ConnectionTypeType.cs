@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,17 +34,34 @@ namespace Rock.GraphQL.Types
     {
        public ConnectionType(): base("ConnectionType")
        {
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionActivityType>>("ConnectionActivityTypes", resolve: x => x.Source.ConnectionActivityTypes);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionOpportunity>>("ConnectionOpportunities", resolve: x => x.Source.ConnectionOpportunities);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionStatus>>("ConnectionStatuses", resolve: x => x.Source.ConnectionStatuses);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionWorkflow>>("ConnectionWorkflows", resolve: x => x.Source.ConnectionWorkflows);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("DaysUntilRequestIdle", x => x.DaysUntilRequestIdle, nullable: false);
           Field("Description", x => x.Description, nullable: false);
           Field("EnableFullActivityList", x => x.EnableFullActivityList, nullable: false);
           Field("EnableFutureFollowup", x => x.EnableFutureFollowup, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("OwnerPersonAlias", resolve: x => x.Source.OwnerPersonAlias);
           Field("OwnerPersonAliasId", x => x.OwnerPersonAliasId, nullable: true);
           Field("RequiresPlacementGroupToConnect", x => x.RequiresPlacementGroupToConnect, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

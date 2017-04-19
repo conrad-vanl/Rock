@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,14 +35,22 @@ namespace Rock.GraphQL.Types
        public Audit(): base("Audit")
        {
           Field("AuditType", x => x.AuditType.ConvertToInt(), nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
           Field("DateTime", x => x.DateTime, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.AuditDetail>>("Details", resolve: x => x.Source.Details);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("EntityId", x => x.EntityId, nullable: false);
           Field<Rock.GraphQL.Types.EntityType>("EntityType", resolve: x => x.Source.EntityType);
           Field("EntityTypeId", x => x.EntityTypeId, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("PersonAlias", resolve: x => x.Source.PersonAlias);
           Field("PersonAliasId", x => x.PersonAliasId, nullable: true);
           Field("Title", x => x.Title, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("Guid", x => x.Guid.ToStringSafe(), nullable: false);
           Field("ForeignId", x => x.ForeignId, nullable: true);
        }

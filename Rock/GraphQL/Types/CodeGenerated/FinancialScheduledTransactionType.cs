@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,8 +34,14 @@ namespace Rock.GraphQL.Types
     {
        public FinancialScheduledTransaction(): base("FinancialScheduledTransaction")
        {
+          Field<Rock.GraphQL.Types.PersonAlias>("AuthorizedPersonAlias", resolve: x => x.Source.AuthorizedPersonAlias);
           Field("AuthorizedPersonAliasId", x => x.AuthorizedPersonAliasId, nullable: false);
           Field("CardReminderDate", x => x.CardReminderDate, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("EndDate", x => x.EndDate, nullable: true);
           Field<Rock.GraphQL.Types.FinancialGateway>("FinancialGateway", resolve: x => x.Source.FinancialGateway);
           Field("FinancialGatewayId", x => x.FinancialGatewayId, nullable: true);
@@ -44,19 +51,29 @@ namespace Rock.GraphQL.Types
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("GatewayScheduleId", x => x.GatewayScheduleId, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastRemindedDate", x => x.LastRemindedDate, nullable: true);
           Field("LastStatusUpdateDateTime", x => x.LastStatusUpdateDateTime, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("NextPaymentDate", x => x.NextPaymentDate, nullable: true);
           Field("NumberOfPayments", x => x.NumberOfPayments, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.FinancialScheduledTransactionDetail>>("ScheduledTransactionDetails", resolve: x => x.Source.ScheduledTransactionDetails);
           Field<Rock.GraphQL.Types.DefinedValue>("SourceTypeValue", resolve: x => x.Source.SourceTypeValue);
           Field("SourceTypeValueId", x => x.SourceTypeValueId, nullable: true);
           Field("StartDate", x => x.StartDate, nullable: false);
+          Field("TotalAmount", x => x.TotalAmount, nullable: false);
           Field("TransactionCode", x => x.TransactionCode, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("TransactionFrequencyValue", resolve: x => x.Source.TransactionFrequencyValue);
           Field("TransactionFrequencyValueId", x => x.TransactionFrequencyValueId, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.FinancialTransaction>>("Transactions", resolve: x => x.Source.Transactions);
           Field<Rock.GraphQL.Types.DefinedValue>("TransactionTypeValue", resolve: x => x.Source.TransactionTypeValue);
           Field("TransactionTypeValueId", x => x.TransactionTypeValueId, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

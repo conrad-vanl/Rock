@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,24 +34,38 @@ namespace Rock.GraphQL.Types
     {
        public WorkflowType(): base("WorkflowType")
        {
+          Field<ListGraphType<Rock.GraphQL.Types.WorkflowActivityType>>("ActivityTypes", resolve: x => x.Source.ActivityTypes);
           Field<Rock.GraphQL.Types.Category>("Category", resolve: x => x.Source.Category);
           Field("CategoryId", x => x.CategoryId, nullable: true);
           Field("CompletedWorkflowRetentionPeriod", x => x.CompletedWorkflowRetentionPeriod, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("HasActiveForms", x => x.HasActiveForms, nullable: false);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: true);
           Field("IsPersisted", x => x.IsPersisted, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LoggingLevel", x => x.LoggingLevel.ConvertToInt(), nullable: false);
           Field("LogRetentionPeriod", x => x.LogRetentionPeriod, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("NoActionMessage", x => x.NoActionMessage, nullable: false);
           Field("Order", x => x.Order, nullable: false);
           Field("ProcessingIntervalSeconds", x => x.ProcessingIntervalSeconds, nullable: true);
           Field("SummaryViewText", x => x.SummaryViewText, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("WorkflowIdPrefix", x => x.WorkflowIdPrefix, nullable: false);
           Field("WorkTerm", x => x.WorkTerm, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,16 +36,29 @@ namespace Rock.GraphQL.Types
        {
           Field<Rock.GraphQL.Types.Attribute>("Attribute", resolve: x => x.Source.Attribute);
           Field("AttributeId", x => x.AttributeId, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("HideLabel", x => x.HideLabel, nullable: false);
           Field("IsReadOnly", x => x.IsReadOnly, nullable: false);
           Field("IsRequired", x => x.IsRequired, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("IsVisible", x => x.IsVisible, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Order", x => x.Order, nullable: false);
           Field("PostHtml", x => x.PostHtml, nullable: false);
           Field("PreHtml", x => x.PreHtml, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
+          Field<Rock.GraphQL.Types.WorkflowActionForm>("WorkflowActionForm", resolve: x => x.Source.WorkflowActionForm);
           Field("WorkflowActionFormId", x => x.WorkflowActionFormId, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

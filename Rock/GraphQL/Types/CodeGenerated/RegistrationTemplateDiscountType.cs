@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,18 +35,33 @@ namespace Rock.GraphQL.Types
        public RegistrationTemplateDiscount(): base("RegistrationTemplateDiscount")
        {
           Field("Code", x => x.Code, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("DiscountAmount", x => x.DiscountAmount, nullable: false);
+          Field("DiscountLimitsString", x => x.DiscountLimitsString, nullable: false);
           Field("DiscountPercentage", x => x.DiscountPercentage, nullable: false);
+          Field("DiscountString", x => x.DiscountString, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("EndDate", x => x.EndDate, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("MaxRegistrants", x => x.MaxRegistrants, nullable: true);
           Field("MaxUsage", x => x.MaxUsage, nullable: true);
           Field("MinRegistrants", x => x.MinRegistrants, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Order", x => x.Order, nullable: false);
+          Field<Rock.GraphQL.Types.RegistrationTemplate>("RegistrationTemplate", resolve: x => x.Source.RegistrationTemplate);
           Field("RegistrationTemplateId", x => x.RegistrationTemplateId, nullable: false);
           Field("StartDate", x => x.StartDate, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

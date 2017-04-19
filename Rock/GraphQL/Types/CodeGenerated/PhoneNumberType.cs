@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,20 +34,35 @@ namespace Rock.GraphQL.Types
     {
        public PhoneNumber(): base("PhoneNumber")
        {
+          Field("ContextKey", x => x.ContextKey, nullable: false);
           Field("CountryCode", x => x.CountryCode, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("Extension", x => x.Extension, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IsMessagingEnabled", x => x.IsMessagingEnabled, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
           Field("IsUnlisted", x => x.IsUnlisted, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Number", x => x.Number, nullable: false);
           Field("NumberFormatted", x => x.NumberFormatted, nullable: false);
+          Field("NumberFormattedWithCountryCode", x => x.NumberFormattedWithCountryCode, nullable: false);
+          Field("NumberReversed", x => x.NumberReversed, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("NumberTypeValue", resolve: x => x.Source.NumberTypeValue);
           Field("NumberTypeValueId", x => x.NumberTypeValueId, nullable: true);
+          Field<Rock.GraphQL.Types.Person>("Person", resolve: x => x.Source.Person);
           Field("PersonId", x => x.PersonId, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

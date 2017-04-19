@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,6 +34,7 @@ namespace Rock.GraphQL.Types
     {
        public BenevolenceRequest(): base("BenevolenceRequest")
        {
+          Field<ListGraphType<Rock.GraphQL.Types.BenevolenceResult>>("BenevolenceResults", resolve: x => x.Source.BenevolenceResults);
           Field<Rock.GraphQL.Types.Campus>("Campus", resolve: x => x.Source.Campus);
           Field("CampusId", x => x.CampusId, nullable: true);
           Field<Rock.GraphQL.Types.PersonAlias>("CaseWorkerPersonAlias", resolve: x => x.Source.CaseWorkerPersonAlias);
@@ -40,16 +42,28 @@ namespace Rock.GraphQL.Types
           Field("CellPhoneNumber", x => x.CellPhoneNumber, nullable: false);
           Field<Rock.GraphQL.Types.DefinedValue>("ConnectionStatusValue", resolve: x => x.Source.ConnectionStatusValue);
           Field("ConnectionStatusValueId", x => x.ConnectionStatusValueId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.BenevolenceRequestDocument>>("Documents", resolve: x => x.Source.Documents);
           Field("Email", x => x.Email, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("FirstName", x => x.FirstName, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("FullName", x => x.FullName, nullable: false);
+          Field("FullNameReversed", x => x.FullNameReversed, nullable: false);
           Field("GovernmentId", x => x.GovernmentId, nullable: false);
           Field("HomePhoneNumber", x => x.HomePhoneNumber, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastName", x => x.LastName, nullable: false);
           Field<Rock.GraphQL.Types.Location>("Location", resolve: x => x.Source.Location);
           Field("LocationId", x => x.LocationId, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("ProvidedNextSteps", x => x.ProvidedNextSteps, nullable: false);
           Field("RequestDateTime", x => x.RequestDateTime, nullable: false);
           Field<Rock.GraphQL.Types.PersonAlias>("RequestedByPersonAlias", resolve: x => x.Source.RequestedByPersonAlias);
@@ -58,6 +72,10 @@ namespace Rock.GraphQL.Types
           Field("RequestStatusValueId", x => x.RequestStatusValueId, nullable: true);
           Field("RequestText", x => x.RequestText, nullable: false);
           Field("ResultSummary", x => x.ResultSummary, nullable: false);
+          Field("TotalAmount", x => x.TotalAmount, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("WorkPhoneNumber", x => x.WorkPhoneNumber, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

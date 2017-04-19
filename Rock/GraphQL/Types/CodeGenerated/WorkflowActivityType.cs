@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,16 +34,35 @@ namespace Rock.GraphQL.Types
     {
        public WorkflowActivity(): base("WorkflowActivity")
        {
+          Field<ListGraphType<Rock.GraphQL.Types.WorkflowAction>>("Actions", resolve: x => x.Source.Actions);
+          Field<Rock.GraphQL.Types.WorkflowActivity>("ActivatedByActivity", resolve: x => x.Source.ActivatedByActivity);
           Field("ActivatedByActivityId", x => x.ActivatedByActivityId, nullable: true);
           Field("ActivatedDateTime", x => x.ActivatedDateTime, nullable: true);
+          Field<Rock.GraphQL.Types.WorkflowActivityType>("ActivityType", resolve: x => x.Source.ActivityType);
           Field("ActivityTypeId", x => x.ActivityTypeId, nullable: false);
+          Field<Rock.GraphQL.Types.Group>("AssignedGroup", resolve: x => x.Source.AssignedGroup);
           Field("AssignedGroupId", x => x.AssignedGroupId, nullable: true);
+          Field<Rock.GraphQL.Types.PersonAlias>("AssignedPersonAlias", resolve: x => x.Source.AssignedPersonAlias);
           Field("AssignedPersonAliasId", x => x.AssignedPersonAliasId, nullable: true);
           Field("CompletedDateTime", x => x.CompletedDateTime, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsActive", x => x.IsActive, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastProcessedDateTime", x => x.LastProcessedDateTime, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
+          Field<Rock.GraphQL.Types.Workflow>("Workflow", resolve: x => x.Source.Workflow);
           Field("WorkflowId", x => x.WorkflowId, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,17 +34,38 @@ namespace Rock.GraphQL.Types
     {
        public ConnectionOpportunity(): base("ConnectionOpportunity")
        {
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionOpportunityCampus>>("ConnectionOpportunityCampuses", resolve: x => x.Source.ConnectionOpportunityCampuses);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionOpportunityConnectorGroup>>("ConnectionOpportunityConnectorGroups", resolve: x => x.Source.ConnectionOpportunityConnectorGroups);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionOpportunityGroupConfig>>("ConnectionOpportunityGroupConfigs", resolve: x => x.Source.ConnectionOpportunityGroupConfigs);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionOpportunityGroup>>("ConnectionOpportunityGroups", resolve: x => x.Source.ConnectionOpportunityGroups);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionRequest>>("ConnectionRequests", resolve: x => x.Source.ConnectionRequests);
+          Field<Rock.GraphQL.Types.ConnectionType>("ConnectionType", resolve: x => x.Source.ConnectionType);
           Field("ConnectionTypeId", x => x.ConnectionTypeId, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.ConnectionWorkflow>>("ConnectionWorkflows", resolve: x => x.Source.ConnectionWorkflows);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IconCssClass", x => x.IconCssClass, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
+          Field<Rock.GraphQL.Types.BinaryFile>("Photo", resolve: x => x.Source.Photo);
           Field("PhotoId", x => x.PhotoId, nullable: true);
+          Field("PhotoUrl", x => x.PhotoUrl, nullable: false);
           Field("PublicName", x => x.PublicName, nullable: false);
           Field("Summary", x => x.Summary, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

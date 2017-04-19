@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,6 +36,8 @@ namespace Rock.GraphQL.Types
        {
           Field("AllowedFrameDomains", x => x.AllowedFrameDomains, nullable: false);
           Field("AllowIndexing", x => x.AllowIndexing, nullable: false);
+          Field("AllowsInteractiveBulkIndexing", x => x.AllowsInteractiveBulkIndexing, nullable: false);
+          Field<Rock.GraphQL.Types.Page>("ChangePasswordPage", resolve: x => x.Source.ChangePasswordPage);
           Field("ChangePasswordPageId", x => x.ChangePasswordPageId, nullable: true);
           Field<Rock.GraphQL.Types.PageRoute>("ChangePasswordPageRoute", resolve: x => x.Source.ChangePasswordPageRoute);
           Field("ChangePasswordPageRouteId", x => x.ChangePasswordPageRouteId, nullable: true);
@@ -42,6 +45,10 @@ namespace Rock.GraphQL.Types
           Field("CommunicationPageId", x => x.CommunicationPageId, nullable: true);
           Field<Rock.GraphQL.Types.PageRoute>("CommunicationPageRoute", resolve: x => x.Source.CommunicationPageRoute);
           Field("CommunicationPageRouteId", x => x.CommunicationPageRouteId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field<Rock.GraphQL.Types.Page>("DefaultPage", resolve: x => x.Source.DefaultPage);
           Field("DefaultPageId", x => x.DefaultPageId, nullable: true);
           Field<Rock.GraphQL.Types.PageRoute>("DefaultPageRoute", resolve: x => x.Source.DefaultPageRoute);
@@ -49,6 +56,7 @@ namespace Rock.GraphQL.Types
           Field("Description", x => x.Description, nullable: false);
           Field("EnableMobileRedirect", x => x.EnableMobileRedirect, nullable: false);
           Field("EnablePageViews", x => x.EnablePageViews, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ErrorPage", x => x.ErrorPage, nullable: false);
           Field("ExternalUrl", x => x.ExternalUrl, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
@@ -57,6 +65,8 @@ namespace Rock.GraphQL.Types
           Field("IndexStartingLocation", x => x.IndexStartingLocation, nullable: false);
           Field("IsIndexEnabled", x => x.IsIndexEnabled, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.Layout>>("Layouts", resolve: x => x.Source.Layouts);
           Field<Rock.GraphQL.Types.Page>("LoginPage", resolve: x => x.Source.LoginPage);
           Field("LoginPageId", x => x.LoginPageId, nullable: true);
           Field<Rock.GraphQL.Types.PageRoute>("LoginPageRoute", resolve: x => x.Source.LoginPageRoute);
@@ -64,6 +74,9 @@ namespace Rock.GraphQL.Types
           Field<Rock.GraphQL.Types.Page>("MobilePage", resolve: x => x.Source.MobilePage);
           Field("MobilePageId", x => x.MobilePageId, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("PageHeaderContent", x => x.PageHeaderContent, nullable: false);
           Field<Rock.GraphQL.Types.Page>("PageNotFoundPage", resolve: x => x.Source.PageNotFoundPage);
@@ -76,7 +89,11 @@ namespace Rock.GraphQL.Types
           Field<Rock.GraphQL.Types.PageRoute>("RegistrationPageRoute", resolve: x => x.Source.RegistrationPageRoute);
           Field("RegistrationPageRouteId", x => x.RegistrationPageRouteId, nullable: true);
           Field("RequiresEncryption", x => x.RequiresEncryption, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.SiteDomain>>("SiteDomains", resolve: x => x.Source.SiteDomains);
           Field("Theme", x => x.Theme, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

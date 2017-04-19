@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,12 +34,26 @@ namespace Rock.GraphQL.Types
     {
        public ConnectionWorkflow(): base("ConnectionWorkflow")
        {
+          Field<Rock.GraphQL.Types.ConnectionOpportunity>("ConnectionOpportunity", resolve: x => x.Source.ConnectionOpportunity);
           Field("ConnectionOpportunityId", x => x.ConnectionOpportunityId, nullable: true);
+          Field<Rock.GraphQL.Types.ConnectionType>("ConnectionType", resolve: x => x.Source.ConnectionType);
           Field("ConnectionTypeId", x => x.ConnectionTypeId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("QualifierValue", x => x.QualifierValue, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field<Rock.GraphQL.Types.WorkflowType>("WorkflowType", resolve: x => x.Source.WorkflowType);
           Field("WorkflowTypeId", x => x.WorkflowTypeId, nullable: true);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);

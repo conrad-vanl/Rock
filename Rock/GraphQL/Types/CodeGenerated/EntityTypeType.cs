@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,16 +35,30 @@ namespace Rock.GraphQL.Types
        public EntityType(): base("EntityType")
        {
           Field("AssemblyName", x => x.AssemblyName, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("FriendlyName", x => x.FriendlyName, nullable: false);
+          Field("IndexDocumentUrl", x => x.IndexDocumentUrl, nullable: false);
+          Field("IndexResultTemplate", x => x.IndexResultTemplate, nullable: false);
+          Field("IsAnalyticHistoricalSupported", x => x.IsAnalyticHistoricalSupported, nullable: false);
+          Field("IsAnalyticSupported", x => x.IsAnalyticSupported, nullable: false);
           Field("IsCommon", x => x.IsCommon, nullable: false);
           Field("IsEntity", x => x.IsEntity, nullable: false);
           Field("IsIndexingEnabled", x => x.IsIndexingEnabled, nullable: false);
+          Field("IsIndexingSupported", x => x.IsIndexingSupported, nullable: false);
           Field("IsSecured", x => x.IsSecured, nullable: false);
+          Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<Rock.GraphQL.Types.FieldType>("MultiValueFieldType", resolve: x => x.Source.MultiValueFieldType);
           Field("MultiValueFieldTypeId", x => x.MultiValueFieldTypeId, nullable: true);
           Field("Name", x => x.Name, nullable: false);
+          Field<Rock.GraphQL.Types.FieldType>("SingleValueFieldType", resolve: x => x.Source.SingleValueFieldType);
           Field("SingleValueFieldTypeId", x => x.SingleValueFieldTypeId, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("Guid", x => x.Guid.ToStringSafe(), nullable: false);
           Field("ForeignId", x => x.ForeignId, nullable: true);
        }

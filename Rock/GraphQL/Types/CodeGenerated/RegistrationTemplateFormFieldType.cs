@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,6 +36,11 @@ namespace Rock.GraphQL.Types
        {
           Field<Rock.GraphQL.Types.Attribute>("Attribute", resolve: x => x.Source.Attribute);
           Field("AttributeId", x => x.AttributeId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("FieldSource", x => x.FieldSource.ConvertToInt(), nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
@@ -42,14 +48,22 @@ namespace Rock.GraphQL.Types
           Field("IsInternal", x => x.IsInternal, nullable: false);
           Field("IsRequired", x => x.IsRequired, nullable: false);
           Field("IsSharedValue", x => x.IsSharedValue, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Order", x => x.Order, nullable: false);
           Field("PersonFieldType", x => x.PersonFieldType.ConvertToInt(), nullable: false);
           Field("PostText", x => x.PostText, nullable: false);
           Field("PreText", x => x.PreText, nullable: false);
+          Field<Rock.GraphQL.Types.RegistrationTemplateForm>("RegistrationTemplateForm", resolve: x => x.Source.RegistrationTemplateForm);
           Field("RegistrationTemplateFormId", x => x.RegistrationTemplateFormId, nullable: false);
           Field("ShowCurrentValue", x => x.ShowCurrentValue, nullable: false);
           Field("ShowOnWaitlist", x => x.ShowOnWaitlist, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

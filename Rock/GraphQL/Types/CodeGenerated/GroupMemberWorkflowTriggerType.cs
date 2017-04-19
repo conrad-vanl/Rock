@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,15 +34,23 @@ namespace Rock.GraphQL.Types
     {
        public GroupMemberWorkflowTrigger(): base("GroupMemberWorkflowTrigger")
        {
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field<Rock.GraphQL.Types.Group>("Group", resolve: x => x.Source.Group);
           Field("GroupId", x => x.GroupId, nullable: true);
+          Field<Rock.GraphQL.Types.GroupType>("GroupType", resolve: x => x.Source.GroupType);
           Field("GroupTypeId", x => x.GroupTypeId, nullable: true);
           Field("IsActive", x => x.IsActive, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("Order", x => x.Order, nullable: false);
           Field("TriggerType", x => x.TriggerType.ConvertToInt(), nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
           Field("TypeQualifier", x => x.TypeQualifier, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("WorkflowName", x => x.WorkflowName, nullable: false);
           Field<Rock.GraphQL.Types.WorkflowType>("WorkflowType", resolve: x => x.Source.WorkflowType);
           Field("WorkflowTypeId", x => x.WorkflowTypeId, nullable: false);

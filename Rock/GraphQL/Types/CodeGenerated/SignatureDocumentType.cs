@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -39,18 +40,31 @@ namespace Rock.GraphQL.Types
           Field("AssignedToPersonAliasId", x => x.AssignedToPersonAliasId, nullable: true);
           Field<Rock.GraphQL.Types.BinaryFile>("BinaryFile", resolve: x => x.Source.BinaryFile);
           Field("BinaryFileId", x => x.BinaryFileId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("DocumentKey", x => x.DocumentKey, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("InviteCount", x => x.InviteCount, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastInviteDate", x => x.LastInviteDate, nullable: true);
           Field("LastStatusDate", x => x.LastStatusDate, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
+          Field<Rock.GraphQL.Types.SignatureDocumentTemplate>("SignatureDocumentTemplate", resolve: x => x.Source.SignatureDocumentTemplate);
           Field("SignatureDocumentTemplateId", x => x.SignatureDocumentTemplateId, nullable: false);
           Field<Rock.GraphQL.Types.PersonAlias>("SignedByPersonAlias", resolve: x => x.Source.SignedByPersonAlias);
           Field("SignedByPersonAliasId", x => x.SignedByPersonAliasId, nullable: true);
           Field("Status", x => x.Status.ConvertToInt(), nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

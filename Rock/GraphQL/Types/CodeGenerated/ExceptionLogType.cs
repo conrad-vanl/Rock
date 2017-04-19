@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,23 +34,37 @@ namespace Rock.GraphQL.Types
     {
        public ExceptionLog(): base("ExceptionLog")
        {
+          Field("ContextKey", x => x.ContextKey, nullable: false);
           Field("Cookies", x => x.Cookies, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ExceptionType", x => x.ExceptionType, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("Form", x => x.Form, nullable: false);
           Field("HasInnerException", x => x.HasInnerException, nullable: true);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field<Rock.GraphQL.Types.Page>("Page", resolve: x => x.Source.Page);
           Field("PageId", x => x.PageId, nullable: true);
           Field("PageUrl", x => x.PageUrl, nullable: false);
           Field("ParentId", x => x.ParentId, nullable: true);
           Field("QueryString", x => x.QueryString, nullable: false);
           Field("ServerVariables", x => x.ServerVariables, nullable: false);
+          Field<Rock.GraphQL.Types.Site>("Site", resolve: x => x.Source.Site);
           Field("SiteId", x => x.SiteId, nullable: true);
           Field("Source", x => x.Source, nullable: false);
           Field("StackTrace", x => x.StackTrace, nullable: false);
           Field("StatusCode", x => x.StatusCode, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

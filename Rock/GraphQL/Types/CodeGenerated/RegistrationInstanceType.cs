@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -41,16 +42,27 @@ namespace Rock.GraphQL.Types
           Field<Rock.GraphQL.Types.PersonAlias>("ContactPersonAlias", resolve: x => x.Source.ContactPersonAlias);
           Field("ContactPersonAliasId", x => x.ContactPersonAliasId, nullable: true);
           Field("ContactPhone", x => x.ContactPhone, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
           Field("Cost", x => x.Cost, nullable: true);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Details", x => x.Details, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("EndDateTime", x => x.EndDateTime, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.EventItemOccurrenceGroupMap>>("Linkages", resolve: x => x.Source.Linkages);
           Field("MaxAttendees", x => x.MaxAttendees, nullable: false);
           Field("MinimumInitialPayment", x => x.MinimumInitialPayment, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.Registration>>("Registrations", resolve: x => x.Source.Registrations);
           Field<Rock.GraphQL.Types.RegistrationTemplate>("RegistrationTemplate", resolve: x => x.Source.RegistrationTemplate);
           Field("RegistrationTemplateId", x => x.RegistrationTemplateId, nullable: false);
           Field<Rock.GraphQL.Types.WorkflowType>("RegistrationWorkflowType", resolve: x => x.Source.RegistrationWorkflowType);
@@ -58,6 +70,9 @@ namespace Rock.GraphQL.Types
           Field("ReminderSent", x => x.ReminderSent, nullable: false);
           Field("SendReminderDateTime", x => x.SendReminderDateTime, nullable: true);
           Field("StartDateTime", x => x.StartDateTime, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

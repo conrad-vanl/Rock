@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,14 +34,26 @@ namespace Rock.GraphQL.Types
     {
        public Communication(): base("Communication")
        {
+          Field("AdditionalMergeFieldsJson", x => x.AdditionalMergeFieldsJson, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("EnabledLavaCommands", x => x.EnabledLavaCommands, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("FutureSendDateTime", x => x.FutureSendDateTime, nullable: true);
           Field("IsBulkCommunication", x => x.IsBulkCommunication, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field("MediumDataJson", x => x.MediumDataJson, nullable: false);
           Field<Rock.GraphQL.Types.EntityType>("MediumEntityType", resolve: x => x.Source.MediumEntityType);
           Field("MediumEntityTypeId", x => x.MediumEntityTypeId, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.CommunicationRecipient>>("Recipients", resolve: x => x.Source.Recipients);
           Field("ReviewedDateTime", x => x.ReviewedDateTime, nullable: true);
           Field("ReviewerNote", x => x.ReviewerNote, nullable: false);
           Field<Rock.GraphQL.Types.PersonAlias>("ReviewerPersonAlias", resolve: x => x.Source.ReviewerPersonAlias);
@@ -49,6 +62,9 @@ namespace Rock.GraphQL.Types
           Field("SenderPersonAliasId", x => x.SenderPersonAliasId, nullable: true);
           Field("Status", x => x.Status.ConvertToInt(), nullable: false);
           Field("Subject", x => x.Subject, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

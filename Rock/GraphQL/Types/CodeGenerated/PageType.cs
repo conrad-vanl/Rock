@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -34,13 +35,19 @@ namespace Rock.GraphQL.Types
        public Page(): base("Page")
        {
           Field("AllowIndexing", x => x.AllowIndexing, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.Block>>("Blocks", resolve: x => x.Source.Blocks);
           Field("BodyCssClass", x => x.BodyCssClass, nullable: false);
           Field("BreadCrumbDisplayIcon", x => x.BreadCrumbDisplayIcon, nullable: false);
           Field("BreadCrumbDisplayName", x => x.BreadCrumbDisplayName, nullable: false);
           Field("BrowserTitle", x => x.BrowserTitle, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
           Field("DisplayInNavWhen", x => x.DisplayInNavWhen.ConvertToInt(), nullable: false);
           Field("EnableViewState", x => x.EnableViewState, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("HeaderContent", x => x.HeaderContent, nullable: false);
@@ -48,21 +55,34 @@ namespace Rock.GraphQL.Types
           Field("IncludeAdminFooter", x => x.IncludeAdminFooter, nullable: false);
           Field("InternalName", x => x.InternalName, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("KeyWords", x => x.KeyWords, nullable: false);
+          Field<Rock.GraphQL.Types.Layout>("Layout", resolve: x => x.Source.Layout);
           Field("LayoutId", x => x.LayoutId, nullable: false);
           Field("MenuDisplayChildPages", x => x.MenuDisplayChildPages, nullable: false);
           Field("MenuDisplayDescription", x => x.MenuDisplayDescription, nullable: false);
           Field("MenuDisplayIcon", x => x.MenuDisplayIcon, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Order", x => x.Order, nullable: false);
           Field("OutputCacheDuration", x => x.OutputCacheDuration, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.PageContext>>("PageContexts", resolve: x => x.Source.PageContexts);
           Field("PageDisplayBreadCrumb", x => x.PageDisplayBreadCrumb, nullable: false);
           Field("PageDisplayDescription", x => x.PageDisplayDescription, nullable: false);
           Field("PageDisplayIcon", x => x.PageDisplayIcon, nullable: false);
           Field("PageDisplayTitle", x => x.PageDisplayTitle, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.PageRoute>>("PageRoutes", resolve: x => x.Source.PageRoutes);
+          Field<ListGraphType<Rock.GraphQL.Types.Page>>("Pages", resolve: x => x.Source.Pages);
           Field("PageTitle", x => x.PageTitle, nullable: false);
+          Field<Rock.GraphQL.Types.Page>("ParentPage", resolve: x => x.Source.ParentPage);
           Field("ParentPageId", x => x.ParentPageId, nullable: true);
           Field("RequiresEncryption", x => x.RequiresEncryption, nullable: false);
+          Field("SiteId", x => x.SiteId, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,22 +36,35 @@ namespace Rock.GraphQL.Types
        {
           Field("Assembly", x => x.Assembly, nullable: false);
           Field("Class", x => x.Class, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("CronExpression", x => x.CronExpression, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: true);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("LastRunDateTime", x => x.LastRunDateTime, nullable: true);
           Field("LastRunDurationSeconds", x => x.LastRunDurationSeconds, nullable: true);
           Field("LastRunSchedulerName", x => x.LastRunSchedulerName, nullable: false);
           Field("LastStatus", x => x.LastStatus, nullable: false);
           Field("LastStatusMessage", x => x.LastStatusMessage, nullable: false);
+          Field("LastStatusMessageAsHtml", x => x.LastStatusMessageAsHtml, nullable: false);
           Field("LastSuccessfulRunDateTime", x => x.LastSuccessfulRunDateTime, nullable: true);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("Name", x => x.Name, nullable: false);
           Field("NotificationEmails", x => x.NotificationEmails, nullable: false);
           Field("NotificationStatus", x => x.NotificationStatus.ConvertToInt(), nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);
           Field("CreatedByPersonAliasId", x => x.CreatedByPersonAliasId, nullable: true);

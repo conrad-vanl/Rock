@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -33,13 +34,28 @@ namespace Rock.GraphQL.Types
     {
        public ConnectionOpportunityGroupConfig(): base("ConnectionOpportunityGroupConfig")
        {
+          Field<Rock.GraphQL.Types.ConnectionOpportunity>("ConnectionOpportunity", resolve: x => x.Source.ConnectionOpportunity);
           Field("ConnectionOpportunityId", x => x.ConnectionOpportunityId, nullable: false);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
+          Field<Rock.GraphQL.Types.GroupTypeRole>("GroupMemberRole", resolve: x => x.Source.GroupMemberRole);
           Field("GroupMemberRoleId", x => x.GroupMemberRoleId, nullable: true);
           Field("GroupMemberStatus", x => x.GroupMemberStatus.ConvertToInt(), nullable: false);
+          Field<Rock.GraphQL.Types.GroupType>("GroupType", resolve: x => x.Source.GroupType);
           Field("GroupTypeId", x => x.GroupTypeId, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field("UseAllGroupsOfType", x => x.UseAllGroupsOfType, nullable: false);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
           Field("ModifiedDateTime", x => x.ModifiedDateTime, nullable: true);

@@ -22,6 +22,7 @@
 //
 
 using GraphQL;
+using GraphQL.Types;
 using Rock.Model;
 
 namespace Rock.GraphQL.Types
@@ -35,24 +36,41 @@ namespace Rock.GraphQL.Types
        {
           Field("AddUserAccountsDuringSync", x => x.AddUserAccountsDuringSync, nullable: true);
           Field("AllowGuests", x => x.AllowGuests, nullable: true);
+          Field("AllowsInteractiveBulkIndexing", x => x.AllowsInteractiveBulkIndexing, nullable: false);
           Field<Rock.GraphQL.Types.Campus>("Campus", resolve: x => x.Source.Campus);
           Field("CampusId", x => x.CampusId, nullable: true);
+          Field("ContextKey", x => x.ContextKey, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("CreatedByPersonAlias", resolve: x => x.Source.CreatedByPersonAlias);
+          Field("CreatedByPersonId", x => x.CreatedByPersonId, nullable: true);
+          Field("CreatedByPersonName", x => x.CreatedByPersonName, nullable: false);
           Field("Description", x => x.Description, nullable: false);
+          Field("EncryptedKey", x => x.EncryptedKey, nullable: false);
           Field<Rock.GraphQL.Types.SystemEmail>("ExitSystemEmail", resolve: x => x.Source.ExitSystemEmail);
           Field("ExitSystemEmailId", x => x.ExitSystemEmailId, nullable: true);
           Field("ForeignGuid", x => x.ForeignGuid.ToStringSafe(), nullable: true);
           Field("ForeignKey", x => x.ForeignKey, nullable: false);
           Field("GroupCapacity", x => x.GroupCapacity, nullable: true);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupLocation>>("GroupLocations", resolve: x => x.Source.GroupLocations);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupMemberWorkflowTrigger>>("GroupMemberWorkflowTriggers", resolve: x => x.Source.GroupMemberWorkflowTriggers);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupRequirement>>("GroupRequirements", resolve: x => x.Source.GroupRequirements);
+          Field<ListGraphType<Rock.GraphQL.Types.Group>>("Groups", resolve: x => x.Source.Groups);
           Field<Rock.GraphQL.Types.GroupType>("GroupType", resolve: x => x.Source.GroupType);
           Field("GroupTypeId", x => x.GroupTypeId, nullable: false);
           Field("IsActive", x => x.IsActive, nullable: false);
           Field("IsPublic", x => x.IsPublic, nullable: false);
           Field("IsSecurityRole", x => x.IsSecurityRole, nullable: false);
           Field("IsSystem", x => x.IsSystem, nullable: false);
+          Field("IsValid", x => x.IsValid, nullable: false);
+          Field<ListGraphType<Rock.GraphQL.Types.EventItemOccurrenceGroupMap>>("Linkages", resolve: x => x.Source.Linkages);
+          Field<ListGraphType<Rock.GraphQL.Types.GroupMember>>("Members", resolve: x => x.Source.Members);
           Field("ModifiedAuditValuesAlreadyUpdated", x => x.ModifiedAuditValuesAlreadyUpdated, nullable: false);
+          Field<Rock.GraphQL.Types.PersonAlias>("ModifiedByPersonAlias", resolve: x => x.Source.ModifiedByPersonAlias);
+          Field("ModifiedByPersonId", x => x.ModifiedByPersonId, nullable: true);
+          Field("ModifiedByPersonName", x => x.ModifiedByPersonName, nullable: false);
           Field("MustMeetRequirementsToAddMember", x => x.MustMeetRequirementsToAddMember, nullable: true);
           Field("Name", x => x.Name, nullable: false);
           Field("Order", x => x.Order, nullable: false);
+          Field<Rock.GraphQL.Types.Group>("ParentGroup", resolve: x => x.Source.ParentGroup);
           Field("ParentGroupId", x => x.ParentGroupId, nullable: true);
           Field<Rock.GraphQL.Types.SignatureDocumentTemplate>("RequiredSignatureDocumentTemplate", resolve: x => x.Source.RequiredSignatureDocumentTemplate);
           Field("RequiredSignatureDocumentTemplateId", x => x.RequiredSignatureDocumentTemplateId, nullable: true);
@@ -60,6 +78,9 @@ namespace Rock.GraphQL.Types
           Field("ScheduleId", x => x.ScheduleId, nullable: true);
           Field<Rock.GraphQL.Types.DataView>("SyncDataView", resolve: x => x.Source.SyncDataView);
           Field("SyncDataViewId", x => x.SyncDataViewId, nullable: true);
+          Field("TypeId", x => x.TypeId, nullable: false);
+          Field("TypeName", x => x.TypeName, nullable: false);
+          Field("UrlEncodedKey", x => x.UrlEncodedKey, nullable: false);
           Field<Rock.GraphQL.Types.SystemEmail>("WelcomeSystemEmail", resolve: x => x.Source.WelcomeSystemEmail);
           Field("WelcomeSystemEmailId", x => x.WelcomeSystemEmailId, nullable: true);
           Field("CreatedDateTime", x => x.CreatedDateTime, nullable: true);
