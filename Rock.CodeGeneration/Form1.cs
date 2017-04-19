@@ -722,6 +722,13 @@ order by [parentTable], [columnName]
             string name = type.Name;
             string typeNamespace = type.Assembly.GetName().Name + ".GraphQL.Types";
             string dbContextFullName = Rock.Reflection.GetDbContextForEntityType( type ).GetType().FullName;
+            
+            // we skip analytics tables for now (issue with loading backing types)
+            // XXX figure out issue an load all tables
+            if (name.Contains("Analytics"))
+            {
+                return;
+            }
 
             var dataMembers = type.GetProperties().SortByStandardOrder()
                 .Where(a => a.GetCustomAttribute<DataMemberAttribute>() != null)
@@ -793,6 +800,7 @@ order by [parentTable], [columnName]
 
                 if (fieldType.Namespace == "Rock.Model")
                 {
+
                     if (fieldType.IsEnum)
                     {
                         IsEnum = true;
@@ -818,7 +826,7 @@ order by [parentTable], [columnName]
                 {
                     sb.AppendFormat("          Field<{0}>(\"{1}\", resolve: x => x.Source.{1});" + Environment.NewLine, fieldTypeName, field.Name);
 
-                } else if ( !string.IsNullOrWhiteSpace( fieldTypeName ))
+                } else if ( !string.IsNullOrWhiteSpace( fieldTypeName ) )
                 {
 
                     string fieldname = field.Name;
