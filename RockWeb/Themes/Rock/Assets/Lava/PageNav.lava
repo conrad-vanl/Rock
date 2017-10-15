@@ -11,6 +11,14 @@
 				{% if childPage.DisplayChildPages == 'true' and childPage.Pages != empty %}
                     <ul class="nav nav-childpages">
                         <li class="title">{{ childPage.Title }}</li>
+
+                        {% for includedPage in IncludePageList  %}
+                            {% assign attributeParts = includedPage | PropertyToKeyValue %}
+                            <li>
+                                <a role="menu-item" href="{{ attributeParts.Value }}">{{ attributeParts.Key }}</a>
+                            </li>
+                        {% endfor %}
+
 						{% for grandchildPage in childPage.Pages %}
                             <li class="header">{{ grandchildPage.Title }}</li>
                             {% if grandchildPage.DisplayChildPages == 'true' %}
@@ -21,6 +29,7 @@
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}
+
                     </ul>
                 {% endif %}
 
